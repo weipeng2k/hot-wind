@@ -1,0 +1,72 @@
+{
+  "title": "hot-wind",
+  "author": "weipeng2k",
+  "plugins": [
+    "-lunr",
+    "-search",
+    "search-pro",
+    "-sharing",
+    "disqus",
+    "github-buttons",
+    "editlink",
+    "ga",
+    "-highlight",
+    "bibtex-indexed-cite",
+    "anchor-navigation-ex",
+    "page-footer-ex",
+    "splitter",
+    "copy-code-button",
+    "expandable-chapters-small",
+    "donate",
+    "github"
+  ],
+  "pluginsConfig": {
+    "search-pro": {
+      "cutWordLib": "nodejieba",
+      "defineWord": ["Gitbook Use"]
+    },
+    "anchor-navigation-ex": {
+      "showLevel": false
+    },
+    "disqus": {
+      "shortName": "hot-wind"
+    },
+    "github-buttons": {
+      "buttons": [{
+        "user": "weipeng2k",
+        "repo": "hot-wind",
+        "type": "star",
+        "size": "small",
+        "count": true
+      }]
+    },
+    "editlink": {
+      "base": "https://github.com/weipeng2k/hot-wind/blob/master",
+      "label": "Edit",
+      "multilingual": false
+    },
+    "ga": {
+      "token": "UA-131910384-3"
+    },
+    "page-footer-ex": {
+      "copyright": "By [hot-wind](https://github.com/weipeng2k/hot-wind)，使用[知识共享 署名-相同方式共享 4.0协议](https://creativecommons.org/licenses/by-sa/4.0/deed.zh)发布",
+      "markdown": true,
+      "update_label": "此页面修订于：",
+      "update_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    "bibtex-indexed-cite": {
+      "path": "/"
+    },
+    "donate": {
+      "wechat": "https://weipeng2k.github.io/hot-wind/wechat_qr.JPG",
+      "alipay": "https://weipeng2k.github.io/hot-wind/alipay_qr.JPG",
+      "title": "",
+      "button": "赏",
+      "alipayText": "支付宝打赏",
+      "wechatText": "微信打赏"
+    },
+    "github": {
+      "url": "https://github.com/weipeng2k/hot-wind"
+    }
+  }
+}
