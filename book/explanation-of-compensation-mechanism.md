@@ -23,7 +23,7 @@ CreateOrder:
     CreateBizOrder;
     CreatePayOrder;
     CreateLogisticOrder;
-````
+```
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果其中一个失败，就需要进行重试补偿。
 
@@ -188,7 +188,7 @@ public class CreateLogisticsOrderFailOverProcess implements CompensationProcesso
 
 ```java
 try {
-    TransactionMessage msg = Convert.convert(messageExt.getBody());
+    CompensationMessage msg = Convert.convert(messageExt.getBody());
     List< CompensationProcessor >  list = applicationContext.getBeans(CompensationProcessor.class);
     String scene = msg.getScene();
     String phase = msg.getPhase();
