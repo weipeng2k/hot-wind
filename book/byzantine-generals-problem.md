@@ -1,5 +1,9 @@
 # 拜占庭将军问题
 
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/byzantine-generals-problem/byz.jpg"/>
+</center>
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分布式系统是由多个部分组成，当有部分组件或者系统出现问题，向其他组件或者系统发出具有冲突性的信息时，可靠的计算机系统必须能够正确应对这种情况。这种情况可以用这个场景来形容，一组拜占庭将军率领各自的部队包围了敌人的城池，将军们只能通过信使交流，必须就共同的作战计划达成一致。然而不幸的是，他们中的一个或多个可能是叛徒，他们会试图迷惑其他人。问题是找到一种算法来确保忠诚的将军们会达成一致。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;结果表明：
