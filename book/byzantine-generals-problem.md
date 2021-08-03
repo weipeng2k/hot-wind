@@ -76,20 +76,20 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*中尉1*不知道叛徒是谁，他不能告诉*指挥官*实际上给*中尉2*发送了什么信息。因此，这两个场景在*中尉1*看来是完全相同的。如果叛徒一直在说谎，那么*中尉1*就无法区分这两种情况，在这种两难的境地，*中尉1*无法得出能够满足**IC1**和**IC2**的结论。
 
-> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) 需要证明3m个参与者，其中m个叛徒，是无法使2m个忠诚参与者采用一致的结论或遵循忠诚将军的命令，这也就是IC1和IC2的要求。证明过程使用了反证法，将一个拜占庭将军负责的部队拆分为一组阿尔巴尼亚军团，利用递归的思路加以证明。但是笔者认为通过例证的方式会更加明确，因为对于忠诚的参与者面对的信息一定是相反且均数的。
+> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) 需要证明3m个参与者，其中m个叛徒，是无法使2m个忠诚参与者采用一致的结论或遵循忠诚*将军*的命令，这也就是**IC1**和**IC2**的要求。证明过程使用了反证法，将一个拜占庭将军负责的部队拆分为一组阿尔巴尼亚军团，利用递归的思路加以证明。但是笔者认为通过例证的方式会更加明确，因为对于忠诚的参与者面对的信息一定是相反且均数的。
 > 
-> 下面模拟4个参与者，1个叛徒，也就是超过3m个参与者，首先看一下忠诚的将军和一个叛徒中尉。
+> 下面模拟4个参与者，1个叛徒，也就是超过3m个参与者，首先看一下忠诚的*将军*和一个叛徒*中尉*。
 >
 > <center>
-> <img src="https://weipeng2k.github.io/> hot-wind/resources/byzantine-generals-problem/4g-l-is-t.png" width="50%"/>
+> <img src="https://weipeng2k.github.io/hot-wind/resources/byzantine-generals-problem/4g-l-is-t.png" width="50%"/>
 > </center>
 >
-> 忠诚的将军发起“进攻”命令，*中尉1*收到的信息是三个：*指挥官*的“进攻”、*中尉2*说收到指挥官的命令是“进攻”和叛徒*中尉3*说收到指挥官的命令是“撤退”，这样*中尉1*可以做出决策：进攻（2票进攻，1票撤退）。这个结论就同时满足了**IC1**和IC2**。
+> 忠诚的*将军*发起“进攻”命令，*中尉1*收到的信息是三个：*指挥官*的“进攻”、*中尉2*说收到指挥官的命令是“进攻”和叛徒*中尉3*说收到指挥官的命令是“撤退”，这样*中尉1*可以做出决策：进攻（2票进攻，1票撤退）。这个结论就同时满足了**IC1**和IC2**。
 >
-> 如果将军是叛徒，那么他会发送给不同的中尉以不同的命令，如下图所示：
+> 如果*将军*是叛徒，那么他会发送给不同的*中尉**以不同的命令，如下图所示：
 > 
 > <center>
-> <img src="https://weipeng2k.github.io/> hot-wind/resources/byzantine-generals-problem/4g-g-is-t.png" width="50%"/>
+> <img src="https://weipeng2k.github.io/hot-wind/resources/byzantine-generals-problem/4g-g-is-t.png" width="50%"/>
 > </center>
 >
 > 可以看到叛徒*指挥官*发送了命令进攻和撤退数量是不等的，同时忠诚的*中尉*之间会正确的传递信息，这样忠诚的*中尉*会采取进攻（2票进攻，1票撤退），满足了IC1，同时对于IC2，由于*指挥官*是叛徒，所以也满足**IC2**。
