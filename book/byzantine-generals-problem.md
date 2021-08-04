@@ -103,7 +103,38 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**A1**. 发送的每条消息都能被正确传递；
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**A2**. 消息的接收者知道是谁发送的；
- 
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**A3**. 可以检测到缺失哪个发送者的消息。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**假设A1和A2**可以防止叛徒干扰其他两个参与者之间的通信，因为通过**A1**，叛徒不能干扰传递的消息，而通过**A2**，叛徒不能通过引入虚假信息来混淆他们的交流。**假设A3**将挫败一个试图通过不发送消息来阻止决策的叛徒。这些假设的实际实现在第6节中讨论。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本节和下一节中的算法要求每个参与者都能够直接向其他参与者发送消息。在第5节中，我们描述了没有此要求的算法。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果*指挥官*是叛徒，*指挥官*可以决定不下达任何命令，以此来使*中尉们*无法达成共识。由于*中尉*必须服从某些命令，需要获得输入，在这种情况下他们需要某些默认命令来服从。因此让“撤退”成为这个默认命令。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;定义口头消息算法 **OM(m)**，对于所有非负整数**m**，*指挥官*通过它向**n-1**名*中尉*发送命令。我们接下来证明**OM(m)**在最多m个叛徒存在的情况下解决了**3m+1**或更多*将军*的拜占庭将军问题。我们发现用*中尉*“获得一个值”而不是“服从命令”来描述这个算法更方便。
+
+> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) 分布式环境下的共识，实际目的就是对于一个问题（变量）有共识（值）。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该算法假定函数**majority**具有以下特性：如果值`v(i)`的大多数等于**v**，则`majority(v1, v2, … , vn-1)`等于**v**。对`majority(v1,v2,…,vn-1)`：
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**1**. `v(i)` 中的多数值，如果不存在则为“撤退”；
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**2**. `v(i)` 的中位数，假设它们来自一个有序集合。
+
+> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) 涉及到分布式环境中，一个节点的值，那么上述函数就是一种最朴素的算法，也就是取其他**n-1**个节点的值，然后多数值为自己的值。这点可以理解为，一个节点去获取值，如果集群中其他的节点都会返回这个值的内容，那么就取多数。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;根据上述的**majority**算法约束，m为非负整数，对于**OM**算法描述如下：
+
+```java
+if (m == 0) {
+    (1) 指挥官将他的值发送给每个中尉；
+    (2) 每个中尉使用他从指挥官那里得到的值，如果没有收到值，则默认“撤退”。
+} else {
+    (1) 指挥官将他的值发送给每个中尉；
+    (2) 对于每个中尉i，令vi是中尉i从指挥官那里得到的值，如果没有收到任何值，则撤退。中尉i接下来作为指挥官，运行OM(m-1)算法，将值vi发送给n-2个其他中尉；
+    (3) 对于每个中尉i，以及每个j不等于i（也就是其他中尉），令v(j)是在步骤(2)中从中尉j那里得到的值，如果没有收到值，则默认“撤退”。中尉i使用值为majority(v1, v2, … , vn-1)。
+}
+```
+
+> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png)针对`m=1, n=4`的场景，在上一节中笔者已经做了描述，这里不再赘述。
