@@ -1,8 +1,12 @@
 # 拜占庭将军问题
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;《拜占庭将军问题》来自于对**Leslie Lamport**一篇在1982年发表的论文，可以通过检索*the-byzantine-generals-problem*来下载阅读。这篇论文的主旨是阐述了一个将军和若干中尉协作进攻一个城池的问题，通过假设和分析问题场景中的多种情况，比如：存在叛徒和信息传递丢失的问题，来设计一组算法，使得忠诚的将军（或中尉）有统一的行动计划，并将这组算法应用到可靠计算机系统的建设中。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;《拜占庭将军问题》来自于对[**Leslie Lamport**](https://www.microsoft.com/en-us/research/people/lamport/)一篇在1982年发表的论文，可以通过检索*the-byzantine-generals-problem*来下载阅读。这篇论文的主旨是阐述了一个将军和若干中尉协作进攻一个城池的问题，通过假设和分析问题场景中的多种情况，比如：存在叛徒和信息传递丢失的问题，来设计一组算法，使得忠诚的将军（或中尉）有统一的行动计划，并将这组算法应用到可靠计算机系统的建设中。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;论文整体上有些散（或者说目标多），并且在定理阐述阶段也不断的修改，比如：在假设阶段，不断的修改拜占庭将军问题的题设，从多将军协作，到将军和中尉，再到作战时间的协商，有兴趣的读者可以自己下载原文阅读，由于作者在一篇论文中尝试说明多个场景的解法，导致笔者的阅读体感并不好。该论文阐述的问题和思考是有价值的，尤其在分布式环境下构建一个可靠的计算机系统有指导意义。
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/byzantine-generals-problem/lamport.jpeg" width="50%"/>
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;论文整体上有些散（或者说目标多），并且在定理阐述阶段也不断的修改，比如：在假设阶段，不断的修改拜占庭将军问题的题设，从多将军协作，到将军和中尉，再到作战时间的协商，有兴趣的读者可以自己下载原文阅读，由于作者在一篇论文中尝试说明多个场景的解法，导致笔者的阅读体感并不好，而实际作为一篇论文，20页的体积还是相当大的。该论文阐述的问题和思考是有价值的，尤其在分布式环境下构建一个可靠的计算机系统有指导意义。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以下是笔者对这篇论文的（摘录）翻译和理解。如果是笔者的理解将会以![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png)来开头，以引言的形式来展示，比如：
 
@@ -132,9 +136,52 @@ if (m == 0) {
     (2) 每个中尉使用他从指挥官那里得到的值，如果没有收到值，则默认“撤退”。
 } else {
     (1) 指挥官将他的值发送给每个中尉；
-    (2) 对于每个中尉i，令vi是中尉i从指挥官那里得到的值，如果没有收到任何值，则撤退。中尉i接下来作为指挥官，运行OM(m-1)算法，将值vi发送给n-2个其他中尉；
+    (2) 对于每个中尉i，令vi是中尉i从指挥官那里得到的值，如果没有收到任何值，则默认“撤退”。中尉i接下来作为指挥官，运行OM(m-1)算法，将值vi发送给n-2个其他中尉；
     (3) 对于每个中尉i，以及每个j不等于i（也就是其他中尉），令v(j)是在步骤(2)中从中尉j那里得到的值，如果没有收到值，则默认“撤退”。中尉i使用值为majority(v1, v2, … , vn-1)。
 }
 ```
 
-> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png)针对`m=1, n=4`的场景，在上一节中笔者已经做了描述，这里不再赘述。
+> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) 针对`m=1, n=4`的场景，在上一节中笔者已经做了描述，这里不再赘述。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为了证明算法`OM(m)`对任意m的正确性，我们首先证明以下引理。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**引理1**. 对于任何**m**和**k**，如果有超过`2k+m`名*将军*（或参与者）和至多**k**名叛徒，则算法`OM(m)`满足**IC2**。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**证明**：使用数学归纳法通过对**m**的归纳来证明。很容易看出算法`OM(0)`在*指挥官*忠诚的情况下是成立的，因此当`m=0时`引理成立。**IC1**要求所有忠诚的*中尉*有一致的值，而**IC2**要求忠诚的*中尉*会执行忠诚**将军**的命令，在`m=0`时，**IC2**会达成，且**IC1**会随之达成。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们现在假设`m-1`并且`m>0`成立，然后证明**m**时引理成立。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在步骤(1)中，忠诚的*指挥官*将值**v**发送给所有`n-1`名*中尉*。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在步骤(2)中，每个忠诚的*中尉*对`n-1`个参与者应用`OM(m-1)`。由于假设`n>2k+m`，可知`n-1 > 2k+(m-1)`。由于最多有k个叛徒，并且 `n-1 > 2k+(m-1) >= 2k`，因此，对于`n-1`个值**i**中的大多数忠诚的*中尉*，每个忠诚的*中尉*都有`v(i) = v`，因为他在步骤（3）中获得了 `majority(v1,v2,…,vn-1)=v`，所以我们可以应用归纳假设得出结论：对于每个忠诚的*中尉j*，`v(j)=v`。由此，证明了**引理1**满足**IC2**。
+
+> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) 对于引理的证明，实际可以通过分析获得。原因在于`2k+m`，可以拆解为 `k + k + m`，对于接收到值的*中尉*需要面对上述的结论集合，而k与非k（叛徒的结果，权且这么称呼）相互低效，关键票就到了**m**，而**m**为大于0的，使得`2k+m`为真。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在此基础上，提出以下定理，算法`OM(m)`解决了拜占庭将军问题。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**定理1**. 对于任意**m**，如果*将军*（参与者）超过**3m**，叛徒最多m，则算法`OM(m)`满足条件**IC1**和**IC2**。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**证明**：使用数学归纳法通过对m的归纳来证明。如果没有叛徒，那么很容易看出`OM(0)`满足**IC1**和**IC2**。我们假设该定理对于`OM(m-1)`成立并证明它对于`OM(m), m > 0`成立。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们首先考虑*指挥官*忠诚的情况。通过在**引理1**中取**k**等于**m**，我们看到`OM(m)`满足**IC2**。如果*指挥官*是忠诚的，**IC1**被**IC2**所包含，所以我们只需要在*指挥官*是叛徒的情况下证明**IC1**。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最多有**m**个叛徒，*指挥官*是其中之一，所以最多`m-1`个*中尉*是叛徒。既然有超过**3m**的参与者，就有不少于`3m-1`的*中尉*，`3m - 1 > 3(m - 1)`。因此，我们可以应用归纳假设来得出`OM(m-1)`满足条件**IC1**和**IC2**的结论。
+
+> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) **Lamport**与其说是一位计算机科学家，还不如说是一名数学家。这点在他的自我描述中也能感觉到，对于定理的提出而言，不是直接描述定理，而是提出引理，利用引理来道出定理，使更具实践性的定理显得更加生动，这点可以看出作者的造诣之深。
+
+## 一种基于签名消息的解法
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;正如我们从之前场景中看到的，正是叛徒撒谎的能力使拜占庭将军问题变得如此困难。如果可以限制这种能力，问题就会变得更容易解决。一种方法是允许*将军*发送不可伪造的签名消息。在消息假设中新增一个约束：
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**A4**. (a) 忠诚*将军*的签名不能被伪造，伪造会被（忠诚的*将军*或*中尉*收到后）发现；
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(b) 任何人都可以验证消息签名的真实性。
+
+> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) 由于在实际场景中，不常见到基于签名消息的这种一致性算法，同时它强约束，使得运用起来较为困难。基于签名消息的解法不再赘述，想了解的同学可以参考原文。
+
+## 丢失通信路径
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;同上一节，不赘述。
+
+## 可靠计算机系统
+
