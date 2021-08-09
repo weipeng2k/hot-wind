@@ -1,6 +1,6 @@
 # 拜占庭将军问题
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;《拜占庭将军问题》来自于对[**Leslie Lamport**](https://www.microsoft.com/en-us/research/people/lamport/)一篇在1982年发表的论文，可以通过检索*the-byzantine-generals-problem*来下载阅读。这篇论文的主旨是阐述了一个将军和若干中尉协作进攻一个城池的问题，通过假设和分析问题场景中的多种情况，比如：存在叛徒和信息传递丢失的问题，来设计一组算法，使得忠诚的将军（或中尉）有统一的行动计划，并将这组算法应用到可靠计算机系统的建设中。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;《拜占庭将军问题》来自于[**Leslie Lamport**](https://www.microsoft.com/en-us/research/people/lamport/)一篇在1982年发表的论文，可以通过检索*the-byzantine-generals-problem*来下载阅读。这篇论文的主旨是阐述了一个将军和若干中尉协作进攻一个城池的问题，通过假设和分析问题场景中的多种情况，比如：存在叛徒和信息传递丢失的问题，来设计一组算法，使得忠诚的将军（或中尉）有统一的行动计划，并将这组算法应用到可靠计算机系统的建设中。
 
 <center>
 <img src="https://weipeng2k.github.io/hot-wind/resources/byzantine-generals-problem/lamport.jpeg" width="50%"/>
@@ -192,6 +192,7 @@ if (m == 0) {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为了让多数投票产生一个可靠的系统，应该满足以下两个条件：
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 所有无故障处理器必须使用相同的输入值（因此它们产生相同的输出）。
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 如果输入单元无故障，则所有无故障进程都使用它提供的值作为输入（因此它们产生正确的输出）。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这些只是我们的交互一致性条件**IC1**和**IC2**，其中*“指挥官”*是产生输入的单位，*“中尉”*是处理器，*“忠诚”*意味着无故障。
