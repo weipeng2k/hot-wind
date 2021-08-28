@@ -7,3 +7,5 @@
 * [热风-拜占庭将军问题](book/byzantine-generals-problem.md)
 * [热风-共识协议：两阶段提交](book/2pc-summary.md)
 * [热风-一种基于补偿的事务处理机制（TCC）](book/compensation-and-tcc.md)
+* [热风-如何设计一个分布式数据库读后感](book/how-to-design-a-distribute-database-feeling.md)
+* [热风-使用Seata来实现TCC](book/tcc-using-seata.md)
