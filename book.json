@@ -6,7 +6,6 @@
     "-search",
     "search-pro",
     "-sharing",
-    "disqus",
     "github-buttons",
     "editlink",
     "ga",
@@ -18,9 +17,7 @@
     "copy-code-button",
     "expandable-chapters-small",
     "donate",
-    "github",
-    "theme-default",
-    "theme-comscore"
+    "github"
   ],
   "pluginsConfig": {
     "search-pro": {
@@ -29,9 +26,6 @@
     },
     "anchor-navigation-ex": {
       "showLevel": true
-    },
-    "disqus": {
-      "shortName": "hot-wind"
     },
     "github-buttons": {
       "buttons": [{
@@ -69,9 +63,6 @@
     },
     "github": {
       "url": "https://github.com/weipeng2k/hot-wind"
-    },
-    "theme-default": {
-      "showLevel": true
     }
   }
 }
