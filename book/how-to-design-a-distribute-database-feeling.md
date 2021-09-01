@@ -20,7 +20,7 @@
 
 > ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) 对于过程和行为数据的广泛收集，目的是更加细致和准确的了解用户。以往在系统建模上，过程数据不会过多的保留，或者以某些实体的属性存在，但现在对于用户所有操作行为的数据都需要加以建模和记录，目的就是更加完整的建立用户画像。
 >
->一个很小的业务，如果对于用户的操作能够细致的建模和存储，其实数据量级也不会很小，比如：一个健康记录程序，以往可能记录每天的身体状况，但是如果把用户每个时段的身体状况都通过装置进行存储，那无疑会使数据量增长好几个级别，可以如果善用存储下来的数据，将会给用户带来更加细致的指导意见。
+>一个很小的业务，如果对于用户的操作能够细致的建模和存储，其实数据量级也不会很小，比如：一个健康记录程序，以往可能记录每天的身体状况，但是如果把用户每个时段的身体状况都通过装置进行存储，那无疑会使数据量增长好几个级别，如果善用存储下来的数据，将会给用户带来更加细致的指导意见。
 >
 > 从`TB`级别到今天的`PB`和`EB`级别，数据的膨胀只会随着`IoT`的更加普及而变得愈来愈多。传统的关系数据库面对这种量级的数据，自身由于单体部署约束，导致无法应对海量数据的存储和使用。这个过程中，通过传统关系数据库的上层策略（比如：分库分表）可以一时的解决部分问题，但是数据对于业务的侵入（比如：分库键等）以及对限制（跨库查询等）总会使人用起来有些不快。这时`NoSQL`的出现缓解了这个问题，通过注重于水平扩展和无限存储（权且这么叫），再加上不错的性能，使得它虽然从开发人员手中拿走了一些东西（比如：额外的学习、新增的概念以及些许简陋的功能），但是它还给开发人员手中的好处确实让人兴奋，因为它解决问题。
 >
@@ -45,6 +45,24 @@
 <center>
 <img src="https://weipeng2k.github.io/hot-wind/resources/how-to-design-a-distribute-database/google.jpg" width="50%">
 </center>
+
+* F1是SQL层，Spanner是NoSQL
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/how-to-design-a-distribute-database/spanner-f1.jpg" width="50%">
+</center>
+
+> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) `F1`是一个逻辑处理层，负责将关系数据库的`SQL`进行解析，将`SQL`翻译为`Spanner`可以理解的一系列指令，然后指令下达给`Spanner`，由它来完成数据的操作。谷歌的`F1`和`Spanner`论文需要了解一下。
+>
+> [F1的论文](https://www.researchgate.net/publication/262403895_F1_A_distributed_SQL_database_that_scales)
+>
+> [Spanner的论文（含翻译）](http://dblab.xmu.edu.cn/post/google-spanner/)
+
+* Aurora替换了存储引擎
+
+> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) 以`MySQL`为基础，替换了存储引擎，比如：将`InnoDB`替换为一个具备了分布式水平扩展能力的存储引擎。不愧是具备了电商基因的云厂商，这无疑是一种见效快的方式。
+>
+> 如果是一般云厂商，大概率都会使用这种方式，因为用户的编程界面不用改，但是它也会有很多限制，而像谷歌那种颠覆性的做法不常见，因此也能感觉其难能可贵。
 
 ## `TiDB`总揽
 
