@@ -49,7 +49,7 @@
 * F1是SQL层，Spanner是NoSQL
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/how-to-design-a-distribute-database/spanner-f1.jpg" width="50%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/how-to-design-a-distribute-database/spanner-f1.png" width="50%">
 </center>
 
 > ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) `F1`是一个逻辑处理层，负责将关系数据库的`SQL`进行解析，将`SQL`翻译为`Spanner`可以理解的一系列指令，然后指令下达给`Spanner`，由它来完成数据的操作。谷歌的`F1`和`Spanner`论文需要了解一下。
