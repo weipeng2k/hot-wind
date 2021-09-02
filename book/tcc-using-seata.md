@@ -28,6 +28,12 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果使用2PC来确保该分布式事务的执行，假设在订购过程中，订单微服务生成了订单，但由于调用商品库存系统出现错误（库存不足或调用出错），该全局事务会进行回滚，而该过程对资源的占用如下图所示：
 
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/tcc-using-seata/2pc-abort-cost-time.png" width="60%" />
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到参与到该分布式事务的交易前台、订单和商品库存三个微服务，会将参与事务的资源（比如：订单数据和商品库存数据等）进行锁定，而锁定时间会横跨两个阶段。商品库存微服务反馈中止，全局事务必然中止，可是订单微服务依旧要等待协调者的通知才能继续，这使得订单资源被长时间锁定。可以看到，在2PC模式下，整个系统的吞吐量存在短板，事务参与者中如果存在比较耗时的操作，将会导致该问题更加明显。
+
 ## Seata支持TCC
 
 ## 一个基于Seata的TCC参考示例

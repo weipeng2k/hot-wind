@@ -4,7 +4,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;业务补偿本质上就是处理分布式环境数据一致性的问题，在分布式数据一致性处理常规手段上，按照强弱大致分为两种：
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**强一致性**：XA/TCC，分布式环境下：TXC/Aliyun GTS
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**强一致性**：XA/2PC，分布式环境下：TXC/Aliyun GTS
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**弱一致性（最终一致）**：失败记录，消息中间件，系统重试
 
