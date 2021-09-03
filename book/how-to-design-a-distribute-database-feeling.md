@@ -66,6 +66,22 @@
 
 ## `TiDB`总揽
 
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/how-to-design-a-distribute-database/tidb-architecture.png" width="50%">
+</center>
+
+* TiDB的基本架构如上图所示
+
+> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) 底层的分布式存储层解决的是KV存储问题，如果对一般的KV存储，其实也可以使用`Redis`，但是`TiDB`要求的是分布式，因此就需要一个能够在分布式环境下工作的KV存储。
+>
+> `TiKV`也是单独的项目，[TiKV](https://github.com/tikv/tikv)。多个实例间通过`Raft`一致性算法，将写入数据能够完成多写，做到高可用。这里底层没有使用分布式文件系统，比如：`Ceph`，`HDFS`，原因是如果再使用分布式文件系统，那么数据就会写的更多。`Raft`的3份，文件系统的3份，写9份，因此从效率和经济角度出发，TiKV底层就没有使用分布式文件系统来构造。
+>
+> `TiDB`通过`gRPC`来请求TiKV，目前来看gRPC是要做到终端到服务端，服务端到服务端以及服务端到终端的全通信工具。`gRPC`的代码（Java版本）在2017年左右看过，写的其实很一般，比较粗糙，没有分层，就更不要提层与层的抽象隔离了，但是架不住谷歌这么一直推动。推动是多方面的，一是谷歌背书和不断的更新，二是基于它来叠罗汉，就是涉及到通信的谷歌产品都会使用它，形成了合力，使得很多开源产品也首要支持它，这点值得很多技术公司学习。
+>
+> 整个架构看起来很清晰，职责分离明确，伸缩性应该非常不错。无状态SQL层负责计算，而分布式存储层负责存储，状态数据在`PlacementDriver`。
+>
+> 黄旭东的另一个作品，[codis](https://github.com/CodisLabs/codis)。一个`golang`实现的`Redis`集群代理，能够组建`redis`集群。看了一下，使用方不少，关注度不错。
+
 ## 存储总揽
 
 ## `TiDB`中的SQL生命周期
