@@ -74,7 +74,7 @@
 
 > ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) 底层的分布式存储层解决的是KV存储问题，如果对一般的KV存储，其实也可以使用`Redis`，但是`TiDB`要求的是分布式，因此就需要一个能够在分布式环境下工作的KV存储。
 >
-> `TiKV`也是单独的项目，[TiKV](https://github.com/tikv/tikv)。多个实例间通过`Raft`一致性算法，将写入数据能够完成多写，做到高可用。这里底层没有使用分布式文件系统，比如：`Ceph`，`HDFS`，原因是如果再使用分布式文件系统，那么数据就会写的更多。`Raft`的3份，文件系统的3份，写9份，因此从效率和经济角度出发，TiKV底层就没有使用分布式文件系统来构造。
+> `TiKV`也是单独的项目，[TiKV](https://github.com/tikv/tikv)。多个实例间通过`Raft`一致性算法，将写入数据能够完成多写，做到高可用。这里底层没有使用分布式文件系统，比如：[`Ceph`](https://www.bookstack.cn/read/ceph_from_scratch/architecture-papers.md)，`HDFS`，原因是如果再使用分布式文件系统，那么数据就会写的更多。`Raft`的3份，文件系统的3份，写9份，因此从效率和经济角度出发，TiKV底层就没有使用分布式文件系统来构造。
 >
 > `TiDB`通过`gRPC`来请求TiKV，目前来看gRPC是要做到终端到服务端，服务端到服务端以及服务端到终端的全通信工具。`gRPC`的代码（Java版本）在2017年左右看过，写的其实很一般，比较粗糙，没有分层，就更不要提层与层的抽象隔离了，但是架不住谷歌这么一直推动。推动是多方面的，一是谷歌背书和不断的更新，二是基于它来叠罗汉，就是涉及到通信的谷歌产品都会使用它，形成了合力，使得很多开源产品也首要支持它，这点值得很多技术公司学习。
 >
@@ -84,6 +84,48 @@
 
 ## 存储总揽
 
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/how-to-design-a-distribute-database/tikv-architecture.png" width="50%">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`TiKV`的基本架构如上图所示。客户端通过`gRPC`访问`TiKV`集群，每个`TiKV`节点都是一个进程，运作在一台计算实例上，在`TiKV`内部将存储进行了`Region`分区，切割成为面上使用者的大小以及适合访问的形态，外部通过`Raft`协议将一次写入能够写到多个`TiKV`节点上，借由此来提升整体可用性。
+
+> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) 存储引擎的数据结构基于`LSM Tree`，日志结构化合并树，这是一种对随机添加更为友好的数据结构。相比较`B+树`，它的随机访问能力更好，而`B+树`是更加适合磁盘的访问形式，在SSD这种场景下，效率并不高。关于`LSM Tree`可以[参考文章](https://blog.csdn.net/baichoufei90/article/details/84841289)。
+>
+> 每个`TiKV`实际是使用了单机的KV存储引擎—`RocksDB`，这个是脸书基于谷歌的`LevelDB`的改进版本，修复了不少问题，同时`PingCAP`也对`RocksDB`有捐赠源码（包括问题修复）。
+>
+> 任何分布式的装置都是建立在完善的单机装置上的，基于宏观上可靠的策略，将其形成为一个容易伸缩且高可靠的整体解决方案。`TiKV`的整体代码是使用`Rust`编写，这个新一代的系统编程语言是值得关注的。未来在底层高性能软件上可能会越来越多的看到`Rust`的身影，而系统软件和应用软件之间的中间件将会看到更多的`golang`。
+
 ## `TiDB`中的SQL生命周期
 
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/how-to-design-a-distribute-database/tidb-sql.png" width="50%">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;外部请求发起方依旧是`MySQL`客户端，`TiDB`会伪装成为一个`MySQL Server`。当`TiDB`收到`SQL`时会进行语法树解析，生成执行计划，这点和`MySQL Server`工作的步骤有些类似。但是在最终的逻辑执行计划会生成出可选的物理计划，比如一个`SUM`会发给几个物理节点进行执行，最终会进行所有结果集的`SUM`。之所以要做这么一个`SQL`层，就是要将`SQL`和后端的分布式存储层能够联通。
+
+> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) 对于语法解析这段内容，想象中可以照抄`MySQ`L的，但是`PingCAP`并没有这么做，而是抛弃遗留代码，自己做了，目的是在中间能够加入一些自有的优化，同时为解析出来的结果同物理执行计划之间充分分隔开，很有胆略。
+>
+> 一个概念意义上的SQL输入，最终被翻译成为一组分布式计算的指令。
+
 ## 注重测试
+
+* 测试驱动开发
+
+> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) TiDB整体项目的单测覆盖率是非常高的，行覆盖在80%左右，很不容易了。黄旭东对于单测的看法比较注重，强调单个构件的可靠性，这点是做高质量软件的必由之路。
+>
+> 对于任何问题，需要在单测或者测试场景上进行复现，然后通过不断的回归测试来确保正确，同时使用社区的非常多测试样例，保证其测试的覆盖面。
+>
+> 非常多的开发者对于单测总是忽略，这是一种非常不成熟的表现，很难保证你写出考究的代码。
+
+* 故障注入
+
+> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) 在软/硬级别进行故障的注入，验证该环境下TiDB的工作是否能够达到预期（或者正常）。包括对磁盘、网络、CPU和时钟等多种环境的调整以及故障预设，使TiDB工作在环境不稳定的场景中，发现问题，加以改善。
+
+* 分布式测试
+
+> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) 介绍了`Jepsen`和`Namazu`两款测试软件，搜了一下，基本都和PingCAP有关，看到的是其实习生写的分享，实习生后来还去了阿里云的数据库团队。。。
+>
+> 看样子PingCAP对内部分享也非常在意，有点学院的意思。
+>
+> 分布式测试之前没有接触过，更多的单元、功能、集成、性能。。。哪些传统的测试。
