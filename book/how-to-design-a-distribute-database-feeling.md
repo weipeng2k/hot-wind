@@ -67,7 +67,7 @@
 ## `TiDB`总揽
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/how-to-design-a-distribute-database/tidb-architecture.png" width="50%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/how-to-design-a-distribute-database/tidb-architecture.png" width="70%">
 </center>
 
 * TiDB的基本架构如上图所示
@@ -85,7 +85,7 @@
 ## 存储总揽
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/how-to-design-a-distribute-database/tikv-architecture.png" width="50%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/how-to-design-a-distribute-database/tikv-architecture.png" width="70%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`TiKV`的基本架构如上图所示。客户端通过`gRPC`访问`TiKV`集群，每个`TiKV`节点都是一个进程，运作在一台计算实例上，在`TiKV`内部将存储进行了`Region`分区，切割成为面上使用者的大小以及适合访问的形态，外部通过`Raft`协议将一次写入能够写到多个`TiKV`节点上，借由此来提升整体可用性。
@@ -128,4 +128,4 @@
 >
 > 看样子PingCAP对内部分享也非常在意，有点学院的意思。
 >
-> 分布式测试之前没有接触过，更多的单元、功能、集成、性能。。。哪些传统的测试。
+> 分布式测试之前没有接触过，更多的单元、功能、集成、性能。。。那些传统的测试。
