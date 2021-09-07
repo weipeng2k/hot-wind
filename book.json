@@ -17,7 +17,8 @@
     "copy-code-button",
     "expandable-chapters-small",
     "donate",
-    "github"
+    "github",
+    "word-count"
   ],
   "pluginsConfig": {
     "search-pro": {
