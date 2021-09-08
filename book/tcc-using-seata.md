@@ -61,7 +61,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;微服务接口定义需要做出改变以适应TCC，以订单生成接口为例，在2PC和TCC模式下的不同如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/tcc-using-seata/tcc-interface.png" width="60%" />
+<img src="https://weipeng2k.github.io/hot-wind/resources/tcc-using-seata/tcc-interface.png" width="70%" />
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到在2PC（上图左半部分）模式下，应用对于接口的定义不会受到约束，这点是2PC的优势，事务协调者同数据源进行协作实现分布式事务，一定程度上对应用透明。而TCC（上图右半部分）模式下，应用成为分布式事务中的主角，它需要同事务协调者进行交互，所以在接口定义上需要定义出数据的创建、取消和确认三个不同的方法来分别应对TCC中的TRY、CANCEL和CONFIRM逻辑处理。
@@ -71,6 +71,32 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在上图中的TCC模式下，对于订单生成服务OrderCreateService定义了三个方法createOrder、cancelOrder和confirmOrder分别应对订单生成过程中的TRY、CANCEL和CONFIRM逻辑。TCC除了对应用接口定义产生了侵入，对于这些方法的实现也有隐性的要求，也就是方法实现需要做到幂等。以cancelOrder为例，在取消订单时需要先获取订单，且订单是新生成、没有被取消且没有被确认的情况下才能够进行取消处理，这么做的原因在于事务协调者对于应用的通知可能会由于网络（或其他）原因出现延迟或重复通知，所以需要由应用自身的代码逻辑保证逻辑的幂等。
 
 ## Seata支持TCC
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用TCC，需要一个事务协调者来完成对全局事务（和分支事务）的状态维护与驱动。事务协调者接受事务参与者（也就是微服务应用）本地分支事务的注册，并且在全局事务提交或回滚时调用各个事务参与者相应的确认或取消接口。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TCC事务协调者的开源实现目前在业界有多个，其中使用广泛、功能完备且稳定可靠的参考实现当属Seata。
+
+### 什么是Seata
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Seata是一款开源的分布式解决方案，支持诸如：AT（类似2PC）、TCC、SAGA和XA多种事务模式。Seata是基于C/S架构的中间件，微服务应用需要依赖Seata客户端来完成和Seata服务端的通信，通信协议基于Seata自有的RPC协议。微服务应用通过Seata远程调用完成分布式事务的开启、注册，同时该链路也接受来自Seata服务端（由于事务状态变更而带来）的回调通知，其架构如下图所示：
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/tcc-using-seata/seata-architecture.png" width="70%" />
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用Seata之前，需要先部署Seata服务端，服务端会将Seata服务注册到注册中心，目的是当依赖Seata客户端的微服务应用启动时，可以通过注册中心订阅到Seata服务，使Seata服务以集群高可用的方式暴露给开发者。Seata的客户端和服务端有许多参数可以配置，比如：提交的重试次数或间隔时间，这些配置可以配置在微服务应用或者Seata服务端上，但也可以通过将其配置在配置中心上统一的管理起来。Seata服务端可以通过依赖外部的数据存储将事务上下文等信息持久化存储起来，使得Seata服务端无状态化，进一步提升可用性。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;微服务应用通过依赖Seata客户端来获得同Seata服务端通信的能力，Seata客户端通过AOP以及对主流RPC框架的扩展来完成对微服务应用间远程调用的信息，在远程调用前开启（或注册）分布式事务，当Seata服务端发现事务状态变化时，再回调部署在微服务应用中的Seata客户端来执行相应的逻辑。
+
+> Seata的注册中心支持多种类型，包括：文件、ZooKeeper、Redis、Nacos和ETCD等
+>
+> Seata的配置中心支持多种类型，包括：文件、ZooKeeper、Nacos、ETCD和SpringCloud Config等
+>
+> Seata的数据存储支持多种类型，包括：文件、关系数据库和Redis
+
+### Seata如何支持TCC
+
+### 部署Seata
 
 ## 一个基于Seata的TCC参考示例
 
