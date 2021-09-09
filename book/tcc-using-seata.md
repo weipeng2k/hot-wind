@@ -76,6 +76,8 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TCC事务协调者的开源实现目前在业界有多个，其中使用广泛、功能完备且稳定可靠的参考实现当属Seata。
 
+> 本文中的Seata版本以2021年4月发布的1.4.2版本为主
+
 ### 什么是Seata
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Seata是一款开源的分布式解决方案，支持诸如：AT（类似2PC）、TCC、SAGA和XA多种事务模式。Seata是基于C/S架构的中间件，微服务应用需要依赖Seata客户端来完成和Seata服务端的通信，通信协议基于Seata自有的RPC协议。微服务应用通过Seata远程调用完成分布式事务的开启、注册，同时该链路也接受来自Seata服务端（由于事务状态变更而带来）的回调通知，其架构如下图所示：
@@ -96,8 +98,69 @@
 
 ### Seata如何支持TCC
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在TCC模式中，由事务管理器（一般也是事务参与者）开启全局事务，在事务逻辑执行过程中，该链路上所有节点（微服务应用）的分布式调用都会注册相应的分支事务，全局事务和分支事务会产生关联。当事务逻辑执行成功，代表全局事务可以提交，事务协调者会回调各个事务参与者的确认逻辑，反之，回调其取消逻辑。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到事务的开启和（节点之间的）传播是实现TCC的关键，Seata利用了AOP以及对主流RPC框架进行扩展来提供支持，接下来会简单介绍一下Seata对全局事务开启以及传播的主要逻辑，涉及到Seata更细节的知识需要读者自行了解。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在需要全局事务控制的方法上，通过添加注解@GlobalTransactional将其标识为全局事务方法，该方法中的逻辑即事务逻辑，在方法中的远程调用也会被全局事务所管理，其主要接口和类（以及部分主要方法）如下图所示：
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/tcc-using-seata/seata-aop.png" width="70%" />
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到Seata客户端通过实现spring-aop的方法拦截器来获得对用户方法的拦截。Seata将全局事务抽象为GlobalTransaction，它和普通事务一样具备开始、提交和回滚等方法，当拦截到用户方法的调用（或异常）时，会触发全局事务对应的方法。Seata客户端与服务端通信底层基于netty，传输的自有RPC协议为RpcMessage，当事务管理器TransactionManager被调用时，会将相关事务操作远程通知到Seata服务端，可以认为在微服务之间进行业务远程调用下还存在着一层透明的Seata远程调用。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通过AOP以及远程调用的方式，可以让应用透明的开启全局事务，但在微服务架构下，如何能够做到当前事务在微服务之间传播呢？答案是，扩展应用使用的RPC框架。以Apache Dubbo为例，可以看到Seata通过扩展Dubbo过滤器的方式，在微服务之间传播事务，部分关键代码如下所示：
+
+```java
+@Activate(group = {DubboConstants.PROVIDER, DubboConstants.CONSUMER}, order = 100)
+public class ApacheDubboTransactionPropagationFilter implements Filter {
+
+    @Override
+    public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
+        String xid = RootContext.getXID();
+        BranchType branchType = RootContext.getBranchType();
+
+        String rpcXid = RpcContext.getContext().getAttachment(RootContext.KEY_XID);
+        String rpcBranchType = RpcContext.getContext().getAttachment(RootContext.KEY_BRANCH_TYPE);
+        boolean bind = false;
+        if (xid != null) {
+            RpcContext.getContext().setAttachment(RootContext.KEY_XID, xid);
+            RpcContext.getContext().setAttachment(RootContext.KEY_BRANCH_TYPE, branchType.name());
+        } else {
+            if (rpcXid != null) {
+                RootContext.bind(rpcXid);
+                if (StringUtils.equals(BranchType.TCC.name(), rpcBranchType)) {
+                    RootContext.bindBranchType(BranchType.TCC);
+                }
+                bind = true;
+            }
+        }
+        try {
+            return invoker.invoke(invocation);
+        } finally {
+            // 略
+        }
+    }
+}
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apache Dubbo提供了对调用链路扩展的能力，这也是一款成熟的RPC框架需要必备的基础能力。可以看到在上述代码逻辑中，Seata的扩展点先尝试获取本地事务信息（包括：事务ID和事务模式），然后尝试获取Dubbo请求上下文中对应的远程事务信息。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果能够获取到存储在ThreadLocal中的本地事务信息，表明当前代码运作在一个全局事务中，则尝试将事务信息放置到Dubbo请求上下文中，使之能够传递到下一个微服务节点。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果本地事务信息没有获取到，而远程事务信息存在，这表明本次调用是Seata事务调用，则需要恢复远程事务信息到当前ThreadLocal中，将全局事务能够连接起来。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通过扩展Dubbo的Filter，使得Seata的全局事务具备了击鼓传花般的远程传输能力，事务逻辑中所有的分布式调用，均会在请求中“沾染”上事务信息，而这些信息也会被Seata服务端所掌握，最终在事务完成时，发起对所有事务参与者的回调。
+
+## 一个基于Seata的参考示例
+
+还是以文中商品订购场景为例，基于SpringBoot和Dubbo来实现该功能，同时依靠Seata确保分布式事务。示例中的部分业务代码仅打印了参数或结果，目的是方便读者观察执行的过程，本文接下来针对关键代码进行介绍，应用全部代码可以在：[https://github.com/weipeng2k/seata-tcc-guide](https://github.com/weipeng2k/seata-tcc-guide) 找到。
+
 ### 部署Seata
 
-## 一个基于Seata的TCC参考示例
+### 相关微服务应用
+
+### 演示订购场景
 
 ## Seata的一些问题
