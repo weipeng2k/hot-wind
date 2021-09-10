@@ -2,12 +2,12 @@
 
 ## TCC的交互过程
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TCC是TRY-CANCEL/CONFIRM的缩写（以下均简称为TCC），它是一种柔性事务的代表技术，相关描述可以在 连接 找到。TCC本质上仍是一种两阶段提交的变体，也就是在TRY阶段将资源的变更已经做完，达到万事俱备只欠东风的状态，而之后所有的事务参与者如果对此无异议，则事务发起者将会请求整体提交，也就是触发CONFIRM，反之会执行CANCEL。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TCC是TRY-CANCEL/CONFIRM的缩写（以下均简称为TCC），它是一种柔性事务的代表技术，相关描述可以在 [https://weipeng2k.github.io/hot-wind/book/compensation-and-tcc.html](https://weipeng2k.github.io/hot-wind/book/compensation-and-tcc.html) 找到。TCC本质上仍是一种两阶段提交的变体，也就是在TRY阶段将资源的变更已经做完，达到万事俱备只欠东风的状态，而之后所有的事务参与者如果对此无异议，则事务发起者将会请求整体提交，也就是触发CONFIRM，反之会执行CANCEL。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TCC需要事务协调者的参与来完成TCC中CANCEL或CONFIRM的触发工作。TCC的全局事务由事务参与者发起，所涉及的事务参与者都会创建本地分支事务，这点同2PC类似，而本地事务的提交和回滚操作就分别对应于CONFIRM和CANCEL。TRY-CONFIRM的过程如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/tcc-using-seata/try-confirm.png" width="60%" />
+<img src="https://weipeng2k.github.io/hot-wind/resources/tcc-using-seata/try-confirm.png" width="50%" />
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到全局事务由应用程序发起，一般应用程序也是一个事务参与者，承担全局事务管理角色，负责全局事务的提交或者回滚。由应用程序在事务逻辑中请求不同的事务参与者，收到请求的事务参与者会将本地事务作为一个分支事务和全局事务形成关联，同时也会将上述信息注册至事务协调者。如果应用程序事务逻辑执行完成，各事务参与者均响应正常，代表全局事务可以提交，应用程序则会通知事务协调者提交全局事务，事务协调者在收到通知后会触发各个参与者的确认（CONFIRM）逻辑。
@@ -15,7 +15,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TRY-CANCEL的过程如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/tcc-using-seata/try-cancel.png" width="60%" />
+<img src="https://weipeng2k.github.io/hot-wind/resources/tcc-using-seata/try-cancel.png" width="50%" />
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该过程和TRY-CONFIRM过程相似，在这个过程中，如果在事务逻辑中调用事务参与者出现错误，则应用程序会通知事务协调者对当前全局事务进行回滚，事务协调者在收到通知后会触发各个参与者的取消（CANCEL）逻辑。
@@ -38,7 +38,11 @@
 <img src="https://weipeng2k.github.io/hot-wind/resources/tcc-using-seata/tcc-cancel-cost-time.png" width="60%" />
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从TCC的交互过程可以看到各个事务参与者所负责的本地事务在接收到调用请求后就会提交，相比较2PC而言，TCC对资源的锁定占用时间会短很多，呈现出一种对资源离散且短时占据的形态，而非2PC在整个事务周期内都会整块长时间的锁定资源。由于资源锁定时间变短，使得TCC模式下，整个系统的吞吐量会有显著的提升。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从TCC的交互过程可以看到各个事务参与者所负责的本地事务在接收到调用请求后就会开始处理，一旦完成就会提交。订单微服务在接受到交易前台微服务的调用后就会进行订单创建，不会等待商品库存微服务的处理结果，而当事务协调者发送取消事件给订单微服务时，订单微服务会根据通知所包含的事务上下文关键信息（比如：订单ID）来取消对应的订单，且取消订单的操作也是一个本地事务。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;相比较2PC而言，TCC对资源的锁定占用时间会短很多，呈现出一种对资源离散且短时占据的形态，而非2PC在整个事务周期内都会整块长时间的锁定资源。由于资源锁定时间变短，相同时间下处理本地事务数量自然增多，使得TCC模式下，整个系统的吞吐量会有显著的提升。
+
+> 在微服务架构下，可以通过适当提升TCC链路上较为耗时的微服务实例数量，使的整个系统的吞吐量更进一步提升。
 
 ## TCC的使用代价
 
@@ -76,7 +80,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TCC事务协调者的开源实现目前在业界有多个，其中使用广泛、功能完备且稳定可靠的参考实现当属Seata。
 
-> 本文中的Seata版本以2021年4月发布的1.4.2版本为主
+> 本文使用的Seata版本是2021年4月发布的1.4.2版本，讲述内容主要涉及到TCC的使用，更详尽的内容可以访问seata.io，参考其官方文档
 
 ### 什么是Seata
 
@@ -86,15 +90,15 @@
 <img src="https://weipeng2k.github.io/hot-wind/resources/tcc-using-seata/seata-architecture.png" width="70%" />
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用Seata之前，需要先部署Seata服务端，服务端会将Seata服务注册到注册中心，目的是当依赖Seata客户端的微服务应用启动时，可以通过注册中心订阅到Seata服务，使Seata服务以集群高可用的方式暴露给开发者。Seata的客户端和服务端有许多参数可以配置，比如：提交的重试次数或间隔时间，这些配置可以配置在微服务应用或者Seata服务端上，但也可以通过将其配置在配置中心上统一的管理起来。Seata服务端可以通过依赖外部的数据存储将事务上下文等信息持久化存储起来，使得Seata服务端无状态化，进一步提升可用性。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用Seata之前，需要先部署Seata服务端，服务端会将Seata服务注册到注册中心，目的是当依赖Seata客户端的微服务应用启动时，可以通过注册中心订阅到Seata服务，使Seata服务以集群高可用的方式暴露给开发者。Seata的客户端和服务端有许多参数可以配置，比如：提交的重试次数或间隔时间，这些配置可以配置在微服务应用或者Seata服务端上，但也可以通过将其配置在配置中心上统一的管理起来。Seata服务端可以通过依赖外部的数据存储将事务上下文等信息持久化存储起来，使得Seata服务端无状态化，进一步提升可用性。Seata可以选择多种开源的注册和配置中心以及数据存储，如下表所示：
+
+|类型|可选产品|功能描述|
+|---|---|---|
+|注册中心|文件、ZooKeeper、Redis、Nacos和ETCD等|Seata服务端注册Seata服务，Seata客户端进行服务发现|
+|配置中心|文件、ZooKeeper、Nacos、ETCD和SpringCloud Config等|统一管理和维护Seata的配置信息|
+|数据存储|文件、关系数据库和Redis|持久化存储全局事务、分支事务以及事务上下文信息|
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;微服务应用通过依赖Seata客户端来获得同Seata服务端通信的能力，Seata客户端通过AOP以及对主流RPC框架的扩展来完成对微服务应用间远程调用的信息，在远程调用前开启（或注册）分布式事务，当Seata服务端发现事务状态变化时，再回调部署在微服务应用中的Seata客户端来执行相应的逻辑。
-
-> Seata的注册中心支持多种类型，包括：文件、ZooKeeper、Redis、Nacos和ETCD等
->
-> Seata的配置中心支持多种类型，包括：文件、ZooKeeper、Nacos、ETCD和SpringCloud Config等
->
-> Seata的数据存储支持多种类型，包括：文件、关系数据库和Redis
 
 ### Seata如何支持TCC
 
@@ -155,12 +159,224 @@ public class ApacheDubboTransactionPropagationFilter implements Filter {
 
 ## 一个基于Seata的参考示例
 
-还是以文中商品订购场景为例，基于SpringBoot和Dubbo来实现该功能，同时依靠Seata确保分布式事务。示例中的部分业务代码仅打印了参数或结果，目的是方便读者观察执行的过程，本文接下来针对关键代码进行介绍，应用全部代码可以在：[https://github.com/weipeng2k/seata-tcc-guide](https://github.com/weipeng2k/seata-tcc-guide) 找到。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以前文中商品订购场景为例，基于SpringBoot和Dubbo来实现该功能，同时依靠Seata确保分布式事务。示例中的部分业务代码仅打印了参数或结果，目的是方便读者观察执行的过程，本文接下来针对关键代码进行介绍，应用全部代码可以在：[https://github.com/weipeng2k/seata-tcc-guide](https://github.com/weipeng2k/seata-tcc-guide) 找到。
 
 ### 部署Seata
 
-### 相关微服务应用
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在运行示例前需要部署Seata服务端，Seata服务端一般以集群的方式进行部署，依赖注册和配置中心以及外部存储做到高可用。由于本文主要介绍微服务应用如何使用Seata实现TCC，简单起见采用单节点的方式进行部署。
 
-### 演示订购场景
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以选择在官网下载Seata服务端，解压后运行seata-server.sh启动，如下图所示：
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/tcc-using-seata/seata-server-download.png" width="70%" />
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;默认Seata服务端的依赖（注册和配置中心以及外部存储）是本地文件。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当然也可以使用Docker进行部署，在安装了Docker的机器上运行如下命令：
+
+```sh
+docker run --name seata-server -p 8091:8091 -d seataio/seata-server:latest
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该命令在当前机器上启动了Seata服务端，同时暴露了Seata服务端的（默认）端口。
+
+> 如果不在本机部署Seata服务端，需要记录部署了Seata服务端机器的IP，并且能够确保之后部署的微服务应用能够访问该IP。微服务应用中的配置项seata.service.grouplist.default需要配置为服务端的IP和端口。
+
+### 应用代码简介
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本示例中商品订购场景涉及三个微服务应用，其相关信息如下表所示：
+
+|应用|前台交易微服务|订单微服务|商品微服务|
+|---|---|---|---|
+|名称|trade-facade|order-service|product-service|
+|领域实体|无|订单|商品库存<br>库存占用明细|
+|接口服务|TradeAction，商品下单接口|OrderCreateService，订单创建服务|ProductInventoryService，商品库存服务|
+|功能描述|接收前端请求，调用OrderCreateService创建订单，同时调用ProductInventoryService扣减对应商品的库存|实现并发布OrderCreateService，维护订单模型与数据|实现并发布ProductInventoryService，维护商品库存相关模型与数据|
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户订购请求通过trade-facade进入，首先会调用order-service生成订单，此时订单的是否可用状态为false，然后trade-facade调用product-service进行库存扣减，如果库存充足则减少商品预扣库存数量同时生成库存占用明细，以上为TRY阶段，相关部分代码如下：
+
+```java
+@Component("tradeAction")
+public class TradeActionImpl implements TradeAction {
+
+    @DubboReference(group = "dubbo", version = "1.0.0")
+    private OrderCreateService orderCreateService;
+    @DubboReference(group = "dubbo", version = "1.0.0")
+    private ProductInventoryService productInventoryService;
+
+    // fake id generator
+    private final AtomicLong orderIdGenerator = new AtomicLong(System.currentTimeMillis());
+
+    @Override
+    @GlobalTransactional
+    public Long makeOrder(Long productId, Long buyerId, Integer amount) {
+        RootContext.bindBranchType(BranchType.TCC);
+        CreateOrderParam createOrderParam = new CreateOrderParam();
+        createOrderParam.setProductId(productId);
+        createOrderParam.setBuyerUserId(buyerId);
+        createOrderParam.setAmount(amount);
+        Long orderId;
+        try {
+            orderId = orderIdGenerator.getAndIncrement();
+            orderCreateService.createOrder(createOrderParam, orderId);
+        } catch (OrderException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        OccupyProductInventoryParam occupyProductParam = new OccupyProductInventoryParam();
+        try {
+            occupyProductParam.setProductId(productId);
+            occupyProductParam.setAmount(amount);
+            occupyProductParam.setOutBizId(orderId);
+            productInventoryService.occupyProductInventory(occupyProductParam, orderId.toString());
+        } catch (ProductException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return orderId;
+    }
+}
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到makeOrder方法上标注了GlobalTransactional注解，表示该方法需事务保证，同时通过RootContext设置当前的事务模式为TCC。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于OrderCreateService和ProductInventoryService，也需要增加Seata的注解，使得之后的CANCEL或CONFIRM通知能够调用到相应的逻辑，以OrderCreateService为例，代码如下：
+
+```java
+@LocalTCC
+public interface OrderCreateService {
+
+    /**
+     * 根据参数创建一笔订单
+     *
+     * @param param   订单创建参数
+     * @param orderId 订单ID
+     * @throws OrderException 订单异常
+     */
+    @TwoPhaseBusinessAction(name = "orderCreateService", commitMethod = "confirmOrder", rollbackMethod = "cancelOrder")
+    void createOrder(CreateOrderParam param,
+                     @BusinessActionContextParameter(paramName = "orderId") Long orderId) throws OrderException;
+
+    /**
+     * <pre>
+     * 根据订单ID确认订单
+     * </pre>
+     *
+     * @param businessActionContext 业务行为上下文
+     * @throws OrderException 订单异常
+     */
+    void confirmOrder(BusinessActionContext businessActionContext) throws OrderException;
+
+    /**
+     * <pre>
+     * 根据订单ID作废当前订单
+     * </pre>
+     *
+     * @param businessActionContext 业务行为上下文
+     * @throws OrderException 订单异常
+     */
+    void cancelOrder(BusinessActionContext businessActionContext) throws OrderException;
+}
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到接口声明需要标注LocalTCC注解，同时在TRY阶段（也就是createOrder）方法上标注TwoPhaseBusinessAction注解，而其中commitMethod和rollbackMethod分别对应CONFIRM和CANCEL阶段方法。通过TwoPhaseBusinessAction注解的声明，Seata会知晓在全局事务提交或回滚时调用该微服务应用的哪个方法。
+
+> LocalTCC、TwoPhaseBusinessAction和BusinessActionContextParameter注解需要标注在接口上才能被Seata所识别，这也是为什么TCC模式对应用的侵入性较强的一个原因
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果订购成功，全局事务可以提交，Seata服务端会回调参与事务微服务的CONFIRM逻辑。order-service的confirmOrder方法会被调用，订单的可用状态会被更新为true。product-service的confirmProductInventory方法会被调用，真实库存会被扣减，库存占用明细状态会更新为成功。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果订购失败，全局事务需要回滚，失败的原因可能是调用order-service或product-service服务出现业务异常，比如：生成订单失败或库存不足，也有可能是系统异常，比如：调用超时或网络传输异常等，Seata服务端会回调参与事务微服务的CANCEL逻辑。order-service的cancelOrder方法会被调用，订单可用状态会被更新为false。product-service的cancelProductInventory方法会被调用，预扣库存会被增加，库存占用明细状态会更新为取消。
+
+> Seata服务端会回调参与事务微服务的相应逻辑，这个参与代表着业务远程调用已经发起，如果没有执行则不会发起对应的回调。比如：在makeOrder方法代码中，逻辑上的事务参与者有trade-facade、order-service和product-service，但如果makeOrder方法在实际执行中，调用到order-service就抛错了，则CANCEL回调只会通知到trade-facade和order-service。
+
+### 订购示例演示
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;订购示例逻辑为，先初始化一个商品的库存为20，然后本地模拟10个并发请求用于订购商品，每次订购的数量为3，相关代码如下所示：
+
+```java
+@SpringBootApplication
+@EnableDubbo
+@Configuration
+public class TradeApplication implements CommandLineRunner {
+
+    private final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(10, 10, 5, TimeUnit.SECONDS,
+            new LinkedBlockingQueue<>());
+    @Autowired
+    private TradeAction tradeAction;
+
+    public static void main(String[] args) {
+        SpringApplication.run(TradeApplication.class, args);
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        tradeAction.setProductInventory(1L, 20);
+        CountDownLatch start = new CountDownLatch(1);
+        CountDownLatch stop = new CountDownLatch(10);
+        AtomicInteger orderCount = new AtomicInteger();
+        for (int i = 1; i <= 10; i++) {
+            int userId = i;
+            threadPoolExecutor.execute(() -> {
+                try {
+                    start.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    tradeAction.makeOrder(1L, (long) userId, 3);
+                    orderCount.incrementAndGet();
+                } catch (Exception ex) {
+                    // Ignore.
+                } finally {
+                    stop.countDown();
+                }
+            });
+        }
+
+        start.countDown();
+
+        stop.await();
+
+        Thread.sleep(1000);
+
+        System.err.println("订单数量：" + orderCount.get());
+        System.err.println("库存余量：" + tradeAction.getProductInventory(1L));
+    }
+}
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;先启动order-service和product-service，然后运行trade-facade，可以看到输出：
+
+```sh
+订单数量：6
+库存余量：2
+```
+
+> 微服务需要依赖注册中心，本示例的注册中心使用的是ZooKeeper。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;输出显示生成6笔订单，每笔订单包含3件商品，因此商品库存还剩2件，这表示有4笔订单被取消，可以观察order-service的标准输出，能够看到TRY阶段的相关（部分）输出：
+
+```sh
+买家{7}购买商品{1}，数量为{3}，订单{1631264872732}生成@2021-09-10 17:07:56[DubboServerHandler-192.168.31.133:20880-thread-3] in Tx(172.18.0.3:8091:27191024100888792)
+.
+.
+买家{10}购买商品{1}，数量为{3}，订单{1631264872731}生成@2021-09-10 17:07:56[DubboServerHandler-192.168.31.133:20880-thread-4] in Tx(172.18.0.3:8091:27191024100888799)
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总共10条记录，可以看到每笔订单均在不同的事务（Tx）中生成，且运行的线程为Dubbo服务端线程。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在TRY阶段之后，会出现CANCEL和CONFIRM阶段的（部分）输出：
+
+```sh
+买家{7}购买商品{1}，数量为{3}，订单{1631264872732}启用@2021-09-10 17:07:56[rpcDispatch_RMROLE_1_1_24] in Tx(172.18.0.3:8091:27191024100888792)
+.
+.
+买家{9}购买商品{1}，数量为{3}，订单{1631264872728}取消@2021-09-10 17:07:57[rpcDispatch_RMROLE_1_8_24] in Tx(172.18.0.3:8091:27191024100888793)
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其中订单启用的输出有6条，订单取消的输出有4条，同时注意到运行的线程为Seata的资源管理器线程。
+
+> TCC不同阶段的逻辑一般是由不同线程运行的，所以在实际使用过程中，需要注意线程安全问题。
 
 ## Seata的一些问题
