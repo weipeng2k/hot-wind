@@ -10,3 +10,4 @@
 * [热风-如何设计一个分布式数据库读后感](book/how-to-design-a-distribute-database-feeling.md)
 * [热风-使用Seata来实现TCC](book/tcc-using-seata.md)
 * [热风-未来的预测](book/what-about-the-future.md)
+* [热风-Seata存在的一些问题](book/seata-problem.md)
