@@ -12,4 +12,4 @@
 * [热风-未来的预测](book/what-about-the-future.md)
 * [热风-Seata存在的一些问题](book/seata-problem.md)
 * [热风-Java开发者看C](book/java-dev-learn-c.md)
-    * [热风-C语言概述](book/java-dev-learn-c-1.md)
+    * [热风-C语言概述](book/java-dev-learn-c(1).md)
