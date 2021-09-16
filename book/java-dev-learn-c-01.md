@@ -13,7 +13,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**C**语言不是凭空创作出来的，而是诞生于一个演化过程。
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/java-dev-learn-c-01/figure-2.png" width="50%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/java-dev-learn-c-01/figure-2.png" width="90%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Ken**在贝尔实验室在一台**DEC PDP-7**机器上，使用改进后的**BCPL**语言，也就会**B**语言，设计开发了初版的**UNIX**系统。
@@ -50,7 +50,7 @@ AND fact(n) = n=0 -> 1, n*fact(n-1)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Ken**所作业的**DEC PDP-7**不是一个很强的系统，只有4K的内存。
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/java-dev-learn-c-01/dec-pdp-7.jpg" width="80%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/java-dev-learn-c-01/dec-pdp-7.jpg" width="50%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Ken**发明的**B**语言。
@@ -118,13 +118,6 @@ void main() {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;尝试使用gcc进行编译。
 
 ```sh
-ch02 % gcc -O -Wall -W -pedantic  -std=c99 -o target/warn warn.c
-warn.c:3:1: error: 'main' must return 'int'
-void main() {
-^~~~
-int
-1 error generated.
-
 ch02 % gcc -o target/warn warn.c
 warn.c:3:1: warning: return type of 'main' is not 'int' [-Wmain-return-type]
 void main() {
@@ -136,4 +129,15 @@ int
 1 warning generated.
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;两次编译，第一次失败，第二次成功，只是因为增加了`-std=c99`，也就是说要求编译前按照c99的标准检查代码，而对于主函数返回类型，c99要求必须为`int`，所以直接报错。通过增加`-Wall -W`，也能够看到告警，这样会让我们知道哪里可能存在风险。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编译结果出现告警。然后使用新的命令再次编译。
+
+```sh
+ch02 % gcc -O -Wall -W -pedantic  -std=c99 -o target/warn warn.c
+warn.c:3:1: error: 'main' must return 'int'
+void main() {
+^~~~
+int
+1 error generated.
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编译失败，只是因为增加了`-std=c99`，也就是说要求编译前按照c99的标准检查代码，而对于主函数返回类型，c99要求必须为`int`，所以直接报错。通过增加`-Wall -W`，也能够看到告警，这样会让我们知道哪里可能存在风险。
