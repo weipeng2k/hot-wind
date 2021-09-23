@@ -130,7 +130,7 @@ int main(void) {
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在文件中通过`#include`指令包含的头文件，内容被包含进了该文件，同时`#define`定义的内容已经做了替换。
 
-> #define X 10，其中X已经替换成了10。
+> `#define X 10`，其中`X`已经替换成了`10`。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;接下来运行`cc -S test.i > test.s`，将预处理器处理完成的文件作为输入，输出汇编文件。
 
@@ -187,3 +187,37 @@ test.o (END)
 % ./test
 i的值是：10
 ```
+
+### 简单程序的一般形式
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**C**程序实际就是一堆函数的集合，其程序代码可以看做有以下组成。
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/java-dev-learn-c-02/figure-6.png" width="70%">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**C**程序就是编写函数，开发者写的是应用函数，而编译器提供的是本系统环境的系统函数，或者叫标准库，它们有能力同系统进行交互，处于程序调用的底层。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;看一个**C**程序。
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/java-dev-learn-c-02/figure-7.png" width="70%">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;指令、函数和语句构成了**C**程序。
+
+### 定义常量和变量
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;变量或者常量的命名同**Java**的规范一样，这些命名的变量和常量可以被称为标识符。
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/java-dev-learn-c-02/figure-8.png" width="70%">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**C**程序是函数的集合，同时如果以符号来看，实际也是一堆记号（符号）的集合。
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/java-dev-learn-c-02/figure-9.png" width="70%">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从形式上看，一个**C**程序就是定义一些标识符（变量、常量（或宏）和函数），中间使用语言的关键字来定义数据类型，依靠字面量以及运算符来进行运算，同时需要标点符号来分割不同的记号。由此可见，**C**程序是简单的，这种简单是由其语言本身的简单所带来的优点，它扩充能力的方式是通过调用不同的函数库，而不是增加语言的特性（包括语法特性等）和功能。
