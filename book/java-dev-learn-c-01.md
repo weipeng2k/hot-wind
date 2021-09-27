@@ -16,7 +16,7 @@
 <img src="https://weipeng2k.github.io/hot-wind/resources/java-dev-learn-c-01/figure-2.png" width="90%">
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Ken**在贝尔实验室在一台**DEC PDP-7**机器上，使用改进后的**BCPL**语言，也就会**B**语言，设计开发了初版的**UNIX**系统。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Ken**在贝尔实验室在一台**DEC PDP-7**机器上，使用改进后的**BCPL**语言，也就是**B**语言，设计开发了初版的**UNIX**系统。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**BCPL**语言源自**ALGOL60**，也就是算法语言，它长得样子大概是这样：
 

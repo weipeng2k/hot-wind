@@ -88,7 +88,7 @@ i的值是：10
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;运行`cc -E test.c > test.i`，输出预处理器处理后的文件，可以看到该文件（部分内容）：
 
-```sh
+```c
 # 1 "test.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
