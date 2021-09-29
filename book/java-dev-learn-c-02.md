@@ -100,15 +100,11 @@ i的值是：10
 # 64 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/stdio.h" 3 4
 # 1 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h" 1 3 4
 # 68 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h" 3 4
-
 typedef union {
  char __mbstate8[128];
  long long _mbstateL;
 } __mbstate_t;
-
 typedef __mbstate_t __darwin_mbstate_t;
-
-
 typedef long int __darwin_ptrdiff_t;
 
 FILE *fopen(const char * restrict __filename, const char * restrict __mode) __asm("_" "fopen" );

@@ -14,3 +14,4 @@
 * [热风-Java开发者看C](book/java-dev-learn-c.md)
     * [热风-C语言概述](book/java-dev-learn-c-01.md)
     * [热风-C语言的基本概念](book/java-dev-learn-c-02.md)
+* [热风-基础Paxos算法的9页笔记](book/basic-paxos-9-pages-notes.md)
