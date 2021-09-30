@@ -22,9 +22,15 @@
 
 ## 基础**Paxos**算法笔记
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本文阐述的内容基本和《Paxos made simple》一致，但会增加一些示例和推导，是**Paxos**的学习笔记。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本文阐述的内容基本和《Paxos made simple》一致，但会增加一些笔者的思考、示例和推导，是**Paxos**的学习笔记。
 
 ### 第一页
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/basic-paxos-9-pages-notes/paxos-note-1.jpg" width="70%">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Paxos**算法是一个共识（Consensus）算法，而非一致性（Consistency）算法。我们常见认知中，认为**Paxos**就是一个能够解决一致性的神奇东西，但是它并没有那么强大，它只是一个算法策略，没有一点工程化的能力，而一致性是工程需要考虑的问题。可以认为，一致性是一个目标，是我们在分布式环境中追寻的一个目标，而要在分布式环境中达成这个目标，就需要（分布式环境中的）多个节点，它们能够形成共识，拟人的话就是：*对某件事情有一致的看法*，这里的共识就是一种手段，因此利用共识可以达成一致性，它们是这样的关系。
 
 ### 第二页
 
