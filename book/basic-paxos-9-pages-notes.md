@@ -132,6 +132,16 @@
 <img src="https://weipeng2k.github.io/hot-wind/resources/basic-paxos-9-pages-notes/paxos-note-3.jpg" width="70%">
 </center>
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Proposer**提出提案，**Acceptor**进行批准，该怎样批准呢？如果是节点之间进行相互协商，那么可以肯定，这是一个复杂的过程，最好**Acceptor**之间不要进行通信，而是按照一致的批准策略进行提案的审批。提案包含了编号和值，可以想象，一定是在编号上做文章，那么这个批准策略，可以是如果是更大（或更小）的提案，就一定会通过。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;论文中没有明确描述批准策略的步骤，而是先给定了约束。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**约束1.** 一个**Acceptor**必须接受第一次收到的提案。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**约束2.** 一旦一个具有Value的提案被批准，那之后批准的提案必须具有Value。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这两个约束感觉不知所云，**Lamport**在自嗨，没有顾及到普通的读者，所以需要翻译一下。
+
 ### 第四页
 
 ### 第五页
