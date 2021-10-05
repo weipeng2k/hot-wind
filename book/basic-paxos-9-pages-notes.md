@@ -180,6 +180,29 @@
 <img src="https://weipeng2k.github.io/hot-wind/resources/basic-paxos-9-pages-notes/paxos-note-4.jpg" width="70%">
 </center>
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Proposer**知晓所有**Acceptor**的存在，同时每次发起提案时，会将提案发往多数的**Acceptor**。可以看到**Proposer**会有**Acceptor**列表，同时该列表会不断的（随着**Acceptor**启停而）更新，同时在发起提案前，会从可用的**Acceptor**列表中找到一个多数的子集用于发送提案。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里会涉及到**Acceptor**的注册发现诉求，如果动态新增一个**Acceptor**，那么所有**Proposer**的**Acceptor**列表中就会出现该元素，这样当然体感会好很多，但是这超出了本文讨论的范畴，可以认为每个**Proposer**静态的设置了一批**Acceptor**。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Lamport**针对**约束1**做了增强。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**约束1a**. 当且仅当**Acceptor**没有回应过提案编号大于`N`的**Prepare**请求时，**Acceptor**才接受`N`号提案。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从前文中可以看到**Acceptor**拥有提案列表属性，因此可以在收到提案的**Prepare**请求后，检查当前提案列表中最大的提案，如果最大的提案编号小于收到提案编号，则回复**Proposer**已接受该提案。这里提到的**Prepare**请求，是在**Paxos**算法中的准备阶段进行的，算法将一次提案的批准过程分为两个阶段：准备阶段和批准阶段，论文中如下描述：
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通过一个决议分为两个阶段：
+
+* **准备阶段**
+    - **Proposer**选择一个提案编号n并将**Prepare**请求发送给**Acceptor(s)**中的一个多数派；
+    - **Acceptor**收到**Prepare**消息后，如果提案的编号大于它已经回复的所有**Prepare**消息(回复消息表示接受**Accept**)，则**Acceptor**将自己上次接受的提案回复给**Proposer**，并承诺不再回复小于n的提案；
+* **批准阶段**
+    - 当一个**Proposer**收到了多数**Acceptor(s)**对**Prepare**的回复后，就进入批准阶段。它要向回复**Prepare**请求的**Acceptor(s)**发送**Accept**请求，包括编号n和根据**约束2c**决定的value（如果根据**约束2c**没有已经接受的value，那么它可以自由决定value）。
+    - 在不违背自己向其他**Proposer**的承诺的前提下，**Acceptor**收到**Accept**请求后即批准这个请求。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这个过程在任何时候中断都可以保证正确性。例如如果一个**Proposer**发现已经有其他**Proposer(s)**提出了编号更高的提案，则有必要中断这个过程。因此为了优化，在上述准备过程中，如果一个**Acceptor**发现存在一个更高编号的提案，则需要通知**Proposer**，提醒其中断这次提案。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;两阶段描述完毕。
+
 ### 第五页
 
 ### 第六页
