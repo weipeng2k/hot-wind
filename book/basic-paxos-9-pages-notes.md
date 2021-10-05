@@ -114,11 +114,11 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;至此，我们对于提案批准过程有以下（没有在论文中提到的）隐含约束：
 
-* **Proposer**知晓所有的**Acceptor**
+* **隐含约束1**. **Proposer**知晓所有的**Acceptor**
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这样它能够发起有意义的提案，也能判定自己的提案是否得到多数人的支持；
 
-* **Proposal**的编号会产生重复
+* **隐含约束2**. **Proposal**的编号会产生重复
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;因为它的生成需要结合相应**Proposer**的状态信息，而批准过程会使之去重。
 
@@ -136,13 +136,49 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;论文中没有明确描述批准策略的步骤，而是先给定了约束。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**约束1.** 一个**Acceptor**必须接受第一次收到的提案。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**约束1**. 一个**Acceptor**必须接受第一次收到的提案。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**约束2.** 一旦一个具有Value的提案被批准，那之后批准的提案必须具有Value。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**约束2**. 一旦一个具有Value的提案被批准，那之后批准的提案必须具有Value。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这两个约束感觉不知所云，**Lamport**在自嗨，没有顾及到普通的读者，所以需要翻译一下。
+> 这两个约束感觉不知所云，**Lamport**在自嗨，没有顾及到普通的读者，所以需要翻译一下。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Acceptor**接收到一个提案，如果是第一次收到提案就会接受该提案，实际可以认为**Acceptor**能够识别出哪些提案它以前收到过，哪些提案它没有收到过。如果**Acceptor**能够进行识别，那它一定是有状态的，它至少记录了提交给它的所有提案，如下图所示：
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/basic-paxos-9-pages-notes/approve-proposal.png" width="50%">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Acceptor**集群中，每个**Acceptor**都会记录自己收到的提案，如果只有一个**Acceptor**，在**Paxos**算法中，它一定会记录到所有的提案，但如果是多个**Acceptor**呢？那一定是各记录各自的提案，但是所有**Acceptor**的知识一定可以反映出所有的提案，只是在某一个**Acceptor**中，只有部分提案而已，如拼图一样，通过拼接，就可以得到完整的图画。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Lamport**在**约束2**的基础上，做了增强。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**约束2a**. 一旦一个具有Value的提案被批准，那之后的**Acceptor**接收的提案必须具有Value。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**约束2b**. 一旦一个具有Value的提案被批准，那之后的**Acceptor**接收的提案必须具有Value。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**约束2c**. 如果Value V的N号提案提出，多数**Acceptor**要么没有接收N-1号提案，要么接收的最近一个提案（在N-1号之前）包含有Value V。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到**约束2a**将约束推到了决议讨论阶段，而**约束2b**进一步反推到了提议阶段，也就是一旦满足**约束2b**，那就一定会满足**约束2a**，可以将**约束2a**称为**约束2b**的必要条件。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;理解**约束2**及其变体，需要从时间角度去看，如下图：
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/basic-paxos-9-pages-notes/proposer-submit-proposal-timeline.png" width="50%">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到，从一个**Proposer**角度去看，如果其提案被批准形成了决议，则之后再次发起提案时，以往的决议将能够被**Proposer**所见，且不仅限于该**Proposer**可见自己提出的提案（或决议），只要是决议，就算是其他**Proposer**提出的，也是能够可见的。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以数据库事务中事务隔离级别去思考这个问题也是可行的，比如：读已提交隔离级别，就和该约束有些含义上的共通点。至于**约束2c**，实在有些高不太清楚想表达什么意思，先放在这里吧。
 
 ### 第四页
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第四页笔记讲述了**Proposer**发起提案的约束，以及**Paxos**算法的两个阶段和相关流程。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关键词：**Proposer**、**发起提案**、**准备阶段**和**批准阶段**。
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/basic-paxos-9-pages-notes/paxos-note-4.jpg" width="70%">
+</center>
 
 ### 第五页
 
