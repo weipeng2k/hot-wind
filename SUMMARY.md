@@ -15,3 +15,8 @@
     * [热风-C语言概述](book/java-dev-learn-c-01.md)
     * [热风-C语言的基本概念](book/java-dev-learn-c-02.md)
 * [热风-基础Paxos算法的9页笔记](book/basic-paxos-9-pages-notes.md)
+    * [热风-基础Paxos算法笔记(1/9)](book/basic-paxos-9-pages-notes-01.md)
+    * [热风-基础Paxos算法笔记(2/9)](book/basic-paxos-9-pages-notes-02.md)
+    * [热风-基础Paxos算法笔记(3/9)](book/basic-paxos-9-pages-notes-03.md)
+    * [热风-基础Paxos算法笔记(4/9)](book/basic-paxos-9-pages-notes-04.md)
+    * [热风-基础Paxos算法笔记(5/9)](book/basic-paxos-9-pages-notes-05.md)
