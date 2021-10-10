@@ -30,28 +30,28 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通过上图可以看到几个细节：
 
-* 具有**Proposer**和**Acceptor**角色的节点会接受自己的提案
+## 具有Proposer和Acceptor角色的节点会接受自己的提案
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果一个节点同时具备了**Proposer**和**Acceptor**角色，该节点收到**Client**的请求后，将请求转换为提案，并发起**Prepare**请求。**Prepare**请求发起的同时，该节点首先会接受该提案，在进程内响应同意的**Promise**。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以想象，如果该节点提出的提案，自己不接受，那就会产生混乱。现实中，某个议员会提出提案，同时他自然会接受自己的提案。
 
-* 两个阶段的分界线在于提案有了多数人支持
+## 两个阶段的分界线在于提案有了多数人支持
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;阶段是针对提案的，或者说提案的状态。当一个提案有超过多数**Acceptor(s)**支持时，它就从准备阶段到了批准阶段。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里可以看到提案应该能够知晓有多少**Acceptor(s)**同意它，提案不可能知晓所有的**Acceptor(s)**，但是**Proposer**应该知晓。**Proposer**发现该提案已经有多数人支持了，那就代表阶段切换了。
 
-* 两阶段转换的触发在**Proposer**接收达到多数票的最后一个**Promise**
+## 两阶段转换的触发在Proposer接收达到多数票的最后一个Promise
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Proposer**不断的收到**Acceptor**回复的**Promise**，根据**Promise**可以清晰的看到该提案有多少**Acceptor(s)**支持。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当任意一个同意的**Promise**被**Proposer**收到，并发现该**Promise**使得该提案的同意过半，此时，该提案的状态会发生变化，从准备阶段进入到批准阶段。随后开始向所有同意的**Acceptor**发送**Accept**请求，进行值的设置。
 
-* 提案进入批准阶段形成决议，而提案的**Proposer**还会回复**Accept**请求
+## 提案进入批准阶段形成决议，而提案的Proposer还会回复Accept请求
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-* 响应**Client**（或**Citizen**）的**Learner**应该是**Acceptor**通知的第一人
+## 响应Client（或Citizen）的Learner应该是Acceptor通知的第一人
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
