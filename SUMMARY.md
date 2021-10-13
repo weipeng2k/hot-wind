@@ -23,3 +23,4 @@
     * [热风-基础Paxos算法笔记(6/9)](book/basic-paxos-9-pages-notes-06.md)
     * [热风-基础Paxos算法笔记(7/9)](book/basic-paxos-9-pages-notes-07.md)
     * [热风-基础Paxos算法笔记(8/9)](book/basic-paxos-9-pages-notes-08.md)
+    * [热风-基础Paxos算法笔记(9/9)](book/basic-paxos-9-pages-notes-09.md)
