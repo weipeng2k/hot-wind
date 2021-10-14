@@ -12,9 +12,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;论文中对于**Learner**的描述有限，基本都集中在**Proposer**和**Acceptor**上，但是不是说**Learner**不重要，我们需要看一下**Learner**的职责有哪些？第一，存储决议；第二，响应请求。前者是**Learner**的本职工作，其实这点（如果看了前面的文章就能理解到）**Acceptor**实际也可以做到，因为**Acceptor**才是策源地，但是可以理解**Learner**为决议的备份，有它存在，整个系统的可用性会有保证。后者是**Learner**的核心工作，这个工作是参与到**Paxos**算法过程中的，由**Learner**来生成响应，并将响应发回给**Client**。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为什么不是**Acceptor**来做这个工作？其实是可以的，但是如果这样来定义**Acceptor**，就会让它变得很重。因此，一个能够尝试对**Client**建链接发响应，同时存储备份一下决议，是比较符合单一职责的。
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这么看来**Learner**实际承担了**Paxos**算法末段关键流程了，但是论文掐头去尾只着重在中间一段（**Proposer**和**Acceptor**），对这部分内容会描写的比较简单，但涉及到问题却不能那么简单的带过，需要详细看一下。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**为什么不是Acceptor来做这个工作？**其实是可以的，但是如果这样来定义**Acceptor**，就会让它变得很重。因此，一个能够尝试对**Client**建链接发响应，同时存储备份一下决议，是比较符合单一职责的。这么看来**Learner**实际承担了**Paxos**算法末段关键流程了，但是论文掐头去尾只着重在中间一段（**Proposer**和**Acceptor**），对这部分内容会描写的比较简单，但涉及到问题却不能那么简单的带过，需要详细看一下。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**主要的问题在于：如何确保决议在Learner中形成共识？**
 
