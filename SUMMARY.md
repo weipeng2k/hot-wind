@@ -24,3 +24,4 @@
     * [热风-基础Paxos算法笔记(7/9)](book/basic-paxos-9-pages-notes-07.md)
     * [热风-基础Paxos算法笔记(8/9)](book/basic-paxos-9-pages-notes-08.md)
     * [热风-基础Paxos算法笔记(9/9)](book/basic-paxos-9-pages-notes-09.md)
+* [热风-分布式锁小结](book/distribute-lock-brief-summary.md)
