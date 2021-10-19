@@ -6,6 +6,6 @@
 <img src="https://weipeng2k.github.io/hot-wind/resources/readme.jpg" />
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我的[《热风》](https://weipeng2k.github.io/hot-wind/)不是给人打鸡血，而是提醒自己不要停下学习和分享，始终保有热度，写一些技术文章，时刻保有提交的感觉，是作为一个开发者的一部分，也是想成为的样子。不论是在[简书](https://www.jianshu.com/u/8ca8bac8af3b)上，还是在[博客网站](https://blog.csdn.net/WeiPeng2K)，文章的编写总是缺少一种提交的感觉，所以还是在[**github**](https://github.com/weipeng2k/hot-wind)上来的舒坦。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我的[《热风》](https://weipeng2k.github.io/hot-wind/)不是给人打鸡血，而是提醒自己不要停下学习和分享，始终保有热度，写一些技术文章，时刻保有提交的感觉，是作为一个开发者的一部分，也是想成为的样子。不论是在[简书](https://www.jianshu.com/u/8ca8bac8af3b)上，还是在[知乎](https://www.zhihu.com/people/peng.weip)，文章的编写总是缺少一种提交的感觉，所以还是在[**github**](https://github.com/weipeng2k/hot-wind)上来的舒坦。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;看一些技术，总结一下，写一下，感觉是很好的。
