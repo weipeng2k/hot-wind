@@ -76,7 +76,7 @@ public class NoVisibilityTest {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果不存在**可见性**问题，自定义线程应该可以很快发现`ready`值被修改，然后跳出死循环，最终退出。但实际情况会是这样吗？运行程序后，观察不同批次的线程打印信息，这里截取最后几个批次，如下图：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/visible-variable-problem.png">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/visible-variable-problem.png" width="50%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到最后一批（也就是第20批）打印的线程内容，之前创建的`ReaderThread`大部分都存活着，它们都对`ready`值的变化视而不见吗？其实它们不是看不见，它们只是盯着缓存中的值去看，对内存中值的变化不清楚罢了。线程运行在CPU核心上，在线程执行时，将值从内存载入到缓存中，依照缓存中的值来运行。
@@ -104,7 +104,7 @@ private static class ReaderThread extends Thread {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到上述修改只是在`ReaderThread`的死循环中，创建了一个`ReentrantLock`，在这个临时的锁上做了`lock`。如果从功能角度上看这个修改，实际一点作用都没有，但是我们运行这个程序，会看到以下结果。
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/lock-protect-visible.png">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/lock-protect-visible.png" width="50%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;线程读到了内存中的值，它们安全的退出了，这就是锁**可见性**的体现，它保证在锁保护的代码块中，能够看到最新的值，不论是锁的**资源状态**，还是数据变量。在使用锁时，会通过系统指令将CPU上的缓存作废，以期望获取到内存中的值，而作废的内容不止是**资源状态**，而是整块缓存，因此变相的使得线程获取到了最新的`ready`值。
@@ -118,7 +118,7 @@ private static class ReaderThread extends Thread {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分布式锁对于锁资源的申请和占用，如下图：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-concept.png">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-concept.png" width="70%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到，在
@@ -130,7 +130,9 @@ private static class ReaderThread extends Thread {
 ## 自旋式
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+约束1. 一个Acceptor必须接受第一次收到的提案。
 
+约束2. 一旦一个具有Value的提案被批准，那之后批准的提案必须具有Value。
 ## 事件通知式
 
 ## 更进一步
