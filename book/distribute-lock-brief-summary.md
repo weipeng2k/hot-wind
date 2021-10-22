@@ -121,18 +121,45 @@ private static class ReaderThread extends Thread {
 <img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-concept.png" width="70%">
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到，在
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到，在一个实例（或进程）中存在多个线程，而多个实例都可以访问资源，访问资源的最小单位是线程，因此分布式锁控制的粒度同单机锁一样。`JUC`单机锁是否能够获取是依靠内存中的状态值来实现的，在本机内存中的状态值称为锁的**资源状态**，如果将内存中锁的资源移动到进程外，对资源进行获取的系统调用换成网络调用，单机锁不就转变成了分布式锁吗？没错，确实如此，但背后隐含了几个问题，就如同单机锁隐含了**可见性**问题一样。
 
-1. 与JUC的关系，性能，网络
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**资源状态**由内到外的移动不会产生任何变化，而系统调用换成网络调用会产生巨大的变化，主要在以下三个方面：性能、超时和可用性问题，而超时问题会进一步引出死锁问题，接下来我们来看看这几个方面。
+
+### 性能问题
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不论是单机锁还是分布式锁，在实现锁时，都需要获取锁的**资源状态**，然后进行比对，如果是单机锁，那需要读入保存在内存中的值，如果是分布式锁，则需要网络一来一回请求远端的值。这链路的变化，导致性能会出现巨大差异，我们可以通过看一下该图来理论分析一下存在的性能差距。
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/access-equipment-speed.png" width="70%">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该图参考自**Jeff Dean**发表的 *《Numbers Everyone Should Know》* 2020版。通过观察该图可以发现，访问CPU的缓存是在纳秒级别，访问内存在百纳秒级别，而在一个数据中心内往返一次在百微秒级别，而一旦跨数据中心将会到达百毫秒级别。从访问不同的设备的延迟可以看到，如果是单机锁，它能提供纳秒级别的延迟，而如果是分布式锁，延迟会在上百微秒也可能在毫秒级别，二者的差距至少存在上千倍。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果网络变得更快会不会提升分布式锁的性能呢？答案是肯定，但也是存在极限的。通过观察[历年的延迟数据](https://colin-scott.github.io/personal_website/research/interactive_latency.html)，从1990年开始到2020年，30年的时间里，计算机访问不同设备装置的速度有了巨大提升。可以发现网络的延迟虽然有很大改善，但是趋势在逐渐变缓，也就是说硬件与工艺提升带来的红利变得很微薄，虽然有提升，但是还不足以引起质变。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由于分布式锁在访问**资源状态**相比单机锁存在巨大的延迟，就锁的性能而言肯定是低于单机锁的。当然会有同学提出，单机锁解决不了分布式环境下的并发控制问题呀。没错，这里就访问延迟来比较二者的性能有所偏颇，但需要读者明白，分布式锁的引入并不是整个系统高性能的保证，不见得分布式环境会比单机更加有效率，使用分布式锁需要接受它带来的延迟，而它的目的是为分布式环境中水平伸缩的应用服务提供并发控制能力。
+
+### 超时问题
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分布式锁除了面对由于链路变化导致出现的延迟问题之外，还需要考虑锁**资源状态**的可靠性问题。由于锁**资源状态**放置在远程存储上，所以它的管理是依靠（使用锁的）进程实例（或线程）的网络请求来完成的，这个过程如下图所示：
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-remote-status.png" width="70%">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在单机锁中，锁的**资源状态**和应用实例是一体的，而分布式锁的**资源状态**与应用实例相互独立，这会带来锁资源占用超时的问题。我们先考虑一种最简单的分布式锁实现方式，依靠一个数据库来维护**资源状态**。在数据库中，创建一个`lock`表，如果需要获取锁就需要在表中增加一行记录，可以根据锁的名称来查询锁，且在名称这个字段上增加了唯一约束。如果客户端能够新增一行记录，则代表它成功的获取到了锁，否则需要不断的尝试新增记录（并忽略主键冲突错误），当释放锁时需要主动的删除这行记录，该过程如下图所示：
+
+
+
 2. 死锁问题
 3. 超时问题：获取锁的超时，占用锁的超时
+
+### 可用性问题
 
 ## 自旋式
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-约束1. 一个Acceptor必须接受第一次收到的提案。
 
-约束2. 一旦一个具有Value的提案被批准，那之后批准的提案必须具有Value。
 ## 事件通知式
 
 ## 更进一步
