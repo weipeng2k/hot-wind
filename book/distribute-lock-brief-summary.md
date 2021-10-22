@@ -130,7 +130,7 @@ private static class ReaderThread extends Thread {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不论是单机锁还是分布式锁，在实现锁时，都需要获取锁的**资源状态**，然后进行比对，如果是单机锁，那需要读入保存在内存中的值，如果是分布式锁，则需要网络一来一回请求远端的值。这链路的变化，导致性能会出现巨大差异，我们可以通过看一下该图来理论分析一下存在的性能差距。
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/access-equipment-speed.png" width="70%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/access-equipment-speed.png">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该图参考自**Jeff Dean**发表的 *《Numbers Everyone Should Know》* 2020版。通过观察该图可以发现，访问CPU的缓存是在纳秒级别，访问内存在百纳秒级别，而在一个数据中心内往返一次在百微秒级别，而一旦跨数据中心将会到达百毫秒级别。从访问不同的设备的延迟可以看到，如果是单机锁，它能提供纳秒级别的延迟，而如果是分布式锁，延迟会在上百微秒也可能在毫秒级别，二者的差距至少存在上千倍。
@@ -147,9 +147,13 @@ private static class ReaderThread extends Thread {
 <img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-remote-status.png" width="70%">
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在单机锁中，锁的**资源状态**和应用实例是一体的，而分布式锁的**资源状态**与应用实例相互独立，这会带来锁资源占用超时的问题。我们先考虑一种最简单的分布式锁实现方式，依靠一个数据库来维护**资源状态**。在数据库中，创建一个`lock`表，如果需要获取锁就需要在表中增加一行记录，可以根据锁的名称来查询锁，且在名称这个字段上增加了唯一约束。如果客户端能够新增一行记录，则代表它成功的获取到了锁，否则需要不断的尝试新增记录（并忽略主键冲突错误），当释放锁时需要主动的删除这行记录，该过程如下图所示：
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在单机锁中，锁的**资源状态**和应用实例是一体的，而分布式锁的**资源状态**与应用实例相互独立，这会带来锁资源占用超时的问题。我们先考虑一种最简单的分布式锁实现方式，依靠一个数据库来维护**资源状态**。在关系数据库（比如：MySQL）中，创建一个`lock`表，如果需要获取锁就需要在表中增加一行记录，可以根据锁的名称来查询锁，且在名称这个字段上增加了唯一约束。如果客户端能够新增一行记录，则代表它成功的获取到了锁，否则需要不断的尝试新增记录（并忽略主键冲突错误），当释放锁时需要主动的删除这行记录，该过程如下图所示：
 
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-mysql.png" width="70%">
+</center>
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到图中**实例A**和**B**在尝试抢占一个名为`order_lock`的锁，而实例获取锁的方式是在`lock`表中成功新增一行当前锁对应的记录。由于`lock`表在`lock_name`一列上存在唯一约束，所以同一时刻只会有一个实例（也就是**实例A**）能够完成新增记录获取到锁。
 
 2. 死锁问题
 3. 超时问题：获取锁的超时，占用锁的超时
