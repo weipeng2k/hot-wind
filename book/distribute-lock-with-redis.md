@@ -1,8 +1,6 @@
 # 使用Redis实现分布式锁
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本文是在**Redis**官方文档：[https://redis.io/topics/distlock](https://redis.io/topics/distlock)基础上，增加了**Redlock**实现示例部分。
-
-> **Redlock**部分基于[**redisson**](https://github.com/redisson/redisson)来实现。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本文是在**Redis**官方文档：[https://redis.io/topics/distlock](https://redis.io/topics/distlock)基础上进行翻译和完善。
 
 <center>
 <img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/redis.jpeg">

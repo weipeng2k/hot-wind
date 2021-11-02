@@ -30,3 +30,4 @@
     * [热风-事件通知式分布式锁](book/distribute-lock-event-impl.md)
     * [热风-再看分布式锁](book/distribute-lock-another-way.md)
     * [热风-使用Redis实现分布式锁](book/distribute-lock-with-redis.md)
+    * [热风-如何实现分布式锁](book/distribute-lock-how-to-do-it.md)
