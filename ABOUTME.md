@@ -1,6 +1,12 @@
 # 关于作者
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;魏鹏（花名：豫楚），原阿里巴巴集团高级技术专家，2009年硕士研究生毕业加入阿里巴巴中国网站技术部，2021年从阿里云离职，在阿里工作12年，在阿里巴巴多个部门工作过。主要经历有三段：
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;魏鹏（花名：豫楚），原阿里巴巴集团高级技术专家，2009年硕士研究生毕业加入阿里巴巴中国网站技术部，2021年从阿里云离职，在阿里工作12年，在阿里巴巴多个部门工作过。
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/self.jpeg" width="50%">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主要经历有三段：
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第一段，提升技术能力。2009年硕士研究生毕业加入阿里巴巴中国网站技术部，曾担任中国网站交易平台架构师，主导了交易系统服务化工作，设计实现的数据迁移系统高效的完成了阿里巴巴中国网站交易数据到阿里巴巴集团的迁移工作；
 
