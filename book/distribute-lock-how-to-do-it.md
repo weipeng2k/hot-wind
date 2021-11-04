@@ -87,7 +87,7 @@ function writeData(filename, data) {
 <img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/redlock-with-fence.jpg">
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Client1**获取到了锁并同时得到了令牌`33`，但是在执行操作的时候，由于暂停而导致锁实质已经过期。**Client2**在**Client1**暂停期间（由于锁超时释放而）获取到了锁，同时获得了更新的令牌`34`，然后执行操作，将数据完成写入，也包括了令牌`34`。**Client1**随后恢复过来，然后开始尝试向存储写数据，同时包括之前获取到了令牌33。由于存储服务记得之前处理过一个令牌为`34`的请求，所以将会拒绝**Client1**的这次请求。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Client1**获取到了锁并同时得到了令牌`33`，但是在执行操作的时候，由于暂停而导致锁实质已经过期。**Client2**在**Client1**暂停期间（由于锁超时释放而）获取到了锁，同时获得了更新的令牌`34`，然后执行操作，将数据完成写入，也包括了令牌`34`。**Client1**随后恢复过来，然后开始尝试向存储写数据，同时包括之前获取到了令牌`33`。由于存储服务记得之前处理过一个令牌为`34`的请求，所以将会拒绝**Client1**的这次请求。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请注意，这要求存储服务能够支持令牌的检测，在发生令牌倒退时，拒绝写入请求。一旦你知道了诀窍，这并不特别难。如果锁服务生成严格单调增加的令牌，这样能够充分的确保分布式锁的正确性。例如：如果你使用**ZooKeeper**作为分布式锁的底层，那可以使用`zxid`或`znode`版本号作为令牌，并且它们能很好的工作。
 
