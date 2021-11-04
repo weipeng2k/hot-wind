@@ -1,4 +1,4 @@
-# ****Redlock*****能保证锁的正确性吗？
+# Redlock能保证锁的正确性吗？
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本文是[**Salvatore Sanfilippo**](http://antirez.com)反驳**Martin Kleppmann**关于论证**Redlock**难以确保分布式锁正确性的文章，文章原文[在这里](http://antirez.com/news/101)。
 
