@@ -6,6 +6,18 @@
 <img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock.jpeg">
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;接下来，先看一下分布式锁和普通的锁有何不同，实现分布式锁需要注意哪些问题，然后再详细的讨论两种不同类别的分布式锁。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;接下来会有一系列的文章来讨论分布式锁，在讨论之前会通过[锁是什么？](https://weipeng2k.github.io/hot-wind/book/distribute-lock-what-is-lock.html)介绍一下锁的主要特性，特别是可见性，这个容易被忽略的特性。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最后，需要问自己：**我真的需要使用分布式锁来解决这个问题吗？**
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开发一个分布式锁不难，但是会有[很多问题需要解决](https://weipeng2k.github.io/hot-wind/book/distribute-lock-problem.html)，当看到这些问题的时候，你还会觉得简单吗？然后笔者设计开发了一个[分布式锁框架](https://github.com/weipeng2k/distribute-lock)，有文章会介绍它的设计与使用方式，基于该框架，将**Redis**和**ZooKeeper**整合入框架。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Redis**是最常用来做分布式锁的底层实现了，但是围绕它做分布式锁的问题，[**Salvatore Sanfilippo**](http://antirez.com)和[**Martin Kleppmann**](https://martin.kleppmann.com)，一个是**Redis**的作者，一个是分布式专家，两个人吵了一架，他们撕逼的文章笔者做了翻译和注释，有兴趣的可以看一下。
+
+> [使用Redis实现分布式锁](https://weipeng2k.github.io/hot-wind/book/distribute-lock-with-redis.html)
+>
+> [如何实现分布式锁](https://weipeng2k.github.io/hot-wind/book/distribute-lock-how-to-do-it.html)
+>
+> [Redlock能保证锁的正确性吗？](https://weipeng2k.github.io/hot-wind/book/distribute-lock-is-redlock-safe.html)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我是支持**Martin Kleppmann**的。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最后，需要问自己：[**我真的需要使用分布式锁来解决这个问题吗？**](https://weipeng2k.github.io/hot-wind/book/distribute-lock-another-way.html)
