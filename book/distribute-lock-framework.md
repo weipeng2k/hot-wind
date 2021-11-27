@@ -45,7 +45,6 @@ if (lock.tryLock(1, TimeUnit.SECONDS)) {
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述代码表示获取一个名为lock_name的分布式锁，然后对其尝试加锁，超时时间为1秒，如果1秒内成功加锁，则执行一段逻辑，并在最后完成解锁。
 
-
 ### 分布式锁SPI
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;面向开发者的分布式锁SPI，以责任链模式进行构建，开发者可以扩展不同的分布式锁实现以及拦截分布式锁获取与释放链路。分布式锁SPI是框架扩展的体现，其主要类图如下所示：
@@ -69,3 +68,107 @@ if (lock.tryLock(1, TimeUnit.SECONDS)) {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，锁的获取链路会从Head节点开始，将请求传递给链路上所有LockHandler的acquire方法，最终抵达Tail节点，并由Tail节点调用LockRemoteResource的tryAcquire方法，完成远程锁资源的获取。如果链路上的扩展节点需要提前中断获取锁的请求，可以选择不调用AcquireChain的invoke方法，这会将该责任链提前返回。锁的释放链路与获取链路正好相反，由Tail节点开始，先调用LockRemoteResource的release方法完成远程锁资源的释放，然后再逐步前推，直到Head节点。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;任何节点的增加和删除，对于链路上的其他节点而言都是没有影响的，因此锁获取与释放链路的抽象提供了良好的扩展能力，后面会演示如何通过实现LockHandler来扩展框架。
+
+## 基于Redis的实现
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通过扩展LockRemoteResource可以实现分布式锁，接下来以Redis作为锁状态的存储，简单起见，可以通过适配Redisson客户端来进行实现。Redisson客户端版本为：3.16.4，Redis服务端版本为：6.2.6。实现主要代码如下：
+
+```java
+import io.github.weipeng2k.distribute.lock.spi.AcquireResult;
+import io.github.weipeng2k.distribute.lock.spi.LockRemoteResource;
+import io.github.weipeng2k.distribute.lock.spi.support.AcquireResultBuilder;
+import org.redisson.Redisson;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
+import java.util.concurrent.TimeUnit;
+/**
+ * <pre>
+ * 基于Redis的锁实现
+ * </pre>
+ *
+ * @author weipeng2k 2021年11月12日 下午22:53:20
+ */
+public class RedissonLockRemoteResource implements LockRemoteResource {
+    private final RedissonClient redisson;
+    private final int ownSecond;
+    public RedissonLockRemoteResource(String address, int ownSecond) {
+        Config config = new Config();
+        config.useSingleServer()
+                .setAddress(address);
+        redisson = Redisson.create(config);
+        this.ownSecond = ownSecond;
+    }
+    @Override
+    public AcquireResult tryAcquire(String resourceName, String resourceValue, long waitTime,
+                                    TimeUnit timeUnit) throws InterruptedException {
+        RLock lock = redisson.getLock(resourceName);
+        Integer liveSecond = OwnSecond.getLiveSecond();
+        long ownTime = timeUnit.convert(liveSecond != null ? liveSecond : ownSecond, TimeUnit.SECONDS);
+        AcquireResultBuilder acquireResultBuilder;
+        boolean ret = lock.tryLock(waitTime, ownTime, timeUnit);
+        acquireResultBuilder = new AcquireResultBuilder(ret);
+        if (!ret) {
+            acquireResultBuilder.failureType(AcquireResult.FailureType.TIME_OUT);
+        }
+        return acquireResultBuilder.build();
+    }
+    @Override
+    public void release(String resourceName, String resourceValue) {
+        RLock lock = redisson.getLock(resourceName);
+        lock.unlock();
+    }
+}
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述代码的逻辑主要是将Redisson的RLock适配到LockRemoteResource上。适配逻辑整体上比较简单，在tryAcquire方法实现中，通过Redisson客户端获取RLock，然后将请求委派给RLock的tryLock方法。release的适配更加简单，只需要获取到RLock进行解锁即可。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分布式锁框架使用起来比较简单，直接依赖distribute-lock-redis-spring-boot-starter即可，该starter会装配一个DistributeLockManager到应用的Spring容器中，使用方式如下所示：
+
+```java
+@Autowired
+private DistributeLockManager distributeLockManager;
+@Autowired
+private Counter counter;
+
+@Override
+public void run(String... args) throws Exception {
+    DistributeLock distributeLock = distributeLockManager.getLock("lock_key");
+    int times = CommandLineHelper.getTimes(args, 1000);
+    DLTester dlTester = new DLTester(distributeLock, 3);
+    dlTester.work(times, () -> {
+        int i = counter.get();
+        i++;
+        counter.set(i);
+    });
+
+    dlTester.status();
+    System.out.println("counter value:" + counter.get());
+}
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述代码的逻辑比较简单，即获取一个名称为lock_key的分布式锁，然后循环1000次操作（或由启动参数指定），每次操作都会尝试加锁（等待时间为3秒），然后获取远程Redis服务端counter的值，自增后再写回。如果这个过程不加锁，多个进程同时执行，就会出现数据覆盖，导致计数的错乱。Redis中的counter已经提前初始化为0，我们用3个客户端进行操作，每个客户端循环100次，这三个客户端的输出分别为：
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-redis-client1.png" width="60%">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客户端1输出：获取锁成功200次，失败0次，最终看到counter值为486。
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-redis-client2.png" width="60%">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客户端2输出：获取锁成功192次，失败8次，最终看到counter值为592。
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-redis-client3.png" width="60%">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客户端3输出：获取锁成功200次，失败0次，最终看到counter值为332。
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-redis-server-counter.png" width="70%">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;登录到Redis服务端查看counter最终的值尾592，与客户端2的最后输出一致。可以看到基于Redis的分布式锁工作正常，通过分布式锁将原有不安全的逻辑（获取，自增然后写入）进行了保护，使之能够安全运行于分布式环境。
