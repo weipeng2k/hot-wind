@@ -150,19 +150,19 @@ public void run(String... args) throws Exception {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述代码的逻辑比较简单，即获取一个名称为lock_key的分布式锁，然后循环1000次操作（或由启动参数指定），每次操作都会尝试加锁（等待时间为3秒），然后获取远程Redis服务端counter的值，自增后再写回。如果这个过程不加锁，多个进程同时执行，就会出现数据覆盖，导致计数的错乱。Redis中的counter已经提前初始化为0，我们用3个客户端进行操作，每个客户端循环100次，这三个客户端的输出分别为：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-redis-client1.png" width="60%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-redis-client1.png" width="70%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客户端1输出：获取锁成功200次，失败0次，最终看到counter值为486。
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-redis-client2.png" width="60%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-redis-client2.png" width="70%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客户端2输出：获取锁成功192次，失败8次，最终看到counter值为592。
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-redis-client3.png" width="60%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-redis-client3.png" width="70%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客户端3输出：获取锁成功200次，失败0次，最终看到counter值为332。
@@ -172,3 +172,92 @@ public void run(String... args) throws Exception {
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;登录到Redis服务端查看counter最终的值尾592，与客户端2的最后输出一致。可以看到基于Redis的分布式锁工作正常，通过分布式锁将原有不安全的逻辑（获取，自增然后写入）进行了保护，使之能够安全运行于分布式环境。
+
+## 扩展：分布式锁访问日志
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分布式锁的获取与释放会涉及到网络通信，所以对每次分布式锁的使用最好能够打印出包含关键信息的日志，比如：获取锁的名称与耗时。通过收集和分析日志，一来可以掌握分布式锁的指标，二来可以为出现的问题进行报警，减小故障修复时间。通过扩展SPI中的LockHandler，可以将打印访问日志的特性植入到分布式锁的使用链路中，并且该过程对使用者透明。扩展的代码如下所示：
+
+```java
+import io.github.weipeng2k.distribute.lock.spi.AcquireContext;
+import io.github.weipeng2k.distribute.lock.spi.AcquireResult;
+import io.github.weipeng2k.distribute.lock.spi.ErrorAware;
+import io.github.weipeng2k.distribute.lock.spi.LockHandler;
+import io.github.weipeng2k.distribute.lock.spi.ReleaseContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
+
+import java.util.concurrent.TimeUnit;
+
+/**
+ * <pre>
+ * 日志输出Handler，打印获取锁和释放锁的日志
+ * </pre>
+ *
+ * @author weipeng2k 2021年11月27日 下午20:44:18
+ */
+@Order(1)
+public class AccessLoggingLockHandler implements LockHandler, ErrorAware {
+
+    private static final Logger logger = LoggerFactory.getLogger("DISTRIBUTE_LOCK_ACCESS_LOGGER");
+
+    @Override
+    public AcquireResult acquire(AcquireContext acquireContext, AcquireChain acquireChain) throws InterruptedException {
+        AcquireResult acquireResult = acquireChain.invoke(acquireContext);
+
+        logger.info("acquire|{}|{}|{}|{}", acquireContext.getResourceName(), acquireContext.getResourceValue(),
+                acquireResult.isSuccess(),
+                TimeUnit.MILLISECONDS.convert(System.nanoTime() - acquireContext.getStartNanoTime(),
+                        TimeUnit.NANOSECONDS));
+
+        return acquireResult;
+    }
+
+    @Override
+    public void release(ReleaseContext releaseContext, ReleaseChain releaseChain) {
+        releaseChain.invoke(releaseContext);
+
+        logger.info("release|{}|{}|{}", releaseContext.getResourceName(), releaseContext.getResourceValue(),
+                TimeUnit.MILLISECONDS.convert(System.nanoTime() - releaseContext.getStartNanoTime(),
+                        TimeUnit.NANOSECONDS));
+    }
+
+    @Override
+    public void onAcquireError(AcquireContext acquireContext, Throwable throwable) {
+        logger.error("acquire|{}|{}|{}|{}", acquireContext.getResourceName(), acquireContext.getResourceValue(),
+                false,
+                TimeUnit.MILLISECONDS.convert(System.nanoTime() - acquireContext.getStartNanoTime(),
+                        TimeUnit.NANOSECONDS), throwable);
+    }
+
+    @Override
+    public void onReleaseError(ReleaseContext releaseContext, Throwable throwable) {
+        logger.error("release|{}|{}|{}", releaseContext.getResourceName(), releaseContext.getResourceValue(),
+                TimeUnit.MILLISECONDS.convert(System.nanoTime() - releaseContext.getStartNanoTime(),
+                        TimeUnit.NANOSECONDS), throwable);
+    }
+}
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述代码通过实现LockHandler的acquire和release方法在分布式锁使用链路上打印日志，可以看到acquire方法实现中，在获取锁结果AcquireResult返回后，打印了获取锁的名称、值、获取是否成功的结果以及耗时（单位毫秒）。释放锁的release方法与acquire类似。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;另外AccessLoggingLockHandler实现了ErrorAware，如果在链路中出现异常，导致中断，则框架会在对应的链路（获取或释放）回调onAcquireError或onReleaseError方法。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在应用中除了依赖分布式锁的starter，再依赖扩展插件的坐标就能激活该插件，用户在日志配置中声明分布式锁的日志目录即可，配置如下：
+
+```xml
+<property name="APP_NAME" value="distribute-lock-redis-testsuite"/>
+<property name="LOG_PATH" value="${user.home}/logs/${APP_NAME}"/>
+
+<!--分布式锁日志-->
+<property name="DISTRIBUTE_LOCK_LOG_DIR" value="${LOG_PATH}/distribute-lock" />
+<include resource="io/github/weipeng2k/distribute-lock/distribute-lock-access-log.xml”/>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到声明DISTRIBUTE_LOCK_LOG_DIR属性为分布式锁的日志目录，而日志将会输出在这个目录中，文件名为：distribute-lock-access.log。启动应用，可以看到日志（部分）输出，如下图：
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-redis-access-log.png" width="70%">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，基于Redis的分布式锁获取和释放过程输出日志，其中获取锁的耗时基本在35毫秒左右，释放锁也差不多是这个数量。
