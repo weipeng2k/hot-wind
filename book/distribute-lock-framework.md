@@ -2,35 +2,39 @@
 
 ## 为什么需要分布式锁框架？
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分布式锁的实现方式不同，它相应的性能、可用性和正确性保障以及成本都会有所不同，因此需要提供一种适配多种不同实现方式的技术方案。虽然分布式锁的实现可以有多种，但是都需要有监控、流控以及热点锁访问优化等特性，所以该方案不仅能够提供一致的分布式锁API来适配不同的分布式锁实现方式，还需要具备横向功能扩展的能力。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不同的分布式锁实现（以下简称：**实现**，比如：**Redis**或者**ZooKeeper**），它们之间的性能、可用性和正确性保障以及成本都会有所不同，因此需要提供一种适配多种不同实现方式的分布式锁技术方案（以下简称：**方案**）。虽然分布式锁的实现可以有多种，但是都需要有监控、流控以及热点锁访问优化等特性，所以该方案不仅能够提供给使用者一致的分布式锁**API**，还可以让开发者能够适配不同的分布式锁实现，同时还具备良好的横向功能扩展能力。
 
 <center>
 <img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-framework-page.jpg">
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;既要适配不同的实现方式，又要支持开发者横向扩展，这一纵一横的需求就需要通过设计一个简单的分布式锁框架（以下简称为：框架）来达成了。该框架，不仅能够提供给使用者一致且简洁的API，而且能够快速适配不同的分布式锁实现方案，最关键的还可以提供给开发者以横向拦截扩展能力。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;既要适配不同的实现方式，又要支持横向扩展，这一纵一横的扩展需求就需要通过设计一个简单的分布式锁框架（以下简称：**框架**）来达成了。该框架，不仅能够提供给使用者一致且简洁的API，而且能够快速适配不同的分布式锁实现，最关键的还可以提供给开发者以横向拦截的方式来扩展分布式锁获取与释放链路（以下简称：**链路**）的能力。
 
 ## 分布式锁框架
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这个简单的框架分为两类，共5个模块，一类是面向使用者的客户端和starter，另一类是面向开发者的SPI、实现扩展与插件扩展。如果只是想使用分布式锁，那就只需要依赖框架提供的starter，前提是应用基于springboot构建的。如果想扩展分布式锁的实现以及获取与释放锁的链路，可以通过实现框架提供的SPI以达成目的。框架中的各模块都有各自的分工与作用，它们的关系以及包含的主要组件如下图所示：
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这个[**简单框架**](https://github.com/weipeng2k/distribute-lock)组成分为两类，共5个模块。一类是面向使用者的客户端和*starter*，另一类是面向开发者的**SPI**、实现扩展与插件扩展。如果只是想使用分布式锁，那就只需要依赖框架提供的*starter*，前提是应用基于**springboot**构建的。如果想扩展分布式锁的实现或者链路，可以通过实现框架提供的**SPI**以达成目的。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;框架中各模块包含的主要组件以及相互关系如下图所示：
 
 <center>
 <img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-framework-component.png" width="80%">
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，使用者通过依赖starter来将框架快速的引入到应用，同时使用客户端来完成分布式锁的创建、获取与释放。框架的开发者可以通过依赖扩展SPI中的LockRemoteService来将不同的分布式锁实现（比如：Redis或ZooKeeper）引入到框架中，这些实现会对使用者透明。开发者还可以通过实现SPI中的LockHandler完成对分布式锁获取与释放的链路扩展，扩展实现会以切面的形式嵌入到执行链路中，并且对分布式锁的实现以及使用者透明。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，使用者通过依赖*starter*将框架引入应用，同时使用客户端来完成分布式锁的创建、获取与释放工作。开发者可以通过扩展**SPI**中的*LockRemoteService*来将不同的实现引入到框架中，同时这些实现会对使用者透明。开发者还可以通过实现**SPI**中的*LockHandler*完成对链路的扩展，这些扩展会以切面的形式嵌入到执行链路中，并且对分布式锁的实现以及使用者透明。
 
 ### 分布式锁客户端
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;面向使用者的分布式锁客户端，以工厂模式进行构建，使用者可以通过传入锁名称来获取到分布式锁，并使用之。通过依赖SPI将分布式锁实现同使用者编程界面隔开，其主要类图如下所示：
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;面向使用者的分布式锁客户端，以工厂模式进行构建，使用者可以通过传入锁名称来获取到对应的分布式锁，并使用之。客户端通过依赖**SPI**将分布式锁实现与客户端分离开，其主要类图如下所示：
 
 <center>
 <img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-framework-client-class.png" width="80%">
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客户端模块主要定义了分布式锁的接口以及实现骨架。分布式锁DistributeLock主要提供了两个方法，分别是获取锁的tryLock(long waitTime, TimeUnit unit)和释放锁的unlock()。为什么没有提供类似JUC中的lock()方法呢？如果有的话，客户端调用后，会等待获取锁后才返回，有更好的使用体验。原因是客户端使用分布式锁进行加锁时，实际会在底层会发起网络通信，由于网络通信的不可靠性，一旦发生阻塞，将会导致出现用户期望外的问题，所以明确的在参数中给出获取锁的超时，使用户对于获取锁有更明确的认知。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客户端模块主要定义了分布式锁的接口以及基本实现。分布式锁*DistributeLock*主要定义了两个方法，分别是：获取锁的`tryLock(long waitTime, TimeUnit unit)`和释放锁的`unlock()`。有读者一定会问：为什么没有提供类似**JUC**中的`lock()`方法呢？如果有的话，客户端调用后，会等待获取到锁后才返回，使用起来更加方便。原因是客户端使用分布式锁进行加锁时，实际会在底层会发起网络通信，由于通信的不可靠性，比如：一旦发生阻塞，将会导致长时间的阻塞应用逻辑，这可能未必是用户所期望的。所以明确的在参数中给出获取锁的超时，并要求用户传入，使用户对于获取分布式锁的开销有了更明确的感知。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分布式锁实现DistributeLockImpl会将客户端获取锁（以及释放锁）的调用请求委派给SPI，由SPI中的LockHandler来处理。使用者可以非常简单实用分布式锁，只需要从DistributeLockManager中获取锁，然后就可以进行操作，示例代码如下：
+> 如果要实现类似**JUC**中的`lock()`方法语义，可以通过传入一个较长的等待时间来近似做到。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分布式锁实现*DistributeLockImpl*会将客户端获取锁（以及释放锁）的调用请求委派给**SPI**，由**SPI**中的*LockHandler*来处理。使用者只需要从*DistributeLockManager*中获取锁，然后就可以对锁进行操作，示例代码如下：
 
 ```java
 DistributeLock lock = distributeLockManager.getLock("lock_name");
@@ -43,23 +47,23 @@ if (lock.tryLock(1, TimeUnit.SECONDS)) {
 }
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述代码表示获取一个名为lock_name的分布式锁，然后对其尝试加锁，超时时间为1秒，如果1秒内成功加锁，则执行一段逻辑，并在最后完成解锁。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述代码表示获取一个名为`lock_name`的分布式锁，然后对其尝试加锁，超时时间为`1`秒。如果`1`秒内能够成功加锁，则执行一段逻辑后进行解锁，如果未能在`1`秒内加锁，则直接返回。
 
 ### 分布式锁SPI
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;面向开发者的分布式锁SPI，以责任链模式进行构建，开发者可以扩展不同的分布式锁实现以及拦截分布式锁获取与释放链路。分布式锁SPI是框架扩展的体现，其主要类图如下所示：
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;面向开发者的分布式锁**SPI**，以责任链模式进行构建，开发者可以选择适配不同的实现或者扩展链路。分布式锁**SPI**是框架扩展性的体现，其主要类图如下所示：
 
 <center>
 <img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-framework-spi.png" width="80%">
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SPI模块定义了扩展框架所需的相关接口，包含：面向分布式锁实现的LockRemoteResource和面向链路的LockHandler。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**SPI**模块定义了扩展框架所需的相关接口，包含：支持分布式锁实现适配的*LockRemoteResource*和扩展链路的*LockHandler*。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LockRemoteResource定义了获取锁资源的两个方法，即：tryAcquire和release，前者是在超时时间内对远程锁资源进行获取，并返回获取结果AcquireResult，后者是根据资源名称和资源值对获取的资源进行释放。只要具备资源获取和释放的分布式存储服务，都可以通过扩展LockRemoteResource以分布式锁实现的形式集成到框架中，比如：Redis的String数据类型，具备键值的存取功能，那就可以将键值视作分布式锁资源，键值存储作为资源获取，键值删除作为资源释放，以此将Redis转换为分布式锁实现，从而整合到框架中。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*LockRemoteResource*定义了获取锁资源的两个方法，即：`tryAcquire`和`release`，前者声明在超时时间内对远程锁资源进行获取，并返回获取结果*AcquireResult*，后者声明根据资源名称和值对获取到的资源进行释放。只要具备资源获取和释放的分布式服务，都可以通过适配到*LockRemoteResource*，进而以分布式锁实现的形式集成到框架中。以**Redis**的集成作为一个例子，**Redis**的**String**数据类型，具备键值的存取功能，那就可以将键值视作分布式锁资源，键值新增作为资源获取，键值删除作为资源释放，以此将**Redis**转换为分布式锁实现，从而整合到框架中。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LockHandler定义了获取与释放锁的行为，分别由acquire和release两个方法来实现。针对获取锁这个场景，框架抽象了获取锁上下文AcquireContext，它由框架构建并传递给acquire方法，LockHandler处理获取锁的工作，并返回获取结果AcquireResult。获取结果描述本次获取锁的操作结果，包括：是否获取成功以及获取失败的原因。对于释放锁而言，框架提供了释放锁上下文ReleaseContext，也由框架构建并传递给release方法。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*LockHandler*定义了获取与释放锁的行为，分别由`acquire`和`release`两个方法来实现。框架定义了获取锁上下文*AcquireContext*，它由框架构建并传递给`acquire`方法，*LockHandler*处理获取锁的工作，并返回获取结果*AcquireResult*。获取结果*AcquireResult*主要描述本次获取锁的操作结果，包括：是否获取成功以及获取失败的原因。对于释放锁而言，框架提供了释放锁上下文*ReleaseContext*，也由框架构建并传递给`release`方法。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;多个LockHandler会组成获取与释放锁的链路，开发者可以通过扩展LockHandler，以插件的形式将不同的能力集成到框架中。框架默认提供了头和尾两个LockHandler节点，而开发者（或框架）提供的扩展将会穿在这条链路上，该链路如下图所示：
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;多个*LockHandler*会组成分布式锁获取与释放链路，开发者通过扩展*LockHandler*，将实现以插件的形式集成到框架中。框架默认提供了头和尾两个*LockHandler*节点，而开发者（或框架）提供的扩展将会穿在链路上，该链路如下图所示：
 
 <center>
 <img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-framework-chain.png" width="80%">
@@ -69,34 +73,34 @@ if (lock.tryLock(1, TimeUnit.SECONDS)) {
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;任何节点的增加和删除，对于链路上的其他节点而言都是没有影响的，因此锁获取与释放链路的抽象提供了良好的扩展能力，后面会演示如何通过实现LockHandler来扩展框架。
 
-## 基于Redis的实现
+## 基于**Redis**的实现
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通过扩展LockRemoteResource可以实现分布式锁，接下来以Redis作为锁状态的存储，简单起见，可以通过适配Redisson客户端来进行实现。Redisson客户端版本为：3.16.4，Redis服务端版本为：6.2.6。实现主要代码如下：
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通过扩展LockRemoteResource可以实现分布式锁，接下来以**Redis**作为锁状态的存储，简单起见，可以通过适配**Redis**son客户端来进行实现。**Redis**son客户端版本为：3.16.4，**Redis**服务端版本为：6.2.6。实现主要代码如下：
 
 ```java
 import io.github.weipeng2k.distribute.lock.spi.AcquireResult;
 import io.github.weipeng2k.distribute.lock.spi.LockRemoteResource;
 import io.github.weipeng2k.distribute.lock.spi.support.AcquireResultBuilder;
-import org.redisson.Redisson;
+import org.redisson.**Redis**son;
 import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
+import org.redisson.api.**Redis**sonClient;
 import org.redisson.config.Config;
 import java.util.concurrent.TimeUnit;
 /**
  * <pre>
- * 基于Redis的锁实现
+ * 基于**Redis**的锁实现
  * </pre>
  *
  * @author weipeng2k 2021年11月12日 下午22:53:20
  */
-public class RedissonLockRemoteResource implements LockRemoteResource {
-    private final RedissonClient redisson;
+public class **Redis**sonLockRemoteResource implements LockRemoteResource {
+    private final **Redis**sonClient redisson;
     private final int ownSecond;
-    public RedissonLockRemoteResource(String address, int ownSecond) {
+    public **Redis**sonLockRemoteResource(String address, int ownSecond) {
         Config config = new Config();
         config.useSingleServer()
                 .setAddress(address);
-        redisson = Redisson.create(config);
+        redisson = **Redis**son.create(config);
         this.ownSecond = ownSecond;
     }
     @Override
@@ -121,7 +125,7 @@ public class RedissonLockRemoteResource implements LockRemoteResource {
 }
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述代码的逻辑主要是将Redisson的RLock适配到LockRemoteResource上。适配逻辑整体上比较简单，在tryAcquire方法实现中，通过Redisson客户端获取RLock，然后将请求委派给RLock的tryLock方法。release的适配更加简单，只需要获取到RLock进行解锁即可。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述代码的逻辑主要是将**Redis**son的RLock适配到LockRemoteResource上。适配逻辑整体上比较简单，在tryAcquire方法实现中，通过**Redis**son客户端获取RLock，然后将请求委派给RLock的tryLock方法。release的适配更加简单，只需要获取到RLock进行解锁即可。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分布式锁框架使用起来比较简单，直接依赖distribute-lock-redis-spring-boot-starter即可，该starter会装配一个DistributeLockManager到应用的Spring容器中，使用方式如下所示：
 
@@ -147,7 +151,7 @@ public void run(String... args) throws Exception {
 }
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述代码的逻辑比较简单，即获取一个名称为lock_key的分布式锁，然后循环1000次操作（或由启动参数指定），每次操作都会尝试加锁（等待时间为3秒），然后获取远程Redis服务端counter的值，自增后再写回。如果这个过程不加锁，多个进程同时执行，就会出现数据覆盖，导致计数的错乱。Redis中的counter已经提前初始化为0，我们用3个客户端进行操作，每个客户端循环100次，这三个客户端的输出分别为：
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述代码的逻辑比较简单，即获取一个名称为lock_key的分布式锁，然后循环1000次操作（或由启动参数指定），每次操作都会尝试加锁（等待时间为3秒），然后获取远程**Redis**服务端counter的值，自增后再写回。如果这个过程不加锁，多个进程同时执行，就会出现数据覆盖，导致计数的错乱。**Redis**中的counter已经提前初始化为0，我们用3个客户端进行操作，每个客户端循环100次，这三个客户端的输出分别为：
 
 <center>
 <img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-redis-client1.png" width="70%">
@@ -171,7 +175,7 @@ public void run(String... args) throws Exception {
 <img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-redis-server-counter.png" width="70%">
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;登录到Redis服务端查看counter最终的值尾592，与客户端2的最后输出一致。可以看到基于Redis的分布式锁工作正常，通过分布式锁将原有不安全的逻辑（获取，自增然后写入）进行了保护，使之能够安全运行于分布式环境。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;登录到**Redis**服务端查看counter最终的值尾592，与客户端2的最后输出一致。可以看到基于**Redis**的分布式锁工作正常，通过分布式锁将原有不安全的逻辑（获取，自增然后写入）进行了保护，使之能够安全运行于分布式环境。
 
 ## 扩展：分布式锁访问日志
 
@@ -260,4 +264,4 @@ public class AccessLoggingLockHandler implements LockHandler, ErrorAware {
 <img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-redis-access-log.png" width="70%">
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，基于Redis的分布式锁获取和释放过程输出日志，其中获取锁的耗时基本在35毫秒左右，释放锁也差不多是这个数量。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，基于**Redis**的分布式锁获取和释放过程输出日志，其中获取锁的耗时基本在35毫秒左右，释放锁也差不多是这个数量。
