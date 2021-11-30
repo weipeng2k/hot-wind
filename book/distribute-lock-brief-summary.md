@@ -14,9 +14,9 @@
 
 > [使用Redis实现分布式锁](https://weipeng2k.github.io/hot-wind/book/distribute-lock-with-redis.html)，第一篇，**Salvatore**教大家如何使用使用**Redis**做分布式锁。
 >
-> [如何实现分布式锁](https://weipeng2k.github.io/hot-wind/book/distribute-lock-how-to-do-it.html)，**Martin**怼**Salvatore**的文章，表示你的姿势不对。
+> [如何实现分布式锁](https://weipeng2k.github.io/hot-wind/book/distribute-lock-how-to-do-it.html)，第二篇，**Martin**怼**Salvatore**的文章，表示你的姿势不对。
 >
-> [Redlock能保证锁的正确性吗？](https://weipeng2k.github.io/hot-wind/book/distribute-lock-is-redlock-safe.html)，**Salvatore**回怼的文章，表示你也有问题。
+> [Redlock能保证锁的正确性吗？](https://weipeng2k.github.io/hot-wind/book/distribute-lock-is-redlock-safe.html)，第三篇，**Salvatore**回怼的文章，表示你也有问题。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到，分布式锁实现起来不是那么容易，连大神们都吵起来了。。。不过，我是支持**Martin Kleppmann**的。理想是美好的，但现实总不会完美，因此需要结合自己的场景来实现和使用分布式锁。
 
