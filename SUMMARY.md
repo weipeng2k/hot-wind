@@ -26,6 +26,7 @@
     * [热风-基础Paxos算法笔记(9/9)](book/basic-paxos-9-pages-notes-09.md)
 * [热风-分布式锁](book/distribute-lock-brief-summary.md)
     * [热风-锁是什么？](book/distribute-lock-what-is-lock.md)
+    * [热风-分布式锁是什么？](book/distribute-lock-what-is-distribute-lock.md)
     * [热风-实现分布式锁会遇到的问题](book/distribute-lock-problem.md)
     * [热风-分布式锁框架](book/distribute-lock-framework.md)
     * [热风-自旋式分布式锁](book/distribute-lock-spin-impl.md)

@@ -98,7 +98,7 @@ import org.redisson.config.Config;
 import java.util.concurrent.TimeUnit;
 /**
  * <pre>
- * 基于**Redis**的锁实现
+ * 基于Redis的锁实现
  * </pre>
  *
  * @author weipeng2k 2021年11月12日 下午22:53:20
