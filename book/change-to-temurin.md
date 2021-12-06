@@ -14,9 +14,9 @@
 
 ## 已使用AdoptOpenJDK
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;需要卸载**AdoptOpenJDK**，卸载的方式是通过`brew remove —cask $name`命令来进行卸载，其中`$name`是之前安装的**AdoptOpenJDK**。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;需要卸载**AdoptOpenJDK**，卸载的方式是通过`brew remove --cask $name`命令来进行卸载，其中`$name`是之前安装的**AdoptOpenJDK**。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以**adoptopenjdk8**为例，执行命令：`brew remove —cask adoptopenjdk8`。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以**adoptopenjdk8**为例，执行命令：`brew remove --cask adoptopenjdk8`。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当移除完所有`adoptopenjdk${version}`，就可以对**AdoptOpenJDK**进行`untap`了。
 
@@ -47,9 +47,9 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;笔者安装了**OpenJDK8**、**11**、**17**三个版本，分别需要运行：
 
 ```sh
-brew install — cask temurin8
-brew install — cask temurin11
-brew install — cask temurin // 默认是17
+brew install -- cask temurin8
+brew install -- cask temurin11
+brew install -- cask temurin // 默认是17
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;安装完成后，在`/Library/Java/JavaVirtualMachines/`目录下会出现三个目录：
