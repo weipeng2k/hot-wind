@@ -35,3 +35,4 @@
     * [热风-如何实现分布式锁](book/distribute-lock-how-to-do-it.md)
     * [热风-Redlock能保证锁的正确性吗？](book/distribute-lock-is-redlock-safe.md)
     * [热风-再看分布式锁](book/distribute-lock-another-way.md)
+* [热风-更新到Eclipse Temurin](book/change-to-temurin.md)
