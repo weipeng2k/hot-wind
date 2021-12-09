@@ -85,65 +85,90 @@ if (lock.tryLock(1, TimeUnit.SECONDS)) {
 
 ## 基于**Redis**的实现
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通过实现*LockRemoteResource*可以扩展分布式锁实现，接下来以**Redis**作为锁状态的服务端存储，而客户度选择适配**Redisson**客户端。**Redisson**客户端版本为：`3.16.4`，**Redis**服务端版本为：`6.2.6`。实现主要代码如下：
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;实现*LockRemoteResource*可以扩展分布式锁实现，接下来以**Redis**作为维护锁资源状态的存储服务，客户端选择[**Lettuce**](https://lettuce.io)，它是一个基于**Netty**的**Redis**客户端，它最大的特点是基于非阻塞**I/O**，能够帮助开发者构建响应式应用，可以很好的替代**Jedis**客户端。
+
+> **Lettuce**版本为：`6.1.2.RELEASE`，**Redis**版本为：`6.2.6`。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Redis**的分布式锁实现*RedisLockRemoteResource*会在[拉模式的分布式锁](https://weipeng2k.github.io/hot-wind/book/distribute-lock-spin-impl.html)中详细介绍，现在只需要知道它通过**4**个参数来进行构建，参数名、类型与描述如下表所示：
+
+|参数名|类型|描述|
+|----|----|----|
+|`address`|**String**|**Redis**服务端地址|
+|`ownSecond`|**int**|占据键值的时间（单位：秒）|
+|`minSpinMillis`|**int**|自旋最小时间（单位：毫秒）|
+|`randomMillis`|**int**|自旋随机增加的时间（单位：毫秒）|
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Lettuce**客户端通过`address`与**Redis**建立长链接。在获取锁时，会尝试新增一个键值，如果新增失败，将会选择睡眠一段时间（时长为：`minSpinMillis + new Random().nextInt(randomMillis)`），醒后再试。如果新增成功，则代表实例成功获取到锁，同时该键值的存活时间为`ownSecond`，在存活时间内实例需要执行完同步逻辑，否则就会出现正确性被违反的风险。
+
+### Redis分布式锁Starter
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于分布式锁框架的使用者而言，可能不希望关注这么多细节，只需要提供一个**Redis**服务器地址，然后添加一下依赖和配置就可以跑起来，那就最好不过了。**SpringBoot**提供了良好的扩展与集成能力，只需要提供相应的**starter**，就可以让使用者获得这种极致的使用体验。
+
+> 该**starter**在子项目*distribute-lock-redis-spring-boot-starter*中。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Redis**分布式锁的**starter**主要包含了一个**Spring**配置，其主要代码如下所示：
 
 ```java
-import io.github.weipeng2k.distribute.lock.spi.AcquireResult;
-import io.github.weipeng2k.distribute.lock.spi.LockRemoteResource;
-import io.github.weipeng2k.distribute.lock.spi.support.AcquireResultBuilder;
-import org.redisson.Redisson;
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
-import org.redisson.config.Config;
-import java.util.concurrent.TimeUnit;
-/**
- * <pre>
- * 基于Redis的锁实现
- * </pre>
- *
- * @author weipeng2k 2021年11月12日 下午22:53:20
- */
-public class RedissonLockRemoteResource implements LockRemoteResource {
-    private final RedissonClient redisson;
-    private final int ownSecond;
-    public RedissonLockRemoteResource(String address, int ownSecond) {
-        Config config = new Config();
-        config.useSingleServer()
-                .setAddress(address);
-        redisson = **Redis**son.create(config);
-        this.ownSecond = ownSecond;
+@Configuration
+@ConditionalOnProperty(prefix = Constants.PREFIX, name = "address")
+@ConditionalOnClass(RedisLockRemoteResource.class)
+@EnableConfigurationProperties(RedisProperties.class)
+@Import(CommonConfig.class)
+public class DistributeLockRedisAutoConfiguration implements EnvironmentAware {
+
+    private Environment environment;
+
+    @Bean("redisLockRemoteResource")
+    public LockRemoteResource lockRemoteResource() {
+        Binder binder = Binder.get(environment);
+        BindResult<RedisProperties> bindResult = binder.bind(Constants.PREFIX,
+                Bindable.of(RedisProperties.class));
+        RedisProperties redisProperties = bindResult.get();
+
+        return new RedisLockRemoteResource(redisProperties.getAddress(), redisProperties.getOwnSecond(),
+                redisProperties.getMinSpinMillis(), redisProperties.getRandomMillis());
+    }
+
+    @Bean("redisLockHandlerFactory")
+    public LockHandlerFactory lockHandlerFactory(@Qualifier("lockHandlerFinder") LockHandlerFinder lockHandlerFinder,
+                                                 @Qualifier("redisLockRemoteResource") LockRemoteResource lockRemoteResource) {
+        return new LockHandlerFactoryImpl(lockHandlerFinder.getLockHandlers(), lockRemoteResource);
+    }
+
+    @Bean("redisDistributeLockManager")
+    public DistributeLockManager distributeLockManager(
+            @Qualifier("redisLockHandlerFactory") LockHandlerFactory lockHandlerFactory) {
+        return new DistributeLockManagerImpl(lockHandlerFactory);
     }
 
     @Override
-    public AcquireResult tryAcquire(String resourceName, String resourceValue, long waitTime,
-                                    TimeUnit timeUnit) throws InterruptedException {
-        RLock lock = redisson.getLock(resourceName);
-        Integer liveSecond = OwnSecond.getLiveSecond();
-        long ownTime = timeUnit.convert(liveSecond != null ? liveSecond : ownSecond, TimeUnit.SECONDS);
-        AcquireResultBuilder acquireResultBuilder;
-        boolean ret = lock.tryLock(waitTime, ownTime, timeUnit);
-        acquireResultBuilder = new AcquireResultBuilder(ret);
-        if (!ret) {
-            acquireResultBuilder.failureType(AcquireResult.FailureType.TIME_OUT);
-        }
-        return acquireResultBuilder.build();
-    }
-
-    @Override
-    public void release(String resourceName, String resourceValue) {
-        RLock lock = redisson.getLock(resourceName);
-        lock.unlock();
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
     }
 }
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述代码的逻辑主要是将**Redisson**的*RLock*适配到*LockRemoteResource*上。适配逻辑比较简单，在`tryAcquire`方法中，通过**Redisson**客户端获取*RLock*，然后将获取锁的请求委派给*RLock*的`tryLock`方法即可。`release`方法的适配只需要获取到*RLock*进行解锁即可。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由于在`META-INF/spring.factories`配置中声明了*DistributeLockRedisAutoConfiguration*，所以**Spring**容器能够扫描并识别**Redis**分布式锁的配置，并装配三个**Bean**到使用者的**Spring**容器中，如下表所示：
+
+|BeanName|类型|描述|
+|----|----|----|
+|`redisLockRemoteResource`|*LockRemoteResource*|从当前应用的环境中解析配置，装配一个类型为分布式锁实现的**Bean**|
+|`redisLockHandlerFactory`|*LockHandlerFactory*|依赖`redisLockRemoteResource`，装配一个类型为*LockHandlerFactory*的**Bean**，目的是提供给分布式锁**API**获取*LockHandler*的能力|
+|`redisDistributeLockManager`|*DistributeLockManager*|使用者直接依赖该**Bean**，提供分布式锁获取与使用的功能|
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由于配置被**ConditionalOnProperty**注解修饰，使用者除了依赖该**starter**，还需要在`application.properties`中声明键为`spring.distribute-lock.redis.address`的配置，如果没有声明该配置，该**starter**就不会装配上述三个**Bean**到容器中。
+
+> **Constants**定义了常量`PREFIX`，值为：`spring.distribute-lock.redis`
+
+### 使用分布式锁框架
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该框架使用起来比较简单，通过依赖*distribute-lock-redis-spring-boot-starter*，然后在`application.properties`中如下配置：
 
 ```sh
 spring.distribute-lock.redis.address=redis服务端地址，比如：redis://ip:port
-spring.distribute-lock.redis.own-second=可选，表示键值的过期时间，单位：秒
+spring.distribute-lock.redis.own-second=可选，默认10，表示键值的过期时间，单位：秒
+spring.distribute-lock.redis.min-spin-millis=可选，默认10，表示自旋等待的最小时间，单位：毫秒
+spring.distribute-lock.redis.random-millis=可选，默认10，表示自旋等待随机增加的时间，单位：毫秒
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;依赖坐标并声明配置后，该*starter*会装配一个*DistributeLockManager*到应用的**Spring**容器中，使用示例如下所示：

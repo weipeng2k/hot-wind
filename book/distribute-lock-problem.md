@@ -107,12 +107,12 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;因此，可以通过降低**存储服务**的规格来节省成本，而尽可能的不做共享使用，除非是很明显的边缘业务。建议以技术的产品线作为划分依据，不同产品线之间不共用**存储服务**，如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-store-service-maintain.png" width="90%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-store-service-maintain.png" width="60%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，不同的业务线会使用自己的**存储服务**，这样就可以根据实际需求来裁剪（或定制）它的规格。举个例子，商品产品线维护了库存服务，使用商品**ID**作为分布式锁名称，单日交易商品的种数并不多（假定是`50`万），由于单个键值不会超过`1/4KB`，理论`128MB`左右的内存空间就足够存储单日使用的分布式锁**资源状态**。因此，考虑一些**Buffer**，商品产品线可以将**Redis**的规格设置在`1GB`内存，采用主从集群模式部署。
 
-> 单个键值（也就是一行资源状态，键和值的长度都在`64`以内）理论不超过`256byte`，`500000 * (1/4) / 1024 = 122MB`
+> 单个键值（也就是一行资源状态，键和值的长度都在`64`以内）理论不超过`256byte`，`500000 * (1/4)KB / 1024 = 122MB`
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;虽然不同的业务线使用相互独立的**存储服务**，但是在代码层面需要使用同一套技术。通过分布式锁框架统一所有的使用方，除了复用率和维护性的提升以外，还可以通过统一的运维系统对数据进行观测，并定义形式统一的监控与报警策略，获得长效收益。
 
