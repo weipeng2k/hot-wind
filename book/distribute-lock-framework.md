@@ -83,7 +83,7 @@ if (lock.tryLock(1, TimeUnit.SECONDS)) {
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;任何节点的增加和删除，对于链路上的其他节点而言都是没有影响的，因此锁获取与释放链路的抽象提供了良好的扩展能力，后面会演示如何通过实现*LockHandler*来扩展框架。
 
-## 基于**Redis**的实现
+## 实现：基于**Redis**的分布式锁
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;实现*LockRemoteResource*可以扩展分布式锁实现，接下来以**Redis**作为维护锁资源状态的存储服务，客户端选择[**Lettuce**](https://lettuce.io)，它是一个基于**Netty**的**Redis**客户端，它最大的特点是基于非阻塞**I/O**，能够帮助开发者构建响应式应用，可以很好的替代**Jedis**客户端。
 
