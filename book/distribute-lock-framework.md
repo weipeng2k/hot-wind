@@ -89,11 +89,12 @@ if (lock.tryLock(1, TimeUnit.SECONDS)) {
 
 > **Lettuce**版本为：`6.1.2.RELEASE`，**Redis**版本为：`6.2.6`。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Redis**的分布式锁实现*RedisLockRemoteResource*会在[拉模式的分布式锁](https://weipeng2k.github.io/hot-wind/book/distribute-lock-spin-impl.html)中详细介绍，现在只需要知道它通过**4**个参数来进行构建，参数名、类型与描述如下表所示：
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Redis**的分布式锁实现*RedisLockRemoteResource*会在[拉模式的分布式锁](https://weipeng2k.github.io/hot-wind/book/distribute-lock-spin-impl.html)中详细介绍，现在只需要知道它通过**5**个参数来进行构建，参数名、类型与描述如下表所示：
 
 |参数名|类型|描述|
 |----|----|----|
 |`address`|**String**|**Redis**服务端地址|
+|`timeoutMillis`|**int**|访问**Redis**的超时（单位：毫秒）|
 |`ownSecond`|**int**|占据键值的时间（单位：秒）|
 |`minSpinMillis`|**int**|自旋最小时间（单位：毫秒）|
 |`randomMillis`|**int**|自旋随机增加的时间（单位：毫秒）|
