@@ -123,7 +123,7 @@ public AcquireResult tryAcquire(String resourceName, String resourceValue, long 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;释放锁可以通过资源名称*RN*和资源值*RV*删除对应的资源状态即可，但该过程必须是原子化的。如果是先根据*RN*查出资源状态，再比对*RV*与资源状态中的值是否一样，最后使用`del`命令删除对应键值，这样的两步走会导致锁有被误释放的可能，该过程如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-redis-lock-release-problem" width="70%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-redis-lock-release-problem.png" width="70%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，**客户端A**在锁的有效期（也就是占用时长）快结束时调用了`unlock()`方法。如果采用两步走逻辑，在使用`del`命令删除键值前，锁由于超时时间到而自动释放，此时**客户端B**成功获取到了锁，并开始执行**同步逻辑**。**客户端A**由于（旧）值比对通过，使用`del`命令删除了**资源状态**对应的键值，这时运行在**客户端B**上的**同步逻辑**就不会再受到锁的保护，因为其他实例可以获取到锁并执行。
