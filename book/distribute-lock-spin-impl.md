@@ -23,19 +23,140 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果调用新增接口返回失败，这代表实例没有获取到锁，此时客户端需要不断的循环尝试新增直至成功，以此来满足实例获取锁的诉求。如果退出循环的条件只是新增**资源状态**成功，由于调用**存储服务**需要通过网络，稍有不慎会导致实例陷入长时间阻塞。因此，循环退出的条件还包括获取锁的超时时间到，每次新增**资源状态**失败可以睡眠一段时间，避免对**存储服务**产生过多无效请求。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当释放锁时，实例通过传入锁的资源名称*RN*和值*RV*来删除**资源状态**。**存储服务**的删除接口需要具备`compareAndDelete`语义，只有**资源状态**中的值与*RV*相同才能够删除，这样就使得只有获取到锁的实例才能够执行成功，并且多次执行删除操作也是无副作用的。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当释放锁时，实例通过传入锁的资源名称*RN*和值*RV*来删除**资源状态**。**存储服务**的删除接口需要具备`compareAndDelete`（以下简称：**CAD**）语义，只有**资源状态**中的值与*RV*相同才能够删除，这样就使得只有获取到锁的实例才能够执行成功，并且多次执行删除操作也是无副作用的。
 
 ## 需要注意的点
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;拉模式的流程看起来是很简单的，实例通过客户端去获取锁，如果无法在**存储服务**中新增**资源状态**，就进行重试，要么超时返回，要么获取到锁。通过一个循环以及少量的时间运算与判断，通过几行代码就可以实现上述逻辑了。如果从能用的角度去看，就是这么简单，但想用的安心，就需要多考虑一点了。拉模式获取锁的主要步骤包括：访问**存储服务**（调用其新增接口）、时间运算与判断以及睡眠，其中访问**存储服务**和睡眠对实例获取锁有实际影响，接下来分析它们各自需要被关注的点。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;访问**存储服务**需要注意的点包括：请求的**I/O**超时、访问**存储服务**耗时和过期时长设置。首先，请求需要有**I/O**超时，举个例子：我们经常使用**HttpClient**去请求**Web**服务来获取数据，如果**Web**服务很慢或者网络延迟很高，调用线程就会被挂在那里很久。这个问题和访问**存储服务**一样，为了避免客户端陷入未知时长的等待，对**存储服务**的请求需要设置**I/O**超时。其次，访问**存储服务**耗时越短越好，如果访问耗时很低，会提升客户端的响应性，当然不同的**存储服务**访问耗时也会不一样，基于**Redis**的分布式锁在访问耗时上就优于数据库分布式锁。最后，过期时长支持定制，新增**资源状态**时会设置过期时长，一般来说这个时长会结合同步逻辑的最大耗时来考虑，是个固定值，比如：`10`秒。获取锁时，实例其实可以根据当前的上下文估算出可能的耗时，比如：发现**同步逻辑**中处理的列表数据包含的元素数量比平均数高一倍，如果此时能够适当增加对应的过期时长，会是一个好的选择。这就需要分布式锁框架提供**API**，能够支持实例设置过期时长，通过设置一个更大的值，就能有效减少由于过期自动释放锁而导致的正确性问题。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;访问**存储服务**需要注意的点包括：请求的**I/O**超时、访问**存储服务**耗时和过期时长设置。首先，请求需要有**I/O**超时，举个例子：我们经常使用**HttpClient**去请求**Web**服务来获取数据，如果**Web**服务很慢或者网络延迟很高，调用线程就会被挂在那里很久。访问**存储服务**和这个问题一样，为了避免客户端陷入未知时长的等待，对**存储服务**的请求需要设置**I/O**超时。其次，访问**存储服务**耗时越短越好，如果访问耗时很低，会提升客户端的响应性，当然不同的**存储服务**访问耗时也会不一样，基于**Redis**的分布式锁在访问耗时上就优于数据库分布式锁。最后，过期时长支持定制，新增**资源状态**时会设置过期时长，一般来说这个时长会结合同步逻辑的最大耗时来考虑，是个固定值，比如：`10`秒。获取锁时，实例其实可以根据当前的上下文估算出可能的耗时，比如：发现**同步逻辑**中处理的列表数据包含的元素数量比平均数高一倍，如果此时能够适当增加对应的过期时长，会是一个好的选择。这就需要分布式锁框架提供**API**，能够支持实例设置过期时长，通过设置一个更大的值，就能有效减少由于过期自动释放锁而导致的正确性问题。
 
 > 过期时长的设置只会影响到本次获取的锁，是基于请求的，不是全局性的。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;睡眠需要关注对**存储服务**产生的压力。对于睡眠而言，简单的做法是固定一个时长，比如：一旦客户端新增**资源状态**失败，就睡眠`15`毫秒。如果某个锁资源在多个实例之间有激烈的竞争，这种方式会使得未获取到锁的实例在一个较小的时间范围内同时醒来，并发起对**存储服务**的重试，无形中增加了**存储服务**的瞬时压力。如果实例中又以多线程并发的方式获取锁，会导致这个问题变得更糟，解决方式就是引入随机。可以通过指定最小睡眠时长*min*和随机睡眠时长*random*来计算本次应该睡眠的时长，每次睡眠时长不固定，只是在`[min, min + random)`内随机取值。通过随机睡眠会使重试变得离散，一定程度上减轻了对**存储服务**的压力。
 
 ## **Redis**分布式锁实现
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通过实现*LockRemoteResource*接口，可以将**存储服务**适配成为分布式锁实现，并集成到框架中。**Redis**能够满足分布式锁对**存储服务**的诉求，综合考虑性能和成本，它非常适合作为拉模式的分布式锁实现。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在分布式锁框架中，介绍了**Redis**分布式锁实现（*RedisLockRemoteResource*）的构造函数以及其涉及的参数变量，接下来从获取和释放锁两个方面来介绍实现内容。
+
+### Redis分布式锁的获取
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Redis**作为**存储服务**的新增接口，需要使用类似命令：`SET $RN $RV NX PX $D`。该命令通过**NX**选项，确保只有在键（也就是`$RN`）不存在的情况下才能设置（添加），同时**PX**选项表示该键将会在`$D`毫秒后过期，而值`$RV`需要做到所有客户端唯一。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用**Lettuce**客户端，上述操作的代码如下所示：
+
+```java
+private boolean lockRemoteResource(String resourceName, String resourceValue, int ownSecond) {
+    SetArgs setArgs = SetArgs.Builder.nx().ex(ownSecond);
+    boolean result = false;
+    try {
+        String ret = syncCommands.set(resourceName, resourceValue, setArgs);
+        // 返回是OK，则锁定成功，否则锁定资源失败
+        if ("ok".equalsIgnoreCase(ret)) {
+            result = true;
+        }
+    } catch (Exception ex) {
+        throw new RuntimeException("set key:" + resourceName + " got exception.", ex);
+    }
+
+    return result;
+}
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述方法提供了基于**Redis**的`addIfAbsent`语义，且支持过期时长的一并设置。参数**SetArgs**使用构建者模式创建，`syncCommands`是**Lettuce**提供的**RedisCommands**接口，由于当前逻辑需要同步获得设置的结果，所以采用同步模式。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;获取锁的方法，代码如下所示：
+
+```java
+public AcquireResult tryAcquire(String resourceName, String resourceValue, long waitTime,
+                                TimeUnit timeUnit) throws InterruptedException {
+    // 目标最大超时时间
+    long destinationNanoTime = System.nanoTime() + timeUnit.toNanos(waitTime);
+    boolean result = false;
+    boolean isTimeout = false;
+
+    Integer liveSecond = OwnSecond.getLiveSecond();
+    int ownTime = liveSecond != null ? liveSecond : ownSecond;
+
+    AcquireResultBuilder acquireResultBuilder;
+
+    try {
+        while (true) {
+            // 当前系统时间
+            long current = System.nanoTime();
+            // 时间限度外，直接退出
+            if (current > destinationNanoTime) {
+                isTimeout = true;
+                break;
+            }
+            // 远程获取到资源后，返回；否则，spin
+            if (lockRemoteResource(resourceName, resourceValue, ownTime)) {
+                result = true;
+                break;
+            } else {
+                spin();
+            }
+        }
+        acquireResultBuilder = new AcquireResultBuilder(result);
+        if (isTimeout) {
+            acquireResultBuilder.failureType(AcquireResult.FailureType.TIME_OUT);
+        }
+    } catch (Exception ex) {
+        acquireResultBuilder = new AcquireResultBuilder(result);
+        acquireResultBuilder
+                .failureType(AcquireResult.FailureType.EXCEPTION)
+                .exception(ex);
+    }
+
+    return acquireResultBuilder.build();
+}
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述方法，首先将获取锁的超时时间单位统一到纳秒，由超时时长`waitTime`计算出最大的超时时间`destinationNanoTime`。在接下来的自旋中，如果当前系统时间`current`大于`destinationNanoTime`就会超时返回。如果调用**存储服务**返回新增失败，则会执行`spin()`方法进行睡眠，而睡眠的时长为：`ThreadLocalRandom.current().nextInt(randomMillis) + minSpinMillis`，它会在一个时间范围内进行随机，以此避免对**存储服务**产生无谓的瞬时压力。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以通过*OwnSecond*工具对**资源状态**的占用时长（也就是**Redis**键值的过期时间）进行自定义设置。如果需要更改本次调用对于锁的占用时长，可以在调用锁的`tryLock()`方法之前，执行`OwnSencond.setLiveSecond(int second)`方法，该工具依靠**ThreadLocal**将实例设置的占用时长传递给框架。
+
+### Redis分布式锁的释放
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;释放锁可以通过资源名称*RN*和资源值*RV*删除对应的资源状态即可，但该过程必须是原子化的。如果是先根据*RN*查出资源状态，再比对*RV*与资源状态中的值是否一样，最后使用`del`命令删除对应键值，这样的两步走会导致锁有被误释放的可能，该过程如下图所示：
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-redis-lock-release-problem" width="70%">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，**客户端A**在锁的有效期（也就是占用时长）快结束时调用了`unlock()`方法。如果采用两步走逻辑，在使用`del`命令删除键值前，锁由于超时时间到而自动释放，此时**客户端B**成功获取到了锁，并开始执行**同步逻辑**。**客户端A**由于（旧）值比对通过，使用`del`命令删除了**资源状态**对应的键值，这时运行在**客户端B**上的**同步逻辑**就不会再受到锁的保护，因为其他实例可以获取到锁并执行。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Redis**可以通过**Lua**脚本做到原子化**CAD**的支持，脚本如下：
+
+```lua
+if redis.call("get", KEYS[1]) == ARGV[1] then
+    return redis.call("del", KEYS[1])
+else
+    return 0
+end
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到其实就是两步走逻辑的**Lua**版本，只是**Redis**对于**Lua**脚本的执行是确保原子性的。
+
+> 如果使用阿里云的**RDB**缓存服务，可以使用其`cad`扩展命令，不使用上述脚本。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;释放锁的方法，代码如下所示：
+
+```java
+public void release(String resourceName, String resourceValue) {
+    try {
+        syncCommands.eval(
+                "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end",
+                ScriptOutputType.INTEGER, new String[]{resourceName}, resourceValue);
+    } catch (Exception ex) {
+        // Ignore.
+    }
+}
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述方法通过调用**RedisCommands**的`eval()`方法执行**CAD**脚本来安全的删除**资源状态**来完成锁的释放。
 
 ## **Redis**分布式锁存在的问题
 
@@ -74,3 +195,22 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**客户端B**在锁超时后获取到了锁，然后开始执行同步逻辑，**客户端A**由于**GC**结束而恢复执行，此时原本被锁保护的同步逻辑出现了并发执行，锁的正确性被违反。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到虽然**Redlock**算法通过基于法定人数的设计，在理论上确保了正确性和可用性，但是在真实的分布式环境中，会出现正确性无法确保的问题。有同学会问，如果使用没有**GC**特性的编程语言来开发应用，是不是就可以避免由于**GC**导致**Redlock**正确性无法确保的问题。实际上除了**GC**导致进程暂停，如果同步逻辑中有网络交互，也可能由于**TCP**重传等问题导致逻辑实际的执行时间超出了锁的有效期，进而导致两个客户端又有可能并发的执行同步逻辑。这个问题的本质在于基于**Redis**实现的分布式锁，对于锁的释放存在超时时间的假设，虽然避免了死锁，但是会导致锁超时（释放）的一刻，两个客户端同时有进行操作的可能，这点在理论模型上是能够说的通的，毕竟释放锁的不是锁的持有者，而是锁自己。
+
+
+info commandstats
+
+Redis:SET
+3 -> 100 4c
+before: cmdstat_set:calls=96286,usec=388741,usec_per_call=4.04,rejected_calls=0,failed_calls=1
+after:  cmdstat_set:calls=119404,usec=442786,usec_per_call=3.71,rejected_calls=0,failed_calls=1
+
+23118 次
+1099 成功 101 失败
+
+Redis with lh:SET
+3 -> 100 4c
+before: cmdstat_set:calls=119406,usec=442802,usec_per_call=3.71,rejected_calls=0,failed_calls=1
+after:  cmdstat_set:calls=126789,usec=472795,usec_per_call=3.73,rejected_calls=0,failed_calls=1
+
+7383次
+1147 成功 53 失败
