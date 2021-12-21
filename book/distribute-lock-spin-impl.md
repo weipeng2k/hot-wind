@@ -1,5 +1,11 @@
 # 拉模式的分布式锁
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;拉模式的分布式锁，需要实例（通过客户端）以自旋的形式，主动去调用**存储服务**，根据调用结果来判断是否获取到了锁。
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-pull-mode.jng">
+</center>
+
 ## 什么是拉模式？
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;拉模式的分布式锁，需要实例（通过客户端）以自旋的形式，主动去调用**存储服务**，根据调用结果来判断是否获取到了锁。调用的逻辑为：是否能够在存储服务中新增锁对应的**资源状态**（或一行记录），**资源状态**需要包含能够代表获取锁的实例（或线程）标识，并且该标识能够确保全局唯一，不同获取锁的实例标识各不相同。获取拉模式分布式锁的流程如下图所示：
