@@ -204,21 +204,130 @@ public void release(String resourceName, String resourceValue) {
 
 ## 扩展：本地热点锁
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;拉模式分布式锁需要依靠不断的对**存储服务**进行自旋调用，来判断是否能够获取到锁，因此会产生大量的无效调用，平添了**存储服务**的压力。对于分布式锁而言，竞争的最小单位不是进程，而是线程，由于实际情况中的（应用）实例都是以多线程模式运行的，导致竞争会更加激烈。
 
-info commandstats
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在激烈的竞争中，如果遇到热点锁，情况会变得更糟。比如：使用商品ID作为锁的资源名称，对于爆款商品而言，多机多线程就会给**存储服务**带来巨大的压力，该问题如下图所示：
 
-Redis:SET
-3 -> 100 4c
-before: cmdstat_set:calls=96286,usec=388741,usec_per_call=4.04,rejected_calls=0,failed_calls=1
-after:  cmdstat_set:calls=119404,usec=442786,usec_per_call=3.71,rejected_calls=0,failed_calls=1
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-pull-mode-process-thread-problem.png">
+</center>
 
-23118 次
-1099 成功 101 失败
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，实例内通过多线程并发的方式获取锁。在单个实例内，假设获取商品锁的并发度是**10**，那么两个实例就能够给**存储服务**带来**20**个并发的调用。以线程的角度来看这**20**个并发，是合理的，虽然每次请求绝大部分都是无功而返（没有获取到锁），但是这都是为了保证锁的正确性，纵使再高的并发，也只能通过不断的扩容**存储服务**来抵消增长的压力。
 
-Redis with lh:SET
-3 -> 100 4c
-before: cmdstat_set:calls=119406,usec=442802,usec_per_call=3.71,rejected_calls=0,failed_calls=1
-after:  cmdstat_set:calls=126789,usec=472795,usec_per_call=3.73,rejected_calls=0,failed_calls=1
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以想象，**存储服务**上处理的请求，基本全都是无效的，不断的扩容**存储服务**显得不现实，是否有其他方法可以优化这个过程呢？答案就是通过本地热点锁来解决。通过使用（单机）本地锁可以有效的降低对**存储服务**产生的压力，该过程如下图所示：
 
-7383次
-1147 成功 53 失败
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-pull-mode-local-hotspot.png">
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，实例中的多线程应该先尝试竞争本地（基于**JUC**的单机）锁，成功获取到本地锁的线程才能参与到实例间的分布式锁竞争。从实例的角度去看，如果都是获取同一个分布式锁，在同一时刻只能由一个实例中的一个线程获取到锁，因此理论上对**存储服务**的并发上限只需要和实例数一致，也就是**2**个并发就可以了。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以通过在分布式锁前端增加一个本地锁就能得以实现，但事实上并没有这么容易，因为实例中的多线程需要使用同一把本地锁才会有意义，所以需要有一个**Map**结构来保存锁资源名称到本地锁的映射。如果对该结构管理不当，对任意分布式锁的访问都会创建并保有本地锁，那就会使实例有**OOM**的风险。一个比较现实的做法就是针对某些热点锁进行优化，只创建热点锁对应的本地锁来有效减少对***存储服务**产生的压力。
+
+> 在实际工作场景中，可以根据生产数据发现实际的热点数据，比如：爆款商品ID或热卖商家ID等，将其提前（或动态）设置到分布式锁框架中，通过将分布式锁“本地化”，来优化这个过程。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由于本地锁的获取是在分布式锁之前，通过扩展分布式锁框架的*LockHandler*就可以很好的支持这一特性，对应的*LockHandler*扩展（的部分）代码如下：
+
+```java
+package io.github.weipeng2k.distribute.lock.plugin.local.hotspot;
+
+import io.github.weipeng2k.distribute.lock.spi.AcquireContext;
+import io.github.weipeng2k.distribute.lock.spi.AcquireResult;
+import io.github.weipeng2k.distribute.lock.spi.ErrorAware;
+import io.github.weipeng2k.distribute.lock.spi.LockHandler;
+import io.github.weipeng2k.distribute.lock.spi.ReleaseContext;
+import io.github.weipeng2k.distribute.lock.spi.support.AcquireResultBuilder;
+import org.springframework.core.annotation.Order;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+
+/**
+ * <pre>
+ * 本地热点锁LocalHandler
+ *
+ * 获取锁时，会先获取本地的锁，然后尝试获取后面的锁
+ *      如果后面的锁获取成功，则返回
+ *      如果后面的锁获取失败，则需要解锁
+ *
+ * 释放锁时，会先释放后面的锁，然后尝试释放当前的锁，不要抛出错误即可
+ *
+ * </pre>
+ *
+ * @author weipeng2k 2021年12月14日 下午18:43:29
+ */
+@Order(10)
+public class LocalHotSpotLockHandler implements LockHandler, ErrorAware {
+
+    private final LocalHotSpotLockRepo localHotSpotLockRepo;
+
+    public LocalHotSpotLockHandler(LocalHotSpotLockRepo localHotSpotLockRepo) {
+        this.localHotSpotLockRepo = localHotSpotLockRepo;
+    }
+
+    @Override
+    public AcquireResult acquire(AcquireContext acquireContext, AcquireChain acquireChain) throws InterruptedException {
+        AcquireResult acquireResult;
+        Lock lock = localHotSpotLockRepo.getLock(acquireContext.getResourceName());
+        if (lock != null) {
+            // 先获取本地锁
+            if (lock.tryLock(acquireContext.getRemainingNanoTime(), TimeUnit.NANOSECONDS)) {
+                acquireResult = acquireChain.invoke(acquireContext);
+                // 没有获取到后面的锁，则进行解锁
+                if (!acquireResult.isSuccess()) {
+                    unlockQuietly(lock);
+                }
+            } else {
+                AcquireResultBuilder acquireResultBuilder = new AcquireResultBuilder(false);
+                acquireResult = acquireResultBuilder.failureType(AcquireResult.FailureType.TIME_OUT)
+                        .build();
+            }
+        } else {
+            acquireResult = acquireChain.invoke(acquireContext);
+        }
+        return acquireResult;
+    }
+
+    @Override
+    public void release(ReleaseContext releaseContext, ReleaseChain releaseChain) {
+        releaseChain.invoke(releaseContext);
+        Lock lock = localHotSpotLockRepo.getLock(releaseContext.getResourceName());
+        if (lock != null) {
+            unlockQuietly(lock);
+        }
+    }
+    
+    private void unlockQuietly(Lock lock) {
+        try {
+            lock.unlock();
+        } catch (Exception ex) {
+            // Ignore.
+        }
+    }
+}
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到，本地热点锁都存储在*LocalHotSpotLockRepo*中，由使用者进行设置。通过*DistributeLock*获取锁时，框架会先从*LocalHotSpotLockRepo*中查找本地锁，如果没有找到，则执行后续的*LockHandler*，反之，会尝试获取本地锁。需要注意的是，成功获取到本地锁后，如果接下来没有获取到分布式锁，就需要释放当前的本地锁，避免阻塞其他线程获取分布式锁的行为。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于释放锁而言，需要在`releaseChain.invoke(releaseContext);`语句之后释放本地锁，也就是在分布式锁（的**存储服务**）被释放后，再释放本地锁。如果释放顺序反过来，提前释放了本地锁，会使得被（释放本地锁而）唤醒的线程立刻向**存储服务**发起无效请求。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述功能以插件的形式提供给使用者，只需要依赖如下坐标就可以激活使用：
+
+```xml
+<dependency>
+    <groupId>io.github.weipeng2k</groupId>
+    <artifactId>distribute-lock-local-hotspot-plugin</artifactId>
+</dependency>
+```
+
+> 该插件会在应用的**Spring**容器中注入*LocalHotSpotLockRepo*，通过调用它的`createLock(String resourceName)`方法完成本地锁的创建。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;接下来通过两个测试用例：*distribute-lock-redis-testsuite*和*distribute-lock-redis-local-hotspot-testsuite*来展示本地热点锁的优化效果。考察的指标是通过执行**Redis**提供的`info commandstats`来查看**SET**命令执行的数量来进行判定的，因为获取分布式锁就是依靠**SET**命令。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;两个测试用例都会运行**3**个实例，分两个批次执行，获取的分布式锁名称都是`lock_key`。每个实例都会以**4**个并发获取分布式锁，尝试获取**400**次，数据对比如下表所示：
+
+|用例|执行前**SET**命令数量|执行后**SET**命令数量|获取锁成功数量|获取锁失败数量|对**Redis**的**SET**请求数量|
+|---|---|---|---|---|---|
+|**Redis**锁测试集|183168|204413|1099|101|21245|
+|**Redis**锁测试集（包含本地热点锁插件）|204413|210518|1147|53|6105|
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上表所示，可以看到本地热点锁插件能够显著的降低热点锁对**存储服务**的请求，有**70%**的无效请求被该插件所阻挡。随着对**Redis**请求量的下降，分布式锁获取成功率也随之上升。
