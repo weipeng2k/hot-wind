@@ -3,7 +3,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;拉模式的分布式锁，需要实例（通过客户端）以自旋的形式，主动去调用**存储服务**，根据调用结果来判断是否获取到了锁。
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-pull-mode.jng">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-pull-mode.jpg">
 </center>
 
 ## 什么是拉模式？
