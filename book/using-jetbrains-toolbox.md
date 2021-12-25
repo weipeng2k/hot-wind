@@ -8,7 +8,7 @@
 <img src="https://weipeng2k.github.io/hot-wind/resources/using-jetbrains-toolbox/toolbox-app.png" width="70%" />
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;安装好后，就可以打开**Toolbox**，可以看到旧有通过安装器直接安装的IDE，比如：IDEA，如下图所示：
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;安装好后，就可以打开**Toolbox**，可以看到旧有通过安装器直接安装的**IDE**，比如：**IDEA**，如下图所示：
 
 <center>
 <img src="https://weipeng2k.github.io/hot-wind/resources/using-jetbrains-toolbox/delete-manual-app.png" width="70%" />
