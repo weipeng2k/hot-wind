@@ -215,7 +215,7 @@ public void release(String resourceName, String resourceValue) {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在激烈的竞争中，如果遇到热点锁，情况会变得更糟。比如：使用商品ID作为锁的资源名称，对于爆款商品而言，多机多线程就会给**存储服务**带来巨大的压力，该问题如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-pull-mode-process-thread-problem.png">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-pull-mode-process-thread-problem.png" width="70%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，实例内通过多线程并发的方式获取锁。在单个实例内，假设获取商品锁的并发度是**10**，那么两个实例就能够给**存储服务**带来**20**个并发的调用。以线程的角度来看这**20**个并发，是合理的，虽然每次请求绝大部分都是无功而返（没有获取到锁），但是这都是为了保证锁的正确性，纵使再高的并发，也只能通过不断的扩容**存储服务**来抵消增长的压力。
@@ -223,7 +223,7 @@ public void release(String resourceName, String resourceValue) {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以想象，**存储服务**上处理的请求，基本全都是无效的，不断的扩容**存储服务**显得不现实，是否有其他方法可以优化这个过程呢？答案就是通过本地热点锁来解决。通过使用（单机）本地锁可以有效的降低对**存储服务**产生的压力，该过程如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-pull-mode-local-hotspot.png">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-pull-mode-local-hotspot.png" width="70%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，实例中的多线程应该先尝试竞争本地（基于**JUC**的单机）锁，成功获取到本地锁的线程才能参与到实例间的分布式锁竞争。从实例的角度去看，如果都是获取同一个分布式锁，在同一时刻只能由一个实例中的一个线程获取到锁，因此理论上对**存储服务**的并发上限只需要和实例数一致，也就是**2**个并发就可以了。
