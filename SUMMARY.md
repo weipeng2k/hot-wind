@@ -37,3 +37,4 @@
     * [热风-再看分布式锁](book/distribute-lock-another-way.md)
 * [热风-更新到Eclipse Temurin](book/change-to-temurin.md)
 * [热风-使用JetBrains Toolbox来管理IDE](book/using-jetbrains-toolbox.md)
+* [热风-成为更好程序员的8本书](book/8-books-to-be-better-dev.md)

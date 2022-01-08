@@ -1,10 +1,10 @@
 # CAP小结
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本文是对CAP原理的简介、证明以及思考。其中理论证明部分主要来自于对**Gilbert**与**Lynch**的两篇论文（*《Brewer’s Conjecture and the Feasibility of Consistent, Available, Partition-Tolerant Web Services》* 和 *《Perspectives on the CAP Theorem》*）的理解。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本文是对CAP定理的简介、证明以及思考。其中理论证明部分主要来自于对**Gilbert**与**Lynch**的两篇论文（*《Brewer’s Conjecture and the Feasibility of Consistent, Available, Partition-Tolerant Web Services》* 和 *《Perspectives on the CAP Theorem》*）的理解。
 
-## CAP原理简介
+## CAP定理简介
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CAP是一致性（**C**onsistency）、可用性（**A**vailability）以及分区容忍性（**P**artition Tolerance）的首字母缩写，而CAP原理要说明的是，针对这三种特性，一个分布式系统，同时只能满足两个。在分布式环境中，系统大都通过网络链接，彼此之间存在分区，所以分区容忍性往往是所处的现实基础，这个原理也可以这么说，在一个容易出现错误的分布式环境中，无法同时满足一致性和可用性。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CAP是一致性（**C**onsistency）、可用性（**A**vailability）以及分区容忍性（**P**artition Tolerance）的首字母缩写，而CAP定理要说明的是，针对这三种特性，一个分布式系统，同时只能满足两个。在分布式环境中，系统大都通过网络链接，彼此之间存在分区，所以分区容忍性往往是所处的现实基础，这个定理也可以这么说，在一个容易出现错误的分布式环境中，无法同时满足一致性和可用性。
 
 <center>
 <img src="https://weipeng2k.github.io/hot-wind/resources/cap-brief-summary/cap-theorem.png" width="50%" />
@@ -20,7 +20,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**分区容忍性（Partition Tolerance）**，表示分布式系统多个分区（或者副本）之间能够封闭运行，可以在一个分区出现通信问题或者分区之间存在通信问题的情况下，系统对外表现工作良好。如果一个分布式系统，能够在分区或者分区之间通信不稳定的情况下稳定工作，那么表明该系统具备良好的分区容忍性。
 
-## CAP原理证明
+## CAP定理证明
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在2000年的分布式计算原理会议（PODC）上，Brewer提出了一个猜想：对一个Web服务，是无法同时保证一致性、可用性和分区容忍性的。MIT的**Lynch**等人针对这个猜想做了详细的论证和分析，一定程度上形式化证明了该猜想，并基于该猜想，探讨了分布式环境下，如何能够更实际的认识、面对和处理这三者之间的关系。
 
@@ -48,7 +48,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在部分同步网络模型下，传输约束高于异步网络模型，可以做到有条件的弱一致性，这个有条件表示的是可预期的延迟。由于该网络模型下能够确定消息传输的确定性，因此在一段（或者说可以预知的）时间延迟下，能够在P的前提下达成C。当然A也是可以做到的，因为在分区的节点之间，一个节点的访问，不会要求其他节点强参与，这样就做到了A。C是要求所有节点的数据能够一致，这点在部分同步网络模型下，分布式系统节点之间数据完成同步传输的操作（一般是同步消息传递）是可以预期的，所谓预期就是可预知时间的延迟，也就是说能够建立一个在特定时长后可以保证数据一致性的（弱一致性）分布式系统。
 
-## CAP原理思考
+## CAP定理思考
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分区容忍性需要考虑不同分区之间是无法访问的。一般意义上，分布式系统都会有P，那么在分布式系统中剩下的就是C和A选择哪个了。如果是TDDL（淘宝分布式数据访问层）类似的系统，多个原子数据库之间不能相互访问，那么就剩下C和A的选择了，目前看选择了C。
 
@@ -90,7 +90,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（2）如果选择可用性，可以看出当MySQL发生数据变更后，会从网络同步变更到MongoDB，一般会选择消息系统，如果网络出现问题，将会在下次恢复时完成同步。虽然数据在一个时刻（或一瞬），存在短暂的不一致，无法兑现一致性，但是用户的访问的可用性能够得到保证。当然如果选择可用性，也就是AP模式，对于数据同步，可以考虑提升硬件的支持，比如：多条网线连接等方式。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在CAP原理的限定下，许多开发者仍在通过各自的努力，在不同的场景下减少CAP原理带来的麻烦，而基本思路都是在P成立的基础上，看是做到C或A，或者说侧重C或A：
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在CAP定理的限定下，许多开发者仍在通过各自的努力，在不同的场景下减少CAP定理带来的麻烦，而基本思路都是在P成立的基础上，看是做到C或A，或者说侧重C或A：
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（1）尽力而为的可用性，即CP类型。这种设计往往在是在一个数据中心中提供稳定的服务，如果要跨数据中心，将会导致其可用性严重下降。CP类型并不是表示对可用性不看重，以谷歌的分布式锁服务Chubby为例，Chubby集群包括若干节点，只要超过半数能够正常工作，那么Chubby就能提供稳定的服务。可以看到，只要一个数据中心中过半数的Chubby节点承认了本次请求，就认为请求被许可，而可用性也得到了最大限度的提升；
 

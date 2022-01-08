@@ -11,7 +11,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;安装好后，就可以打开**Toolbox**，可以看到旧有通过安装器直接安装的**IDE**，比如：**IDEA**，如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/using-jetbrains-toolbox/delete-manual-app.png" width="70%" />
+<img src="https://weipeng2k.github.io/hot-wind/resources/using-jetbrains-toolbox/delete-manual-app.png" width="50%" />
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;推荐删除它，并改用从**Toolbox**安装的**APP**。通过**Toolbox**安装的程序，可以在：`/Users/${Your Name}/Library/Application Support/JetBrains/Toolbox/apps`中找到。
@@ -19,13 +19,13 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点击安装后的**APP**设置按钮，可以对**APP**进行设置，如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/using-jetbrains-toolbox/settings-app.png" width="70%" />
+<img src="https://weipeng2k.github.io/hot-wind/resources/using-jetbrains-toolbox/settings-app.png" width="50%" />
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;还可以安装历史版本。这里先尝试对**IDEA**进行配置，因为主要使用**Java**，所以内存各方面配置给的高一些。
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/using-jetbrains-toolbox/config-app.png" width="70%" />
+<img src="https://weipeng2k.github.io/hot-wind/resources/using-jetbrains-toolbox/config-app.png" width="50%" />
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;将堆设置到`10G`，编辑对应的文本即可，适当的增大**CodeCache**配置，在看某些大项目时体验会好些。
