@@ -27,11 +27,3 @@
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这本书讲述了**Doug Lea**并发包中的大部分内容，以使用者的角度，它能够让你熟练的运用并发工具来解决日常的问题。
-
-> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) 如果你想探究并发的本质，从理论上让自己不惑，同时也能够在和其他开发者交谈过程中有所谈资，那么推荐你看一下**Doug Lea**的这本书，该书已经是绝版。
->
-> <center>
-> <img src="https://weipeng2k.github.io/hot-wind/resources/8-books-to-be-better-dev/java-concurrent-design-pattern.jpg" width="50%"/>
-> </center>
->
-> 这本书体现了**Doug Lea**的学术水平，他会以形式化的方式来教会开发者如何触及到理论，让开发者有机会接近并发的本质。当然如果你对并发包中的实现感兴趣，也推荐读一下**Java并发编程的艺术**。
