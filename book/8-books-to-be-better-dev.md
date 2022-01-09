@@ -18,7 +18,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;程序设计、架构和设计模式都被包含在这份书单中，你可以看完这篇文章，并把它们加入到你的书架上。希望这些书能够让你成为一个更好的程序员。
 
-## 《Java Concurrency in Practice》
+## Java-Concurrency-in-Practice
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;多任务处理越来越多的占据了我们的生活，我们在手机上操作**APP**，经常一个**APP**的工作还没有结束，就立马切换到另一个**APP**。并发在快速和高效的程序里扮演着重要角色，这本书是在**2006**年出版的，它基于**Java 5**。虽然Java这些年更新了许多大版本，但是这本书仍然是学习并发编程的最好资料。
 
