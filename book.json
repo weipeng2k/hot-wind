@@ -11,7 +11,6 @@
     "ga",
     "-highlight",
     "bibtex-indexed-cite",
-    "anchor-navigation-ex",
     "page-footer-ex",
     "splitter",
     "copy-code-button",
@@ -24,9 +23,6 @@
     "search-pro": {
       "cutWordLib": "nodejieba",
       "defineWord": ["Gitbook Use"]
-    },
-    "anchor-navigation-ex": {
-      "showLevel": false
     },
     "github-buttons": {
       "buttons": [{
