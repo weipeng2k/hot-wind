@@ -14,13 +14,9 @@
 
 ---------
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[DZone](https://dzone.com)是一个不断发展的作者社区，这些作者们具备广泛的技能，同时他们也愿意将自己的知识分享给社区里的其他成员。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[DZone](https://dzone.com)是一个不断发展的作者社区，这些作者们具备广泛的技能，同时他们也愿意将自己的知识分享给社区里的其他成员。我们请求了[DZone](https://dzone.com)核心社区的成员分享那些帮助提升他们技能的书籍，因此我们收到了一份令人吃惊的书单，它们不仅很有用，而且很值得去读。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们请求了[DZone](https://dzone.com)核心社区的成员分享那些帮助提升他们技能的书籍，因此我们收到了一份令人吃惊的书单，它们不仅很有用，而且很值得去读。
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;程序设计、架构和设计模式都被包含在这份书单中，你可以看完这篇文章，并把它们加入到你的书架上。
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;希望这些书能够让你成为一个更好的程序员。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;程序设计、架构和设计模式都被包含在这份书单中，你可以看完这篇文章，并把它们加入到你的书架上。希望这些书能够让你成为一个更好的程序员。
 
 ## **Java Concurrency in Practice**
 
@@ -28,4 +24,30 @@
 
 <center>
 <img src="https://weipeng2k.github.io/hot-wind/resources/8-books-to-be-better-dev/java-concurrency-in-practice.jpg" width="50%"/>
+</center>
+
+> ![self-think](https://weipeng2k.github.io/hot-wind/resources/self-think.png) **Java Concurrency in Practice**讲述了**Doug Lea**并发包中的大部分内容，以使用者的角度，它能够让你熟练的运用并发工具来解决日常的问题。
+>
+> 但是如果你想探究并发的本质，从理论上让自己不惑，同时也能够在和其他开发者交谈过程中有所谈资，那么推荐你看一下**Doug Lea**的这本书，该书已经是绝版。
+> 
+> <center>
+> <img src="https://weipeng2k.github.io/hot-wind/resources/8-books-to-be-better-dev/java-concurrent-design-pattern.jpg" width="50%"/>
+> </center>
+>
+> 这本书体现了**Doug Lea**的学术水平，他会以形式化的方式来教会开发者如何触及到理论，让开发者有机会接近并发的本质。当然如果你对并发包中的实现感兴趣，也推荐读一下《Java并发编程的艺术》😊。
+
+## **Clean Code**
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;能写代码是不足以成为一个有技能的程序员，能够读代码和写出可读性高的代码跟怎样写代码一样重要。这本书教会我们如何识别出代码中的“坏味道”，然后通过持续的重构，使之变为好代码。无论你是一个新手还是一个有经验的老手，我们都推荐你读一读它。
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/8-books-to-be-better-dev/clean-code.jpg" width="50%"/>
+</center>
+
+## **Refactoring**
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不断演进的需求会使得程序不断的更新，在用户功能上变得更好，而在代码世界里，重构也经常出现。一个小的改动，也会导致级连（关联）错误或不可预期的行为。这本书包含了关于重构的方方面面，并演示通过重构来获得一个更加简单和易变的代码库，同时避免出现一些重构中的常见错误，并且能够更好的理解敏捷开发。
+
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/8-books-to-be-better-dev/refactoring.jpg" width="50%"/>
 </center>
