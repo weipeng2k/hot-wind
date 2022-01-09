@@ -18,7 +18,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;程序设计、架构和设计模式都被包含在这份书单中，你可以看完这篇文章，并把它们加入到你的书架上。希望这些书能够让你成为一个更好的程序员。
 
-## **Java Concurrency in Practice**
+## Java Concurrency in Practice
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;多任务处理越来越多的占据了我们的生活，我们在手机上操作**APP**，经常一个**APP**的工作还没有结束，就立马切换到另一个**APP**。并发在快速和高效的程序里扮演着重要角色，这本书是在**2006**年出版的，它基于**Java 5**。虽然Java这些年更新了许多大版本，但是这本书仍然是学习并发编程的最好资料。
 
@@ -30,9 +30,11 @@
 >
 > 但是如果你想探究并发的本质，从理论上让自己不惑，同时也能够在和其他开发者交谈过程中有所谈资，那么推荐你看一下**Doug Lea**的这本书，该书已经是绝版。
 >
+> <center><img src="https://weipeng2k.github.io/hot-wind/resources/8-books-to-be-better-dev/java-concurrent-design-pattern.jpg" width="50%"/></center>
+>
 > 这本书体现了**Doug Lea**的学术水平，他会以形式化的方式来教会开发者如何触及到理论，让开发者有机会接近并发的本质。当然如果你对并发包中的实现感兴趣，也推荐读一下《Java并发编程的艺术》。
 
-## **Clean Code**
+## Clean Code
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;能写代码是不足以成为一个有技能的程序员，能够读代码和写出可读性高的代码跟怎样写代码一样重要。这本书教会我们如何识别出代码中的“坏味道”，然后通过持续的重构，使之变为好代码。无论你是一个新手还是一个有经验的老手，我们都推荐你读一读它。
 
@@ -40,7 +42,7 @@
 <img src="https://weipeng2k.github.io/hot-wind/resources/8-books-to-be-better-dev/clean-code.jpg" width="50%"/>
 </center>
 
-## **Refactoring**
+## Refactoring
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不断演进的需求会使得程序不断的更新，在用户功能上变得更好，而在代码世界里，重构也经常出现。一个小的改动，也会导致级连（关联）错误或不可预期的行为。这本书包含了关于重构的方方面面，并演示通过重构来获得一个更加简单和易变的代码库，同时避免出现一些重构中的常见错误，并且能够更好的理解敏捷开发。
 
