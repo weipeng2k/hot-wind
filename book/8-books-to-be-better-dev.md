@@ -1,6 +1,6 @@
 # 成为更好程序员的8本书
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本文翻译自[DZone](https://dzone.com)的文章，文章推荐了成为一个更好程序的8本书。书单看起来比较偏向**Java**程序员，也许是因为**Java**更加*Pramatic*，所以在这门语言下累积了太多的软知识，而这些宏伟的软知识又需要借助**Java**来向开发者们宣告自己的意志。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本文翻译自[DZone](https://dzone.com)的[文章](https://dzone.com/articles/top-recommended-books-dzone-community)，文章推荐了成为一个更好程序的8本书。书单看起来比较偏向**Java**程序员，也许是因为**Java**更加*Pragmatic*，所以在这门语言下累积了太多的软知识，而这些宏伟的软知识又需要借助**Java**来向开发者们宣告自己的意志。
 
 <center>
 <img src="https://weipeng2k.github.io/hot-wind/resources/8-books-to-be-better-dev/better-programmer.jpg" />
