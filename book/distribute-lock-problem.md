@@ -1,6 +1,6 @@
 # 实现分布式锁会遇到的问题
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分布式锁与（类似**JUC**的）单机锁区别在于：**资源状态**由进程内转移到进程外，访问**资源状态**的方式由本地调用转换成为网络调用，这些变化会带来巨大的问题（与挑战），主要体现在**4**个方面：性能、正确性、可用性以及成本。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分布式锁与（类似**JUC**的）单机锁区别在于：**资源状态**由进程内转移到进程外，访问**资源状态**的方式由本地调用转换成为网络调用，这些变化会带来了问题（与挑战），主要体现在**4**个方面：性能、正确性、可用性以及成本。
 
 <center>
 <img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-implement-problem.jpg">
