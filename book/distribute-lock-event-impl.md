@@ -11,7 +11,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（同步）队列中的节点就是锁的**资源状态**，它包含了获取锁的执行信息（实例以及线程）。推模式锁的核心在于队列操作和节点事件通知，对于推模式分布式锁也一样，任意实例获取锁的行为都会以节点的形式记录在队列中，同时节点的变化会通知到实例，这就需要**存储服务**具备（面向队列的）原子新增和删除能力，并且在此基础上提供发布/订阅功能。在推模式分布式锁中，实例和**存储服务**的结构如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-acquire-release-resource-push.png" width="80%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-acquire-release-resource-push.png" width="60%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，推模式分布式锁在获取锁时会使用`enQueue`将获取锁的线程以节点的形式加入到同步队列中，通过`addListener`来监听节点事件。释放锁时，会使用`deQueue`将节点从队列中删除，通过`notifyEvent`发布节点事件。**存储服务**提供的上述功能以及描述，如下表所示：
@@ -38,7 +38,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每一个尝试获取锁的线程（以及实例）都会以节点形式穿在锁对应的队列上，除首节点外的任意节点都在监听其前驱节点的变化。释放锁时，会将对应的节点从队列中删除，并通知后继节点，这种击鼓传花的方式我们已经在单机锁释放过程中看到过，释放推模式分布式锁的流程如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-push-mode-release-flow.png" width="80%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-push-mode-release-flow.png" width="60%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，当前线程（以及实例）对应的节点为首节点时，就可以释放锁。释放锁时主要包含两个操作：节点出队和通知节点删除事件，前者会将当前节点从**存储服务**的队列中删除，后者会将删除事件通知到该节点的监听器。随着节点删除事件的发布，后继节点会被唤醒，而后继节点对应的线程将会尝试再次获取锁。
@@ -64,7 +64,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;许多知名项目，比如：**Apache HBase**、**Apache Solr**以及**Apache Dubbo**等都使用**ZK**来存储元数据（或配置）。由于配置项会在运行时更改，所以**ZK**支持监听配置项（即节点）的变更，应用可以通过使用**ZK**客户端来监听某个节点，当节点发生变化时，**ZK**会以事件的形式通知应用。这些配置项在**ZK**内部都会以节点（即**ZNode**）的形式存在，而节点之间会以树的形式来组织，这棵树就如同**Linux**文件系统中的路径一样，其根节点为`/`，它的存储结构示意如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-push-mode-znode.png" width="80%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-push-mode-znode.png" width="50%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，这是一个层高为**4**的树，而对任意节点的访问需要给出全路径，比如：*/军舰/052/052D*，新增节点也相同，比如：*/军舰/055/055A*。节点除了包含路径以外，还可以保存值，同时节点有多种类型，节点（部分）类型、描述以及客户端命令示例如下表所示：
@@ -85,7 +85,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;接下来通过启动两个**zkCli**客户端（分别命名为**客户端A和B**）来演示一下实现推模式分布式锁会用到的**ZK**操作，演示过程主要包括客户端各自创建节点，**客户端A**监听**客户端B**创建的节点变更。假定已经存在节点*/member-123*，在该节点下，**客户端A和B**分别创建三个前缀为*/member-123/lock*的临时有序节点，如下图所示（左边为**客户端A**）：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-push-mode-zkcli1.png" width="80%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-push-mode-zkcli1.png">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，通过执行`create -es /member-123/lock`，能够在 */member-123*节点下创建前缀为*lock*的临时有序子节点。通过`ls /member-123`命令，可以列出该节点下所有子节点，能够看到 */member-123*拥有**6**个子节点，节点名称为*lock*与自增**ID**的拼接。并发创建节点的请求能够被有序且安全的创建。
@@ -93,7 +93,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;接下来**客户端A**监听**客户端B**创建的 */member-123/lock0000000003*节点，监听的方式可以使用`get -w $node_path`命令，该命令能够获取节点的内容，并在节点变更时收到通知。然后**客户端B**通过执行`delete`命令删除了对应的节点，该过程如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-push-mode-zkcli2.png" width="80%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-push-mode-zkcli2.png">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，当**客户端B**删除了 */member-123/lock0000000003*节点后，**客户端A**收到了**ZK**实例的事件通知，该通知表示所监听的节点被删除了。因为创建的子节点均为临时有序类型，所以当客户端退出，会话终止后，由会话创建的（临时类型）节点都会被删除。
@@ -101,7 +101,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最后，**客户端A**监听**客户端B**创建的另外两个节点，然后将**客户端B**退出，再观察通知情况，该过程如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-push-mode-zkcli3.png" width="80%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-push-mode-zkcli3.png">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，随着**客户端B**的退出，**客户端A**收到了两个节点的删除事件通知。从上述演示可以看到，**ZK**支持节点的创建、访问、列表、监听和通知，而这些特性可以被用来实现推模式分布式锁。
@@ -236,7 +236,7 @@ public AcquireResult tryAcquire(String resourceName, String resourceValue, long 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以Java应用为例，如果客户端获取到锁，而在执行同步逻辑时由于负载过高（网络请求堆积）引起心跳中断，则会可能导致**ZK**分布式锁对于正确性的保证失效，该过程如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-zk-problem.png" width="80%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-zk-problem.png" width="90%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，**客户端A**成功获取到锁，然后开始执行锁保护的同步逻辑。此时**客户端B**尝试获取锁，该过程会创建**节点B**，由于不是首节点，所以获取锁失败，进入等待状态。**客户端A**执行同步逻辑时（由于**GC**暂停或同步逻辑出现高消耗操作导致）负载飙高，它和**ZK**之间的心跳处理不及时，导致会话终止。**客户端A**与**ZK**之间的会话终止使得**节点A**被自动删除，由于**节点B**监听**节点A**的变化，会收到**节点A**的删除通知，而该通知会唤醒**客户端B**，使之重新尝试获取锁。
