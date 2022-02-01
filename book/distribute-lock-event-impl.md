@@ -167,7 +167,7 @@ CuratorFramework curatorFramework = CuratorFrameworkFactory.builder()
 curatorFramework.start();
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**CuratorFramework**需要调用`start`方法完成启动后方可使用。通过**CuratorFrameworkFactory**创建***CuratorFramework**时，需要设置若干参数，上述代码中的参数以及描述如下表所示：
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**CuratorFramework**需要调用`start`方法完成启动后方可使用。通过**CuratorFrameworkFactory**创建**CuratorFramework**时，需要设置若干参数，上述代码中的参数以及描述如下表所示：
 
 |参数名称|描述|
 |---|---|
