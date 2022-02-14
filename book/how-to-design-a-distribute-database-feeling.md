@@ -1,4 +1,4 @@
-# 《如何设计一个分布式数据库》读后感
+# 《如何设计一个分布式数据库》观后感
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;看了**PingCAP**的CTO（**黄旭东**）的分享[如何设计一个分布式数据库](https://www.bilibili.com/video/BV1vs411g7Fd)，感觉要写点文字记录一下自己的感想。
 

@@ -1,6 +1,6 @@
 # 使用JetBrains Toolbox来管理IDE
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今天（🎄圣诞）续费了**JetBrains**的全家桶，下载了**JetBrains Toolbox**用了一下。它能够管理你的**JetBrains**工具，包括：工具的升级、配置以及项目的目录管理。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今天（🎄圣诞@2021）续费了**JetBrains**的全家桶，下载了**JetBrains Toolbox**用了一下。它能够管理你的**JetBrains**工具，包括：工具的升级、配置以及项目的目录管理。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;访问[如下链接](https://www.jetbrains.com/toolbox-app/)，可以下载**Toolbox**。
 
