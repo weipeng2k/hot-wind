@@ -40,3 +40,4 @@
 * [热风-成为更好程序员的8本书](book/8-books-to-be-better-dev.md)
 * [热风-JUC总结](book/juc-summary.md)
     * [热风-JUC中的StampedLock文档](book/juc-stamped-lock-doc.md)
+    * [热风-《Linux系统高效同步》SeqLock摘译](book/juc-seqlock.md)

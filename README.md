@@ -10,6 +10,8 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;看一些技术，总结一下，写一下，感觉是很好的。文章的组织有些杂，想到那里就写到那里，但是我会不断的收纳整理。
 
+#summary
+
 * [热风-简介](README.md)
 * [热风-关于作者](ABOUTME.md)
 * [热风-CAP小结](book/cap-brief-summary.md)
@@ -50,3 +52,4 @@
 * [热风-成为更好程序员的8本书](book/8-books-to-be-better-dev.md)
 * [热风-JUC总结](book/juc-summary.md)
     * [热风-JUC中的StampedLock文档](book/juc-stamped-lock-doc.md)
+    * [热风-《Linux系统高效同步》SeqLock摘译](book/juc-seqlock.md)
