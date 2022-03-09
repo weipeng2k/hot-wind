@@ -46,7 +46,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`StampedLock`的调度策略没有总是喜欢读或者写，反之亦然。所有**try**开头的方法都会尽最大努力来完成，而并不一定符合任何调度或者公平策略。任何调用**try**开头方法进行锁的获取或者转换的方法，如果返回的邮戳为**0**，这个返回并不会代表锁的任何信息，而后续的调用尝试可能会成功。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;因为`StampedLock`可以实现多种类型的锁，所以该类没有直接实现`Lock`或者`ReadWriteLock`接口。处于方便而言，StampedLock提供了一些视图方法，比如：`asReadLock`、`asWriteLock`以及`asReadWriteLock`，提供给使用者以简化的方式。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;因为`StampedLock`可以实现多种类型的锁，所以该类没有直接实现`Lock`或者`ReadWriteLock`接口。出于方便而言，`StampedLock`提供了一些视图方法，比如：`asReadLock`、`asWriteLock`以及`asReadWriteLock`，提供给使用者以简化的方式。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下面演示了一个平面点的抽象`Point`类，通过演示该示例可以了解该类的使用方式以及一些约定。
 

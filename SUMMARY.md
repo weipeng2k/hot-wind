@@ -41,3 +41,4 @@
 * [热风-JUC总结](book/juc-summary.md)
     * [热风-JUC中的StampedLock文档](book/juc-stamped-lock-doc.md)
     * [热风-《Linux系统高效同步》SeqLock摘译](book/juc-seqlock.md)
+    * [热风-StampedLock简介](book/juc-stampedlock-summary.md)
