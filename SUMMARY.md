@@ -43,3 +43,4 @@
     * [热风-《Linux系统高效同步》SeqLock摘译](book/juc-seqlock.md)
     * [热风-StampedLock简介](book/juc-stampedlock-summary.md)
     * [热风-StampedLock的接口与示例](book/juc-stampedlock-inf-and-case.md)
+    * [热风-StampedLock的实现分析](book/juc-stampedlock-implement-analysis.md)
