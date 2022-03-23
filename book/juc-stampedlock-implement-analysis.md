@@ -45,7 +45,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`WNode`通过`prev`和`next`组成双向链表，而`cowait`会将等待获取锁的读请求以栈的形式进行分组排队。接下来用一个例子来说明队列是如何运作的，假设有**5**个线程（名称分别为：**A**、**B**、**C**、**D**和**E**）顺序获取`StampedLock`，其中线程**A**和**E**获取写锁，而其他**3**个线程获取读锁，这些线程都只是获取锁而不释放锁，因此只有线程**A**可以获取到写锁，其他线程都会被阻塞。当线程**E**尝试获取写锁后，同步队列的节点组成如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/juc-summary/juc-stampedlock-clh-queue.png">
+<img src="https://weipeng2k.github.io/hot-wind/resources/juc-summary/juc-stampedlock-clh-queue.png" width="70%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，`StampedLock`通过`whead`和`wtail`分别指向同步队列的头尾节点。节点**A**是首节点，它是由第一个未获取到锁而被阻塞的线程所创建的，也就是线程**B**，该节点的类型是写，状态为等待。节点**E**是尾节点，线程**E**由于未获取到写锁，从而创建该节点并加入到队列中，节点类型为写，而状态为默认。节点状态的修改，是由后继节点在获取锁的过程中完成的，因为没有第**6**个线程获取锁，所以节点E的状态是默认，而非等待，获取锁的过程会在后续章节中详细介绍。
@@ -69,7 +69,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;成功获取写锁后会得到当前状态的快照，即邮戳，在释放写锁时，需要传入该邮戳，释放写锁的主要流程如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/juc-summary/juc-stampedlock-release-write-lock.png">
+<img src="https://weipeng2k.github.io/hot-wind/resources/juc-summary/juc-stampedlock-release-write-lock.png" width="70%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，（外部）输入的邮戳与状态理论上应该相同，因为写锁具有排他性，从写锁的获取到释放，状态不会发生改变，所以之前返回的邮戳和当前状态应该相等。释放写锁会唤醒后继节点对应的线程，被唤醒的线程会继续执行先前获取锁的逻辑，在队列中自旋获取写锁。
@@ -87,7 +87,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`StampedLock`中的`state`与`readerOverflow`合力维护了读状态，因此读锁的释放相比写锁要复杂一些，写锁一旦释放就可以唤醒后继节点，而释放读锁不能立刻唤醒后继节点，需要等到读状态减为`0`时才能执行。释放读锁的主要流程如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/juc-summary/juc-stampedlock-release-read-lock.png">
+<img src="https://weipeng2k.github.io/hot-wind/resources/juc-summary/juc-stampedlock-release-read-lock.png" width="70%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，需要先判断当前状态与传入的邮戳，二者的版本（也就是高**57**位）是否相同，如果相同则会对读状态进行自减操作。当读状态为`0`时，释放读锁会唤醒后继节点对应的线程，被唤醒的线程会继续执行先前获取读锁的逻辑。
