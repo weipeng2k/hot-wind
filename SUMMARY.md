@@ -45,3 +45,4 @@
     * [热风-StampedLock的接口与示例](book/juc-stampedlock-inf-and-case.md)
     * [热风-StampedLock的实现分析](book/juc-stampedlock-implement-analysis.md)
 * [热风-程序是怎样跑起来的](book/program-how-to-run.md)
+    * [热风-对程序员来说CPU是什么](book/program-how-to-run-01.md)
