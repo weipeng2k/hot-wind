@@ -11,5 +11,5 @@
 <img src="https://weipeng2k.github.io/hot-wind/resources/program-how-to-run-03/chapter-3-2.jpg" />
 </center>
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/program-how-to-run-03/chapter-3-2.jpg" />
+<img src="https://weipeng2k.github.io/hot-wind/resources/program-how-to-run-03/chapter-3-3.jpg" />
 </center>
