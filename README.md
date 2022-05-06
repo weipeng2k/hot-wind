@@ -60,3 +60,4 @@
     * [热风-对程序员来说CPU是什么](book/program-how-to-run-01.md)
     * [热风-数据是用二进制数表示的](book/program-how-to-run-02.md)
     * [热风-计算机进行小数运算时出错的原因](book/program-how-to-run-03.md)
+    * [热风-熟练使用有棱有角的内存](book/program-how-to-run-04.md)
