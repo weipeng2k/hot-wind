@@ -62,3 +62,4 @@
     * [热风-计算机进行小数运算时出错的原因](book/program-how-to-run-03.md)
     * [热风-熟练使用有棱有角的内存](book/program-how-to-run-04.md)
     * [热风-内存和磁盘的亲密关系](book/program-how-to-run-05.md)
+    * [热风-亲自尝试压缩数据](book/program-how-to-run-06.md)
