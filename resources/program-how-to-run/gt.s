@@ -1,42 +1,43 @@
 	.section	__TEXT,__text,regular,pure_instructions
 	.build_version macos, 12, 0	sdk_version 12, 3
+	.intel_syntax noprefix
 	.globl	_main                           ## -- Begin function main
 	.p2align	4, 0x90
 _main:                                  ## @main
 	.cfi_startproc
 ## %bb.0:
-	pushq	%rbp
+	push	rbp
 	.cfi_def_cfa_offset 16
-	.cfi_offset %rbp, -16
-	movq	%rsp, %rbp
-	.cfi_def_cfa_register %rbp
-	subq	$16, %rsp
-	movl	$0, -4(%rbp)
-	leaq	L_.str(%rip), %rdi
-	movb	$0, %al
-	callq	_printf
-	leaq	L_.str.1(%rip), %rdi
-	leaq	-8(%rbp), %rsi
-	movb	$0, %al
-	callq	_scanf
-	leaq	L_.str.2(%rip), %rdi
-	movb	$0, %al
-	callq	_printf
-	leaq	L_.str.1(%rip), %rdi
-	leaq	-12(%rbp), %rsi
-	movb	$0, %al
-	callq	_scanf
-	movl	-8(%rbp), %edi
-	movl	-12(%rbp), %esi
-	callq	_gt
-	movl	%eax, %esi
-	leaq	L_.str.3(%rip), %rdi
-	movb	$0, %al
-	callq	_printf
-	xorl	%eax, %eax
-	addq	$16, %rsp
-	popq	%rbp
-	retq
+	.cfi_offset rbp, -16
+	mov	rbp, rsp
+	.cfi_def_cfa_register rbp
+	sub	rsp, 16
+	mov	dword ptr [rbp - 4], 0
+	lea	rdi, [rip + L_.str]
+	mov	al, 0
+	call	_printf
+	lea	rdi, [rip + L_.str.1]
+	lea	rsi, [rbp - 8]
+	mov	al, 0
+	call	_scanf
+	lea	rdi, [rip + L_.str.2]
+	mov	al, 0
+	call	_printf
+	lea	rdi, [rip + L_.str.1]
+	lea	rsi, [rbp - 12]
+	mov	al, 0
+	call	_scanf
+	mov	edi, dword ptr [rbp - 8]
+	mov	esi, dword ptr [rbp - 12]
+	call	_gt
+	mov	esi, eax
+	lea	rdi, [rip + L_.str.3]
+	mov	al, 0
+	call	_printf
+	xor	eax, eax
+	add	rsp, 16
+	pop	rbp
+	ret
 	.cfi_endproc
                                         ## -- End function
 	.globl	_gt                             ## -- Begin function gt
@@ -44,27 +45,27 @@ _main:                                  ## @main
 _gt:                                    ## @gt
 	.cfi_startproc
 ## %bb.0:
-	pushq	%rbp
+	push	rbp
 	.cfi_def_cfa_offset 16
-	.cfi_offset %rbp, -16
-	movq	%rsp, %rbp
-	.cfi_def_cfa_register %rbp
-	movl	%edi, -4(%rbp)
-	movl	%esi, -8(%rbp)
-	movl	-4(%rbp), %eax
-	cmpl	-8(%rbp), %eax
+	.cfi_offset rbp, -16
+	mov	rbp, rsp
+	.cfi_def_cfa_register rbp
+	mov	dword ptr [rbp - 4], edi
+	mov	dword ptr [rbp - 8], esi
+	mov	eax, dword ptr [rbp - 4]
+	cmp	eax, dword ptr [rbp - 8]
 	jle	LBB1_2
 ## %bb.1:
-	movl	-4(%rbp), %eax
-	movl	%eax, -12(%rbp)                 ## 4-byte Spill
+	mov	eax, dword ptr [rbp - 4]
+	mov	dword ptr [rbp - 12], eax       ## 4-byte Spill
 	jmp	LBB1_3
 LBB1_2:
-	movl	-8(%rbp), %eax
-	movl	%eax, -12(%rbp)                 ## 4-byte Spill
+	mov	eax, dword ptr [rbp - 8]
+	mov	dword ptr [rbp - 12], eax       ## 4-byte Spill
 LBB1_3:
-	movl	-12(%rbp), %eax                 ## 4-byte Reload
-	popq	%rbp
-	retq
+	mov	eax, dword ptr [rbp - 12]       ## 4-byte Reload
+	pop	rbp
+	ret
 	.cfi_endproc
                                         ## -- End function
 	.section	__TEXT,__cstring,cstring_literals

@@ -51,3 +51,4 @@
     * [热风-熟练使用有棱有角的内存](book/program-how-to-run-04.md)
     * [热风-内存和磁盘的亲密关系](book/program-how-to-run-05.md)
     * [热风-亲自尝试压缩数据](book/program-how-to-run-06.md)
+    * [热风-程序是在何种环境中运行的](book/program-how-to-run-07.md)
