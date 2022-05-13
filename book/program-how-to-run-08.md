@@ -11,8 +11,8 @@
 <img src="https://weipeng2k.github.io/hot-wind/resources/program-how-to-run-08/chapter-8-2.jpg" />
 </center>
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/program-how-to-run-08/chapter-8-2.jpg" />
+<img src="https://weipeng2k.github.io/hot-wind/resources/program-how-to-run-08/chapter-8-3.jpg" />
 </center>
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/program-how-to-run-08/chapter-8-2.jpg" />
+<img src="https://weipeng2k.github.io/hot-wind/resources/program-how-to-run-08/chapter-8-4.jpg" />
 </center>
