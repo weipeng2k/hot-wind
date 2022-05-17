@@ -10,7 +10,8 @@ int main() {
     printf("输入第二个数：");
     scanf("%d", &b);
 
-    printf("较大的数是：%d\n", gt(a, b));
+    int x = gt(a, b);
+    printf("较大的数是：%d\n", x);
 
     return 0;
 }
