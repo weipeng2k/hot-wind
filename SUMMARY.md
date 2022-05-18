@@ -55,3 +55,4 @@
     * [热风-从源文件到可执行文件](book/program-how-to-run-08.md)
     * [热风-操作系统和应用的关系](book/program-how-to-run-09.md)
 * [热风-程序！程序！程序！](book/program-program-program.md)
+    * [热风-程序！程序！程序！—— 程序的视角](book/program-program-program-01.md)
