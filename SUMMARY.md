@@ -58,3 +58,4 @@
 * [热风-程序！程序！程序！](book/program-program-program.md)
     * [热风-程序！程序！程序！—— 程序的视角](book/program-program-program-01.md)
     * [热风-程序！程序！程序！—— 硬件的视角](book/program-program-program-02.md)
+    * [热风-程序！程序！程序！—— 编译的力量](book/program-program-program-03.md)
