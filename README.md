@@ -70,6 +70,6 @@
     * [热风-硬件控制方法](book/program-how-to-run-11.md)
 * [热风-程序！程序！程序！](book/program-program-program.md)
     * [热风-程序的视角](book/program-program-program-01.md)
-    * [热风-硬件的视角](book/program-program-program-02.md)
+    * [热风-硬件的执念](book/program-program-program-02.md)
     * [热风-编译的力量](book/program-program-program-03.md)
     * [热风-数据的表达](book/program-program-program-04.md)
