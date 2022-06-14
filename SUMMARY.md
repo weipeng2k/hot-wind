@@ -61,3 +61,4 @@
     * [热风-硬件的执念](book/program-program-program-02.md)
     * [热风-编译的力量](book/program-program-program-03.md)
     * [热风-数据的表达](book/program-program-program-04.md)
+    * [热风-协同的奥义](book/program-program-program-05.md)
