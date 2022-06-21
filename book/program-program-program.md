@@ -2,7 +2,15 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本文讲述的是程序和计算机的故事，涉及到什么是程序，以及运行程序的软硬件环境，可以理解为是一篇漫谈计算机程序的文章。由于文章内容比较长，所以笔者将其拆分成了**5**篇文章，由于是拆分的文章，所以或多或少有些前后依赖。分别是：[**程序的视角**](https://weipeng2k.github.io/hot-wind/book/program-program-program-01.html)、[**硬件的执念**](https://weipeng2k.github.io/hot-wind/book/program-program-program-02.html)、[**编译的力量**](https://weipeng2k.github.io/hot-wind/book/program-program-program-03.html)、[**数据的表达**](https://weipeng2k.github.io/hot-wind/book/program-program-program-04.html)和[**协同的奥义**](https://weipeng2k.github.io/hot-wind/book/program-program-program-05.html)。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[**程序的视角**](https://weipeng2k.github.io/hot-wind/book/program-program-program-01.html)以一个**C**语言的例子为开头，介绍程序的运行环境。[**硬件的执念**](https://weipeng2k.github.io/hot-wind/book/program-program-program-02.html)，以机器语言来解释执行开发者编写的程序，这里会使用到部分汇编知识。[**编译的力量**](https://weipeng2k.github.io/hot-wind/book/program-program-program-03.html)重点介绍编译的过程，一门编程语言最重要的就是它的编译器，它完成了概念到实现的转化。[**数据的表达**](https://weipeng2k.github.io/hot-wind/book/program-program-program-04.html)则是讲述数据是以何种形式存储与计算机的。[**协同的奥义**](https://weipeng2k.github.io/hot-wind/book/program-program-program-05.html)，介绍处理器的基本构成，以及内存和磁盘如何存储数据，它们是如何协同工作的。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[**程序的视角**](https://weipeng2k.github.io/hot-wind/book/program-program-program-01.html)以一个**C**语言的例子为开头，介绍程序的运行环境，程序的运行环境包含了软硬件环境，软体现在操作系统，硬则是指令集。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[**硬件的执念**](https://weipeng2k.github.io/hot-wind/book/program-program-program-02.html)，以机器语言来解释执行开发者编写的程序，这里会使用到部分汇编知识。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[**编译的力量**](https://weipeng2k.github.io/hot-wind/book/program-program-program-03.html)重点介绍编译的过程，一门编程语言最重要的就是它的编译器，它完成了概念到实现的转化，什么是编译、汇编和链接。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[**数据的表达**](https://weipeng2k.github.io/hot-wind/book/program-program-program-04.html)则是讲述数据是以何种形式存储与计算机的，为什么选择二进制，整数和小数如何以二进制的形式存储在芯片中的。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[**协同的奥义**](https://weipeng2k.github.io/hot-wind/book/program-program-program-05.html)，介绍处理器的基本构成，以及内存和磁盘如何存储数据，它们是如何协同工作的。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;加油！加油！克里斯托弗。
 
