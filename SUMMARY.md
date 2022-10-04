@@ -62,3 +62,5 @@
     * [热风-编译的力量](book/program-program-program-03.md)
     * [热风-数据的表达](book/program-program-program-04.md)
     * [热风-协同的奥义](book/program-program-program-05.md)
+* [热风-如何更好的做单元测试](book/do-unit-test-better.md)
+    * [热风-软件开发与单元测试](book/do-unit-test-better-01.md)
