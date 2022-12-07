@@ -121,7 +121,7 @@ public class MemberSpringTest extends AbstractJUnit4SpringContextTests {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;接下来，让我们用**Spring-Boot-Test**改造一下MemberService的单测，改造后的测试代码如下：
 
 ```java
-@**Spring**BootTest(classes = SpringBootMemberTest.Config.class)
+@SpringBootTest(classes = SpringBootMemberTest.Config.class)
 @TestPropertySource(locations = "classpath:test-application.properties")
 @RunWith(SpringRunner.class)
 public class SpringBootMemberTest {
@@ -169,11 +169,11 @@ public class SpringBootMemberTest {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;还是通过UserDAO的单测来演示**SpringBoot**的持久层单测编写，由于测试需要依赖数据库，因此在示例中需要先使用StartDB启动一个hsqldb，然后再运行单测UserDAOImplTest。hsqldb是一款**Java**编写的嵌入式数据库，可以使用内存或主机模式启动，本示例中采用后者，以独立进程的方式启动，在数据库启动后，接下来看一下对应的测试，代码如下所示：
 
 ```java
-@RunWith(**Spring**Runner.class)
-@**Spring**BootTest(classes = UserDAOImplTest.Config.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = UserDAOImplTest.Config.class)
 @TestPropertySource(locations = "classpath:test-application.properties")
 @EnableAutoConfiguration
-public class UserDAOImplTest extends AbstractTransactionalJUnit4**Spring**ContextTests {
+public class UserDAOImplTest extends AbstractTransactionalJUnit4SpringContextTests {
     @Autowired
     private UserDAO userDAO;
     @Test
