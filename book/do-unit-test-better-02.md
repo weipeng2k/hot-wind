@@ -3,7 +3,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在许多稍大一点的公司，会有自己维护一套单元测试框架的冲动，比如：在阿里巴巴，很早之前就存在一套基于**TestNG**的单测框架，叫**JTester**，随着时间的流逝，这个框架就**GG**了。自己维护框架，有这个冲动时需要冷静一下，因为公司自己搞一个单元测试框架，维护将成为大问题，而使用业界成熟的解决方案，将会是一个更好的选择。业绩成熟的解决方案，意味着有一组非常专业的人替你维护，而且不断地有新**Feature**可以使用，同样你熟悉这些之后，你就可以不断的复用这些知识，而不会局限在某个特定的框架下。
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/do-unit-test-better/chapter02-preface.jpg" width="70%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/do-unit-test-better/chapter02-preface.jpg" width="80%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Java**单元测试框架有不少，但以**JUnit**为事实上的标准，而**JUnit**只是解决了单元测试的基本问题，对于**Mock**和容器是不提供支持的。在**Mock**方面，**Java**也有很多开源的选择，诸如：**JMock**、**EasyMock**和**Mockito**，而**Mockito**也同样为其中的翘楚，二者结合起来，能够很好的完成单元测试的工作。
