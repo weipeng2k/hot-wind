@@ -3,7 +3,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单元测试只是在开发阶段用来测试生产代码是否正确运行的工具吗？它们的使命随着生产代码的发布就结束了吗？它们的地位注定比不上生产代码吗？不！绝对不是。我们编写生产代码时会使用高质量的三方组件，应用会部署在tomcat/jboss等容器中运行，我们对类似spring或tomcat这样的开源产品赞不绝口，从来不会怀疑它们的质量。这些框架（或服务器）的质量为什么这么好呢？答案就是规范、设计和测试，而测试就包含了充足的单元测试。
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/do-unit-test-better/chapter04-preface.jpg" width="70%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/do-unit-test-better/chapter04-preface.jpg" width="90%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;记得前同事罗毅讲过他们**WebLogic Server**的质量保证策略：有充足的单测覆盖率，行覆盖率在70%以上，重点模块会更高。每天会进行日常构建，执行单测、回归和性能等多种测试，如果一旦测试被阻断，所有正在进行的项目就会立刻停止，相关和不相关的人都会看到是什么问题阻断了测试执行，直到问题被找到和解决为止。当时我对这种处理方式很不解，这样做不是会经常阻断，导致效率很低呢？回答是：一年基本都不会发生一次，而且效率相当高。
@@ -23,7 +23,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单测发挥作用是缓慢且持久的，跑不过的单测一定在向你告知问题，不要忽略它们。单测数量的提升，一定会让你的代码更自信，不用启动应用也能检验它们是否按照预期运行，效率变得更高。就像巴菲特投资一样，不求暴利，但求稳定的增长，当时间这个因素加入到公式中后，最终价值是巨大的，复利思维如此，单元测试亦是如此。不要因为没人做而不做，不要因为做的少就忽略，眼光放长远些，从结果和技能上看，这都是最划算的投资。
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/do-unit-test-better/chapter04-istanbul.jpeg" width="70%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/do-unit-test-better/chapter04-istanbul.jpeg" width="90%">
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**1453**年君士坦丁堡陷落，奥斯曼帝国苏丹看到宏伟的**圣索菲亚大教堂**，赞叹不已，那是奥斯曼帝国无法企及的水平，之后的日子里只能在圣索菲亚大教堂旁立起一根小小的宣礼塔。感受到艺术冲击的奥斯曼人并没有放弃学习和尝试，随着一根比一根宏伟的宣礼塔在圣索菲亚大教堂旁立起来，帝国自认为建筑水平已经到了，**1617**年，在圣索菲亚大教堂对面落成了更加宏伟的**蓝色清真寺**。单元测试，开始做的时候感觉很困难，那只是不熟悉而已，等到时间久了，就会变得熟练，只要不放弃，最终都会运用自如。
