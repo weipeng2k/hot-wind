@@ -1,6 +1,6 @@
 # JavaNetwork's InetAddress与DNS
 
-Java进行Socket编程，需要知晓主机和端口，使用Socket API进行通信。以发送一个HTTP请求为例，常见的例子：
+使用Java进行Socket编程，需要知晓对端的主机和端口，然后使用SocketAPI进行编程通信。以发送一个HTTP请求和获取响应为例，使用Java SocketAPI 可以这样写：
 
 @Test
 public void http() throws Exception {
@@ -25,9 +25,11 @@ public void http() throws Exception {
     }
 }
 
-示例创建了一个socket，连接到www.baidu.com，然后请求其首页，将HTTP响应以文本形式打印出来。这里我们不关注socket获取输入输出流，而是先看看socket是如何构造和初始化的。任何语言构建socket其实底层都是依赖操作系统提供的协议栈，也就是一个通用的内核级别程序，由他来专门负责同网卡打交道。
+上述示例创建了一个socket，连接到www.baidu.com，然后请求其首页，将HTTP响应以文本形式打印出来。这里我们不关注通过socket获取输入输出流的操作，而是关注socket是如何构造和初始化的。任何语言构建socket都差不多，底层都是依赖操作系统提供的协议栈，也就是一个通用的内核级别程序，由它来专门负责同网卡打交道。
 
-[图]
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/java-network/inetaddress-and-dns-net.png" width="70%">
+</center>
 
 在示例中的第一步，首先会通过静态方法getByName创建InetAddress，然后再使用InetAddress实例再加上端口创建SocketAddress实例。构建好的Socket实例，通过调用connect方法，指定连接超时时间，协议栈在绑定本地（随机）网卡和端口后，尝试同www.baidu.com:80建立TCP连接。
 
