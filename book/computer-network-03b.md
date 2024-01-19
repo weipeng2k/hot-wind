@@ -11,7 +11,7 @@
 这么看Segment考虑的挺周到，接下来看一下TCP协议是如何设计的，如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-protocol.png" width="90%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-protocol.jpg" width="90%">
 </center>
 
 如上图所示，TCP协议设计的比较紧凑，从第4行的数据偏移量，也就是协议头的长度可以看出来，TCP协议是一个变长协议。协议自上而下，分别是发送端和接受端的端口，发送编号与响应编号，以及6位的保留位，6位的控制位和16位的窗口大小。如果对应到RDT 3.1的Segment上，缺失的概念就只剩下数据偏移量和紧急指针了，后者协议栈实现可以不关注，算是个可有可无的概念，接下来还是看一下数据偏移量。
@@ -44,7 +44,7 @@ TCP协议的实现依靠协议栈程序，不同操作系统的实现会有不�
 MTU表示数据链路层一个帧所能携带的最大数据量，这个帧的单位还是字节，毕竟在二层以上还属于字节，到物理层就是信号了。数据链路层有不同种类，目前使用最广泛的就是以太网，以太网默认是1500字节，其结构如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-ethernet-with-ip.png" width="90%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-ethernet-with-ip.jpg" width="90%">
 </center>
 
 可以看到IP分组被装在一个帧里面，如果一个IP分组的大小超过了当前数据链路层的上限，被拆分到多个帧中，那么除了第一个帧还知道自己是谁，后面的帧里面装的就是阿巴阿巴了。从完整性的角度考虑，IP分组需要能够按照当前数据链路层定义的MTU大小来做好自身分片的规划，IP协议如此，TCP协议作为IP协议上层的一个“应用”，连协议头都不完备的它（TCP）就更没有资格讨价还价了。
@@ -54,7 +54,7 @@ MTU表示数据链路层一个帧所能携带的最大数据量，这个帧的�
 对于数据传输而言，上述分片策略如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-mss.png" width="90%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-mss.jpg" width="90%">
 </center>
 
 如上图所示，对于一个完整的HTTP协议消息（注意：消息表示该协议属于应用层），它的尺寸无疑是相对较大的，它会被按照MSS做分拆，拆好的数据会添加对应的TCP协议头，最终被放置到IP分组中，以分片形式发往对端。
@@ -66,7 +66,7 @@ MTU表示数据链路层一个帧所能携带的最大数据量，这个帧的�
 TCP协议建连的“三次握手”过程，如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-connect-seq.png" width="90%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-connect-seq.jpg" width="90%">
 </center>
 
 如上图所示，客户端发起建连操作，一般是由程序调用socket来完成，一般步骤都是先定义服务端的IP和端口，也就是准备好服务端的Endpoint，然后调用connect方法进行连接。
@@ -90,7 +90,7 @@ SYNACK报文发回客户端后，客户端协议栈程序能够根据<src-IP, sr
 通过“三次握手”，TCP连接就在双方的共识中建立起来，客户端和服务端如何知晓该发送SYN或者SYNACK报文呢？答案是状态，根据各自的连接状态来期望得到的报文，以及得到报文后所做出的动作。建连状态的变迁如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-connect-state.png" width="90%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-connect-state.jpg" width="90%">
 </center>
 
 如上图所示，CLOSE、LISTEN、SYN-SENT、SYN-RCVD和ESTABLISHED这5个状态构成了两端TCP连接的状态全集，一旦连接建立完成，一切正常的情况下连接两端去看该连接，状态都是处于ESTABLISHED。不过客户端和服务端双方动作不一样，服务端有监听端口和接收连接建立请求的动作，所以状态也有所不同，客户端具有的状态是CLOSE、SYN-SENT和ESTABLISHED，服务端是CLOSE、LISTEN、SYN-RCVD和ESTABLISHED。
@@ -106,7 +106,7 @@ SYNACK报文发回客户端后，客户端协议栈程序能够根据<src-IP, sr
 两端连接建立完成后，就进入数据传输阶段，该阶段的执行与RDT协议类似，采用发送与确认的方式来确保数据可靠传输。以两台主机之间echo协议为例，TCP协议传输过程如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-echo-protocol.png" width="90%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-echo-protocol.jpg" width="90%">
 </center>
 
 如上图所示，主机A向主机B发送字符c，按照echo协议，主机B会回复相同的字符给主机A。主机A发送的报文序号为42，而确认ack是79，这代表当前报文的字节序号是42，而已经收到了78个字节，接下来期望从第79个收。主机B回复主机A，该报文不仅有对42号的确认，也就是确认ack为43，代表收到42个字节的数据，同时序号是79，也是主机A期望的。
@@ -118,7 +118,7 @@ SYNACK报文发回客户端后，客户端协议栈程序能够根据<src-IP, sr
 报文发送离不开发送缓冲区，这点与RDT差不多，过程如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-swnd.png" width="90%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-swnd.jpg" width="90%">
 </center>
 
 如上图所示，应用需要通过网络发送的数据不断的追加到缓冲区中，而将数据发送到网络后，需要有确认才能继续发送，为了解决可靠性和效率这两个对立的问题，使用发送窗口swnd来进行调和。TCP超时任务会与发送窗口的baseseq相关联，定时关注swnd中发送较早的数据是否收到响应，而对端传回的响应会推动baseseq向前移动，使得更多的数据从缓冲区中发往网络。
@@ -140,7 +140,7 @@ TCP连接建立完成后就可以进行数据传输，当通信双方目标已�
 假设服务端发起断开连接，这需要使用到TCP报文控制位中的FIN，表示连接完结，两端交互的流程如下图：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-disconnect-seq.png" width="90%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-disconnect-seq.jpg" width="90%">
 </center>
 
 如上图所示，通过“四次挥手”两端完成TCP连接的拆除，两端各自发出了FIN报文，同时也对远端的FIN报文做出了ACK响应。由于TCP连接只存在于本地，所以TCP连接在发起断开后不会立刻删除，如果服务端发出FIN报文，客户端没有响应，服务端会进行重发，这样最大限度的让双方对于连接断开能够达成共识。
@@ -150,7 +150,7 @@ TCP连接建立完成后就可以进行数据传输，当通信双方目标已�
 和建连一样，断开连接也需要进行状态控制，断连状态的变迁如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-disconnect-state.png" width="90%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-disconnect-state.jpg" width="90%">
 </center>
 
 如上图所示，由客户端发起断开连接操作，此时客户端TCP连接的状态是ESTABLISHED，客户端进程调用close方法准备断开连接。客户端的FIN包发送后，客户端TCP连接状态变为FIN_WAIT_1，此时如果客户端进程再调用socket的写方法将会报错。
@@ -180,7 +180,7 @@ TCP观测哪些结果呢？一般有两个，即超时和3次连续相同冗余�
 随着对端的响应或者数据到达，本地就能观测出拥塞情况，TCP协议通过引入拥塞窗口（Congestion Window，简称为cwnd）来影响发送速率。一般来说cwnd会从1开始，逐步增大，观测到拥塞后，再减小，一旦发现恢复后，再次增大，这种不断挑战网络传输底线的方式就构成了拥塞控制的解决方案。因此，发送窗口就是由接收窗口和拥塞窗口来决定的，如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-swnd-cal.png" width="90%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-swnd-cal.jpg" width="90%">
 </center>
 
 如上图所示，对于cwnd的增加或减少策略，可以影响到swnd，也就是影响网络的传输效率，而TCP的目的就是在保证网络可用，也就是保证大家都可以用的情况下，尽可能快的传输数据，提升网路利用率。因此，会有很多拥塞控制算法来优化这个过程，但基本思路就是在没有触发拥塞的情况下，逐步增加向网络中发送的数据量，如果一旦观察到拥塞发生，就降低发送速率。
@@ -188,7 +188,7 @@ TCP观测哪些结果呢？一般有两个，即超时和3次连续相同冗余�
 cwnd常见的变化过程如下图所示：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-cwnd-sample.png" width="90%">
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/tcp-cwnd-sample.jpg" width="90%">
 </center>
 
 如上图所示，在初期cwnd会开启慢启动，这个阶段虽然叫慢启动，但是cwnd的扩张实际是非常快的，只是它从0或者1启动的。如果发现超时，cwnd会跌倒1，基本处于跌停状态，然后通过慢启动恢复到原来最高点的1/2，随后线性增长，而保守的线性增长阶段称为拥塞避免阶段。如果发现3次冗余ACK，代表出现了较轻拥塞，cwnd会跌倒当前的1/2，而不是跌倒1，随后开启拥塞避免阶段。
