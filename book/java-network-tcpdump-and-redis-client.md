@@ -1,6 +1,6 @@
 # **Java**Network's TcpDump与Redis客户端
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在处理网络问题时，我们可以使用抓包工具进行抓包，通过分析数据包来了解问题发生时网络的状况，从而定位和解决问题。Wireshark无疑是使用最广泛的抓包工具，它具有漂亮的GUI界面，丰富的功能菜单，在本机上可以随时开启和暂停它，但是如果环境切换到服务器上，可能就没那么顺利了，毕竟你难以在服务器上安装一个wireshark，更何况现在的服务端应用大都跑在容器里。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在处理网络问题时，我们可以使用抓包工具进行抓包，通过分析数据包来了解问题发生时的网络状况，从而定位和解决问题。Wireshark无疑是使用最广泛的抓包工具，它具有漂亮的GUI界面，丰富的功能菜单，在本机上可以随时开启和暂停它，但是如果环境切换到服务器上，可能就没那么顺利了，毕竟你难以在服务器上安装一个wireshark，更何况现在的服务端应用大都跑在容器里。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此时你需要一款小巧的工具，它可以按照你的要求进行抓包，比如：指定目标IP或者端口等，将抓包的内容输出到文件中，你甚至可以将文件拽回到本地，再使用wireshark打开分析，这款工具就是`tcpdump`。在一般的Linux发行版中，都会携带`tcpdump`，所以使用起来很容易。`tcpdump`是基于`libpcap`来工作的，后者是抓包库，它能按照你的要求将网卡上的包发给对应的程序，而在本文中，这个程序就是`tcpdump`。
 
@@ -11,9 +11,13 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;接下来使用`tcpdump`抓取一次HTTP请求，首先通过`ping`找到`www.bing.com`的IP是：`202.89.233.100`，然后在终端运行命令：`tcpdump -i en0 host 202.89.233.100 and port 80 -nn`，此时终端会等待输出。新开一个终端，运行命令：`curl -v www.bing.com`，这表示会对`www.bing.com`完成域名解析，同时再对相应的IP发起HTTP请求并输出响应。
 
 > -i 用来指定网卡，比如当前系统的网卡标识是en0
+>
 > host 用来指定目标IP，也就是只有目标IP是host指定的数据包才会被拦截
+>
 > port 用来指定目标端口
+>
 > -nn 用来取消网络设备的名称解析，这样就直接展示IP，而不是主机名
+>
 > and/or 与/或表达式，如果有多个条件，需要灵活使用and和or
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请求并输出内容如下：
@@ -22,7 +26,7 @@
 <img src="https://weipeng2k.github.io/hot-wind/resources/java-network/tcpdump-and-redis-curl.jpg" width="80%">
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到访问`www.bing.com`，服务端返回了`301`，将请求重定向到`http://cn.bing.com`。此时先前运行tcpdump的终端有了输出，如下所示：
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到访问`www.bing.com`，服务端返回了`301`，将请求重定向到`http://cn.bing.com`。此时先前运行`tcpdump`的终端有了输出，如下所示：
 
 <center>
 <img src="https://weipeng2k.github.io/hot-wind/resources/java-network/tcpdump-and-redis-tcpdump-curl-output.jpg">
@@ -30,7 +34,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;看来`tcpdump`已经通过`libpcap`拦截到了我们期望的数据包，并将相关内容输出到控制台，可以看到过滤器收到了`59`个数据包，而符合要求的有`11`个。每个数据包占一行，其中第一列为时间，接着是来源IP与端口，以及目标IP与端口。Flags是TCP报文中的控制位，其中`S`代表SYN报文，`.`代表ACK报文，`P`代表PSH报文，`F`代表FIN报文。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;前三个数据包是TCP建连过程，以第一个数据包为例：`seq`是`3143996361`，`mss`是`1460`字节。接着对端回复SYNACK报文，`ack`是`3143996362`，而`mss`是`1440`字节。最后四个数据包是TCP断开连接的过程，也就是我们熟知的四次挥手。中间的`4`个数据包就是HTTP消息通信的过程，可以看到主机发送了GET消息，而对端回复了HTTP状态码为`301`的响应。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;前三个数据包是TCP建连过程，以第一个数据包为例：`seq`是`3143996361`，`mss`是`1460`字节。接着对端回复SYNACK报文，`ack`是`3143996362`，而`mss`是`1440`字节。最后四个数据包是TCP断开连接的过程，也就是我们熟知的四次挥手。中间的`4`个数据包就是HTTP消息通信的过程，可以看到主机发送了GET请求，而对端回复了HTTP状态码为`301`的响应。
 
 ## 导出cap文件并用wireshark打开
 
@@ -40,13 +44,13 @@
 <img src="https://weipeng2k.github.io/hot-wind/resources/java-network/tcpdump-and-redis-tcpdump-w.jpg" width="80%">
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到通过`tcpdump`拦截了近`9千`个数据包，其实也就是访问量两个网站，不超过五个页面，接着可以使用wireshark打开`en0.cap`文件，可以看到界面是这样的。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到通过`tcpdump`拦截了近`9千`个数据包，其实也就是访问了两个网站，不超过五个页面，接着可以使用wireshark打开`en0.cap`文件，可以看到界面是这样的。
 
 <center>
 <img src="https://weipeng2k.github.io/hot-wind/resources/java-network/tcpdump-and-redis-open-cap-file.jpg">
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，本地网络存在不同类型的设备，这就使得网络中充满了各式各样的数据包，有ARP，也有DNS，还有访问资源的TCP等等。这样我们就可以在服务器端使用`tcpdump`抓去数据包，将抓到的数据包保存到文件中，然后将文件拽到本地后使用wireshark打开分析。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，本地网络存在许多不同类型的设备，这就使得网络中充满了各式各样的数据包，它们使用的协议有ARP，也有DNS，还有访问资源的TCP等等，显得非常嘈杂。这样我们就可以在服务器端使用`tcpdump`抓去数据包，将抓到的数据包保存到文件中，然后将文件拽到本地后使用wireshark打开分析。
 
 ## 两个redis客户端
 
@@ -54,7 +58,7 @@
 
 ### 使用jedis
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jedis客户端选择的版本是`3.2.0`，，其I/O基于原生Java实现，使用方式参考其文档，单线程的`set`和`get`，代码如下：
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jedis客户端选择的版本是`3.2.0`，其I/O基于原生Java实现，使用方式参考其文档，单线程的`set`和`get`，代码如下：
 
 ```java
 /**
