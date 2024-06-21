@@ -93,3 +93,4 @@
     * [热风-感悟《计算机网络：自顶向下》（05a.数据链路层）](book/computer-network-05a.md)
     * [热风-《计算机网络》第5章-数据链路层（b.以太网）](book/computer-network-05b.md)
     * [热风-《计算机网络》第6章-物理层（a.基本概念）](book/computer-network-06a.md)
+* [热风-聊一聊架构](book/talk-about-architecture.md)
