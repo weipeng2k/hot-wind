@@ -46,7 +46,7 @@ public class T {
 </plugin>
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这一切看着都像一回事，甚至通过`javap`去观察`T.class`时，也可以看到class的major version值是51，妥妥的Java7，但事实上如果你在Java7的环境中运行T，就会得到一个类找不到的错误，原因就是`ConcurrentHashMap`的`keySet()`方法返回的类型是`KeySetView`，一个Java8新增的类型。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这一切看着都像一回事，甚至通过`javap`去观察`T.class`时，也可以看到class的major version值是`51`，妥妥的Java7，但事实上如果你在Java7的环境中运行T，就会得到一个类找不到的错误，原因就是`ConcurrentHashMap`的`keySet()`方法返回的类型是`KeySetView`，一个Java8新增的类型。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用`javap`仔细观察`T.class`，可以看到如下端倪。
 
@@ -77,13 +77,13 @@ public static void main(java.lang.String[]);
         line 6: 27
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第21行指令调用`ConcurrentHashMap`的`keySet()`方法，返回类型为Java8新增的`KeySetView`。一个Java7的class，在Java7的JVM上运行，结果就报错了，世界就是这么一个草台班子。这么看来，如果要杜绝这种问题，只能根据目标Java版本选择对应的JDK了。这的确是一个方案，如果是Mac用户，可以参考[这篇文章]( https://zhuanlan.zhihu.com/p/456426472)，除此之外，还有没有更简单的办法呢？
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第21行指令调用`ConcurrentHashMap`的`keySet()`方法，返回类型为Java8新增的`KeySetView`。一个Java7的class，在Java7的JVM上运行，结果就报错了，世界就是这么一个草台班子。这么看来，如果要杜绝这种问题，只能根据目标Java版本选择对应的JDK了。这的确是一个方案，如果是Mac用户，可以参考[这篇文章](https://zhuanlan.zhihu.com/p/456426472)，除此之外，还有没有更简单的办法呢？
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;答案是：使用（Java9新增的）`release`选项可以更好的编译生成class文件。
 
 ## 实验一：使用ConcurrentHashMap的keySet()方法，输出Java7的class
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由于是Java9新增的，所以切换到JDK17，该版本是最后几个可以输出Java7的JDK了，如果你使用JDK21，就无法输出major version为51的class了。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由于是Java9新增的，所以切换到JDK17，该版本是最后几个可以输出Java7的JDK了，如果你使用JDK21，就无法输出major version为`51`的class了。
 
 ```sh
 % openjdk17 
