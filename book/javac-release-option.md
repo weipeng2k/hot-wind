@@ -135,15 +135,9 @@ public static void main(java.lang.String[]);
 
 ## 实验二：ByteBuffer的flip方法，输出Java8的class
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在Java的nio中，`ByteBuffer`是`Buffer`的子类，其中`Buffer`具有`flip()`方法，在Java8中，它是这样定义的：
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在Java的nio中，`ByteBuffer`是`Buffer`的子类，其中`Buffer`具有`flip()`方法，在Java8中，它是这样定义的：`public final Buffer flip()`。这就使得`ByteBuffer`也继承了`flip()`方法，调用后会返回自己的超类`Buffer`。这一切在Java9中有所改变，首先超类`Buffer`的`flip()`方法没有了`final`修饰，子类`ByteBuffer`扩展了它。
 
-`public final Buffer flip()`
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这就使得`ByteBuffer`也继承了`flip()`方法，调用后会返回自己的超类`Buffer`。这一切在Java9中有所改变，首先超类`Buffer`的`flip()`方法没有了`final`修饰，子类`ByteBuffer`扩展了它。`Buffer`中的定义：
-
-`public Buffer flip()`
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;再看`ByteBuffer`的扩展代码。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`Buffer`中的定义：`public Buffer flip()`，再看`ByteBuffer`的扩展代码。
 
 ```java
 public ByteBuffer flip() {
