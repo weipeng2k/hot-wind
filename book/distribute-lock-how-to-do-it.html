@@ -1,0 +1,1565 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>热风-如何实现分布式锁 · hot-wind</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="weipeng2k">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-bibtex-indexed-cite/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-donate/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="distribute-lock-is-redlock-safe.html" />
+    
+    
+    <link rel="prev" href="distribute-lock-with-redis.html" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"weipeng2k","repo":"hot-wind","type":"star","size":"small","count":true}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    热风-简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../ABOUTME.html">
+            
+                <a href="../ABOUTME.html">
+            
+                    
+                    热风-关于作者
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="cap-brief-summary.html">
+            
+                <a href="cap-brief-summary.html">
+            
+                    
+                    热风-CAP小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="explanation-of-compensation-mechanism.html">
+            
+                <a href="explanation-of-compensation-mechanism.html">
+            
+                    
+                    热风-补偿机制说明
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="byzantine-generals-problem.html">
+            
+                <a href="byzantine-generals-problem.html">
+            
+                    
+                    热风-拜占庭将军问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="2pc-summary.html">
+            
+                <a href="2pc-summary.html">
+            
+                    
+                    热风-共识协议：两阶段提交
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="compensation-and-tcc.html">
+            
+                <a href="compensation-and-tcc.html">
+            
+                    
+                    热风-一种基于补偿的事务处理机制（TCC）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="how-to-design-a-distribute-database-feeling.html">
+            
+                <a href="how-to-design-a-distribute-database-feeling.html">
+            
+                    
+                    热风-《如何设计一个分布式数据库》观后感
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="tcc-using-seata.html">
+            
+                <a href="tcc-using-seata.html">
+            
+                    
+                    热风-使用Seata来实现TCC
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="what-about-the-future.html">
+            
+                <a href="what-about-the-future.html">
+            
+                    
+                    热风-未来的预测
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="seata-problem.html">
+            
+                <a href="seata-problem.html">
+            
+                    
+                    热风-Seata存在的一些问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="java-network-inetaddress-and-dns.html">
+            
+                <a href="java-network-inetaddress-and-dns.html">
+            
+                    
+                    热风-InetAddress与DNS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="java-network-arp-and-pcap4j.html">
+            
+                <a href="java-network-arp-and-pcap4j.html">
+            
+                    
+                    热风-ARP与pcap4j
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="java-network-tcpdump-and-redis-client.html">
+            
+                <a href="java-network-tcpdump-and-redis-client.html">
+            
+                    
+                    热风-TcpDump与Redis客户端
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="java-dev-learn-c.html">
+            
+                <a href="java-dev-learn-c.html">
+            
+                    
+                    热风-Java开发者看C
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="java-dev-learn-c-01.html">
+            
+                <a href="java-dev-learn-c-01.html">
+            
+                    
+                    热风-C语言概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="java-dev-learn-c-02.html">
+            
+                <a href="java-dev-learn-c-02.html">
+            
+                    
+                    热风-C语言的基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="basic-paxos-9-pages-notes.html">
+            
+                <a href="basic-paxos-9-pages-notes.html">
+            
+                    
+                    热风-基础Paxos算法的9页笔记
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="basic-paxos-9-pages-notes-01.html">
+            
+                <a href="basic-paxos-9-pages-notes-01.html">
+            
+                    
+                    热风-基础Paxos算法笔记(1/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="basic-paxos-9-pages-notes-02.html">
+            
+                <a href="basic-paxos-9-pages-notes-02.html">
+            
+                    
+                    热风-基础Paxos算法笔记(2/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.3" data-path="basic-paxos-9-pages-notes-03.html">
+            
+                <a href="basic-paxos-9-pages-notes-03.html">
+            
+                    
+                    热风-基础Paxos算法笔记(3/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.4" data-path="basic-paxos-9-pages-notes-04.html">
+            
+                <a href="basic-paxos-9-pages-notes-04.html">
+            
+                    
+                    热风-基础Paxos算法笔记(4/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.5" data-path="basic-paxos-9-pages-notes-05.html">
+            
+                <a href="basic-paxos-9-pages-notes-05.html">
+            
+                    
+                    热风-基础Paxos算法笔记(5/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.6" data-path="basic-paxos-9-pages-notes-06.html">
+            
+                <a href="basic-paxos-9-pages-notes-06.html">
+            
+                    
+                    热风-基础Paxos算法笔记(6/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.7" data-path="basic-paxos-9-pages-notes-07.html">
+            
+                <a href="basic-paxos-9-pages-notes-07.html">
+            
+                    
+                    热风-基础Paxos算法笔记(7/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.8" data-path="basic-paxos-9-pages-notes-08.html">
+            
+                <a href="basic-paxos-9-pages-notes-08.html">
+            
+                    
+                    热风-基础Paxos算法笔记(8/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.9" data-path="basic-paxos-9-pages-notes-09.html">
+            
+                <a href="basic-paxos-9-pages-notes-09.html">
+            
+                    
+                    热风-基础Paxos算法笔记(9/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="distribute-lock-brief-summary.html">
+            
+                <a href="distribute-lock-brief-summary.html">
+            
+                    
+                    热风-分布式锁
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.17.1" data-path="distribute-lock-what-is-lock.html">
+            
+                <a href="distribute-lock-what-is-lock.html">
+            
+                    
+                    热风-锁是什么？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.2" data-path="distribute-lock-what-is-distribute-lock.html">
+            
+                <a href="distribute-lock-what-is-distribute-lock.html">
+            
+                    
+                    热风-分布式锁是什么？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.3" data-path="distribute-lock-problem.html">
+            
+                <a href="distribute-lock-problem.html">
+            
+                    
+                    热风-实现分布式锁会遇到的问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.4" data-path="distribute-lock-framework.html">
+            
+                <a href="distribute-lock-framework.html">
+            
+                    
+                    热风-分布式锁框架
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.5" data-path="distribute-lock-spin-impl.html">
+            
+                <a href="distribute-lock-spin-impl.html">
+            
+                    
+                    热风-拉模式的分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.6" data-path="distribute-lock-event-impl.html">
+            
+                <a href="distribute-lock-event-impl.html">
+            
+                    
+                    热风-推模式的分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.7" data-path="distribute-lock-with-redis.html">
+            
+                <a href="distribute-lock-with-redis.html">
+            
+                    
+                    热风-使用Redis实现分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.17.8" data-path="distribute-lock-how-to-do-it.html">
+            
+                <a href="distribute-lock-how-to-do-it.html">
+            
+                    
+                    热风-如何实现分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.9" data-path="distribute-lock-is-redlock-safe.html">
+            
+                <a href="distribute-lock-is-redlock-safe.html">
+            
+                    
+                    热风-Redlock能保证锁的正确性吗？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.10" data-path="distribute-lock-another-way.html">
+            
+                <a href="distribute-lock-another-way.html">
+            
+                    
+                    热风-再看分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="change-to-temurin.html">
+            
+                <a href="change-to-temurin.html">
+            
+                    
+                    热风-更新到Eclipse Temurin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="using-jetbrains-toolbox.html">
+            
+                <a href="using-jetbrains-toolbox.html">
+            
+                    
+                    热风-使用JetBrains Toolbox来管理IDE
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="8-books-to-be-better-dev.html">
+            
+                <a href="8-books-to-be-better-dev.html">
+            
+                    
+                    热风-成为更好程序员的8本书
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="juc-summary.html">
+            
+                <a href="juc-summary.html">
+            
+                    
+                    热风-JUC总结
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.21.1" data-path="juc-stamped-lock-doc.html">
+            
+                <a href="juc-stamped-lock-doc.html">
+            
+                    
+                    热风-JUC中的StampedLock文档
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.2" data-path="juc-seqlock.html">
+            
+                <a href="juc-seqlock.html">
+            
+                    
+                    热风-《Linux系统高效同步》SeqLock摘译
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.3" data-path="juc-stampedlock-summary.html">
+            
+                <a href="juc-stampedlock-summary.html">
+            
+                    
+                    热风-StampedLock简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.4" data-path="juc-stampedlock-inf-and-case.html">
+            
+                <a href="juc-stampedlock-inf-and-case.html">
+            
+                    
+                    热风-StampedLock的接口与示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.5" data-path="juc-stampedlock-implement-analysis.html">
+            
+                <a href="juc-stampedlock-implement-analysis.html">
+            
+                    
+                    热风-StampedLock的实现分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="program-how-to-run.html">
+            
+                <a href="program-how-to-run.html">
+            
+                    
+                    热风-程序是怎样跑起来的
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.22.1" data-path="program-how-to-run-01.html">
+            
+                <a href="program-how-to-run-01.html">
+            
+                    
+                    热风-对程序员来说CPU是什么
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.2" data-path="program-how-to-run-02.html">
+            
+                <a href="program-how-to-run-02.html">
+            
+                    
+                    热风-数据是用二进制数表示的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.3" data-path="program-how-to-run-03.html">
+            
+                <a href="program-how-to-run-03.html">
+            
+                    
+                    热风-计算机进行小数运算时出错的原因
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.4" data-path="program-how-to-run-04.html">
+            
+                <a href="program-how-to-run-04.html">
+            
+                    
+                    热风-熟练使用有棱有角的内存
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.5" data-path="program-how-to-run-05.html">
+            
+                <a href="program-how-to-run-05.html">
+            
+                    
+                    热风-内存和磁盘的亲密关系
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.6" data-path="program-how-to-run-06.html">
+            
+                <a href="program-how-to-run-06.html">
+            
+                    
+                    热风-亲自尝试压缩数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.7" data-path="program-how-to-run-07.html">
+            
+                <a href="program-how-to-run-07.html">
+            
+                    
+                    热风-程序是在何种环境中运行的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.8" data-path="program-how-to-run-08.html">
+            
+                <a href="program-how-to-run-08.html">
+            
+                    
+                    热风-从源文件到可执行文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.9" data-path="program-how-to-run-09.html">
+            
+                <a href="program-how-to-run-09.html">
+            
+                    
+                    热风-操作系统和应用的关系
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.10" data-path="program-how-to-run-10.html">
+            
+                <a href="program-how-to-run-10.html">
+            
+                    
+                    热风-通过汇编语言了解程序的实际构成
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.11" data-path="program-how-to-run-11.html">
+            
+                <a href="program-how-to-run-11.html">
+            
+                    
+                    热风-硬件控制方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="program-program-program.html">
+            
+                <a href="program-program-program.html">
+            
+                    
+                    热风-程序！程序！程序！
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.23.1" data-path="program-program-program-01.html">
+            
+                <a href="program-program-program-01.html">
+            
+                    
+                    热风-程序的视角
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.2" data-path="program-program-program-02.html">
+            
+                <a href="program-program-program-02.html">
+            
+                    
+                    热风-硬件的执念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.3" data-path="program-program-program-03.html">
+            
+                <a href="program-program-program-03.html">
+            
+                    
+                    热风-编译的力量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.4" data-path="program-program-program-04.html">
+            
+                <a href="program-program-program-04.html">
+            
+                    
+                    热风-数据的表达
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.5" data-path="program-program-program-05.html">
+            
+                <a href="program-program-program-05.html">
+            
+                    
+                    热风-协同的奥义
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="do-unit-test-better.html">
+            
+                <a href="do-unit-test-better.html">
+            
+                    
+                    热风-如何更好的做单元测试
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.24.1" data-path="do-unit-test-better-01.html">
+            
+                <a href="do-unit-test-better-01.html">
+            
+                    
+                    热风-软件开发与单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.2" data-path="do-unit-test-better-02.html">
+            
+                <a href="do-unit-test-better-02.html">
+            
+                    
+                    热风-Java程序员使用JUnit做单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.3" data-path="do-unit-test-better-03.html">
+            
+                <a href="do-unit-test-better-03.html">
+            
+                    
+                    热风-基于Spring的单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.4" data-path="do-unit-test-better-04.html">
+            
+                <a href="do-unit-test-better-04.html">
+            
+                    
+                    热风-维护好单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.5" data-path="do-unit-test-better-05.html">
+            
+                <a href="do-unit-test-better-05.html">
+            
+                    
+                    热风-体验测试驱动开发
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="computer-network-01.html">
+            
+                <a href="computer-network-01.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.25.1" data-path="computer-network-01.html">
+            
+                <a href="computer-network-01.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（01.概述）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.2" data-path="computer-network-02.html">
+            
+                <a href="computer-network-02.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（02.应用层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.3" data-path="computer-network-03a.html">
+            
+                <a href="computer-network-03a.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（03a.传输层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.4" data-path="computer-network-03b.html">
+            
+                <a href="computer-network-03b.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（03b.传输层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.5" data-path="computer-network-04a.html">
+            
+                <a href="computer-network-04a.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（04a.网络层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.6" data-path="computer-network-04b.html">
+            
+                <a href="computer-network-04b.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（04b.网络层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.7" data-path="computer-network-05a.html">
+            
+                <a href="computer-network-05a.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（05a.数据链路层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.8" data-path="computer-network-05b.html">
+            
+                <a href="computer-network-05b.html">
+            
+                    
+                    热风-《计算机网络》第5章-数据链路层（b.以太网）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.9" data-path="computer-network-06a.html">
+            
+                <a href="computer-network-06a.html">
+            
+                    
+                    热风-《计算机网络》第6章-物理层（a.基本概念）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="talk-about-architecture.html">
+            
+                <a href="talk-about-architecture.html">
+            
+                    
+                    热风-聊一聊架构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="javac-release-option.html">
+            
+                <a href="javac-release-option.html">
+            
+                    
+                    热风-使用Javac's Release选项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="talk-about-design-paradigm.html">
+            
+                <a href="talk-about-design-paradigm.html">
+            
+                    
+                    热风-谈一谈设计范式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="talk-about-system-complex.html">
+            
+                <a href="talk-about-system-complex.html">
+            
+                    
+                    热风-说一说系统复杂性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="how-do-i-write-a-design-doc.html">
+            
+                <a href="how-do-i-write-a-design-doc.html">
+            
+                    
+                    热风-我怎么写概要设计？
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >热风-如何实现分布式锁</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x5206;&#x5E03;&#x5F0F;&#x9501;">&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x5206;&#x5E03;&#x5F0F;&#x9501;</h1>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x672C;&#x6587;&#x662F;<a href="https://martin.kleppmann.com" target="_blank"><strong>Martin Kleppmann</strong></a>&#x8BBA;&#x8BC1;<strong>Redlock</strong>&#x96BE;&#x4EE5;&#x786E;&#x4FDD;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x6B63;&#x786E;&#x6027;&#x7684;&#x6587;&#x7AE0;&#xFF0C;&#x6587;&#x7AE0;&#x539F;&#x6587;<a href="https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html" target="_blank">&#x5728;&#x8FD9;&#x91CC;</a>&#x3002;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/distribute-lock-debate.jpeg">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>Redlock</strong>&#x7B97;&#x6CD5;&#x770B;&#x8D77;&#x6765;&#x662F;&#x4E00;&#x4E2A;&#x4E0D;&#x9519;&#x4E14;&#x9AD8;&#x53EF;&#x7528;&#x7684;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x5B9E;&#x73B0;&#xFF0C;&#x4F46;&#x662F;&#x901A;&#x8FC7;&#x4ED4;&#x7EC6;&#x7684;&#x63A8;&#x6572;&#xFF0C;&#x73B0;&#x5B9E;&#x8FDC;&#x6BD4;&#x7406;&#x60F3;&#x590D;&#x6742;&#xFF0C;&#x5B83;&#x5E76;&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x53EF;&#x9760;&#x7684;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x5B9E;&#x73B0;&#xFF0C;&#x6587;&#x4E2D;&#x8BE6;&#x7EC6;&#x7684;&#x9610;&#x8FF0;&#x5176;&#x95EE;&#x9898;&#x6240;&#x5728;&#xFF0C;&#x5E76;&#x5BF9;&#x4E8E;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x7ED9;&#x4E88;&#x4E86;&#x81EA;&#x5DF1;&#x7684;&#x89C1;&#x89E3;&#x3002;&#x6574;&#x4F53;&#x6587;&#x7AE0;&#x504F;&#x5B66;&#x672F;&#x5316;&#xFF0C;&#x4E25;&#x8C28;&#x4EE5;&#x53CA;&#x7CBE;&#x786E;&#x7684;&#x8868;&#x8FF0;&#x8BA9;&#x4EBA;&#x8BFB;&#x8D77;&#x6765;&#x5F88;&#x60EC;&#x610F;&#x3002;<strong>Redlock</strong>&#x7B97;&#x6CD5;&#x7684;&#x63CF;&#x8FF0;&#x53EF;&#x4EE5;&#x770B;<a href="https://weipeng2k.github.io/hot-wind/book/distribute-lock-with-redis.html" target="_blank">&#x6211;&#x7FFB;&#x8BD1;&#x7684;&#x6587;&#x6863;</a>&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4EE5;&#x4E0B;&#x662F;&#x7B14;&#x8005;&#x5BF9;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x7684;&#xFF08;&#x6458;&#x5F55;&#xFF09;&#x7FFB;&#x8BD1;&#x548C;&#x7406;&#x89E3;&#x3002;&#x5982;&#x679C;&#x662F;&#x7B14;&#x8005;&#x7684;&#x7406;&#x89E3;&#x5C06;&#x4F1A;&#x4EE5;<img src="https://weipeng2k.github.io/hot-wind/resources/self-think.png" alt="self-think">&#x6765;&#x5F00;&#x5934;&#xFF0C;&#x4EE5;&#x5F15;&#x8A00;&#x7684;&#x5F62;&#x5F0F;&#x6765;&#x5C55;&#x793A;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;</p>
+<blockquote>
+<p><img src="https://weipeng2k.github.io/hot-wind/resources/self-think.png" alt="self-think"> &#x8FD9;&#x4E2A;&#x662F;&#x4F5C;&#x8005;&#x7684;&#x7406;&#x89E3;&#x3002;&#x3002;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x63CF;&#x8FF0;&#x5185;&#x5BB9;&#x793A;&#x4F8B;&#x3002;&#x3002;&#x3002;</p>
+</blockquote>
+<hr>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4F5C;&#x4E3A;&#x6211;&#x4E66;&#x7814;&#x7A76;&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF0C;&#x6211;&#x5728;<strong>Redis</strong>&#x7F51;&#x7AD9;&#x4E0A;&#x53D1;&#x73B0;&#x4E86;&#x4E00;&#x79CD;&#x540D;&#x4E3A;<strong>Redlock</strong>&#x7684;&#x7B97;&#x6CD5;&#x3002;&#x8BE5;&#x7B97;&#x6CD5;&#x58F0;&#x79F0;&#x5728;<strong>Redis</strong>&#x4E0A;&#x5B9E;&#x73B0;&#x5BB9;&#x9519;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#xFF0C;&#x9875;&#x9762;&#x8981;&#x6C42;&#x8FDB;&#x5165;&#x5206;&#x5E03;&#x5F0F;&#x7CFB;&#x7EDF;&#x7684;&#x4EBA;&#x63D0;&#x4F9B;&#x53CD;&#x9988;&#x3002;&#x8BE5;&#x7B97;&#x6CD5;&#x672C;&#x80FD;&#x5730;&#x5728;&#x6211;&#x8111;&#x6D77;&#x4E2D;&#x6572;&#x54CD;&#x4E86;&#x4E00;&#x4E9B;&#x8B66;&#x949F;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x82B1;&#x4E86;&#x4E00;&#x4E9B;&#x65F6;&#x95F4;&#x601D;&#x8003;&#x5E76;&#x5199;&#x4E0B;&#x8FD9;&#x4E9B;&#x7B14;&#x8BB0;&#x3002;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/book-cover.png" width="60%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x7531;&#x4E8E;<strong>Redlock</strong>&#x5DF2;&#x7ECF;&#x6709;&#x8D85;&#x8FC7;10&#x4E2A;&#x72EC;&#x7ACB;&#x5B9E;&#x73B0;&#xFF0C;&#x5E76;&#x4E14;&#x6211;&#x4EEC;&#x4E0D;&#x77E5;&#x9053;&#x8C01;&#x5DF2;&#x7ECF;&#x5728;&#x4F9D;&#x8D56;&#x6B64;&#x7B97;&#x6CD5;&#xFF0C;&#x6211;&#x8BA4;&#x4E3A;&#x503C;&#x5F97;&#x516C;&#x5F00;&#x5206;&#x4EAB;&#x6211;&#x7684;&#x7B14;&#x8BB0;&#x3002;&#x6211;&#x4E0D;&#x4F1A;&#x8BA8;&#x8BBA;<strong>Redis</strong>&#x7684;&#x5176;&#x4ED6;&#x65B9;&#x9762;&#xFF0C;&#x5176;&#x4E2D;&#x4E00;&#x4E9B;&#x5DF2;&#x7ECF;&#x5728;<a href="https://aphyr.com/tags/**Redis**" target="_blank">&#x5176;&#x4ED6;&#x5730;&#x65B9;</a>&#x53D7;&#x5230;&#x4E86;&#x6279;&#x8BC4;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5728;&#x6211;&#x8BA8;&#x8BBA;<strong>Redlock</strong>&#x7684;&#x7EC6;&#x8282;&#x4E4B;&#x524D;&#xFF0C;&#x8BF7;&#x5141;&#x8BB8;&#x6211;&#x8BF4;&#xFF0C;&#x6211;&#x975E;&#x5E38;&#x559C;&#x6B22;<strong>Redis</strong>&#xFF0C;&#x6211;&#x8FC7;&#x53BB;&#x66FE;&#x5728;&#x751F;&#x4EA7;&#x4E2D;&#x6210;&#x529F;&#x4F7F;&#x7528;&#x5B83;&#x3002;&#x6211;&#x8BA4;&#x4E3A;&#x8FD9;&#x975E;&#x5E38;&#x9002;&#x5408;&#x60A8;&#x60F3;&#x5728;&#x670D;&#x52A1;&#x5668;&#x4E4B;&#x95F4;&#x5171;&#x4EAB;&#x4E00;&#x4E9B;&#x77AC;&#x65F6;&#x3001;&#x975E;&#x7CBE;&#x786E;&#x3001;&#x5FEB;&#x901F;&#x53D8;&#x5316;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5982;&#x679C;&#x60A8;&#x51FA;&#x4E8E;&#x4EFB;&#x4F55;&#x539F;&#x56E0;&#x5076;&#x5C14;&#x4E22;&#x5931;&#x8FD9;&#x4E9B;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x6CA1;&#x4EC0;&#x4E48;&#x5927;&#x4E0D;&#x4E86;&#x7684;&#x3002;&#x4F8B;&#x5982;&#xFF1A;&#x53EF;&#x4EE5;&#x5C06;&#x542F;&#x7528;&#x5728;&#x8BF7;&#x6C42;&#x8BA1;&#x6570;&#x5668;&#x4E0A;&#xFF0C;&#x7528;&#x4E8E;&#x8BB0;&#x5F55;&#x6BCF;&#x4E2A;IP&#x8BBF;&#x95EE;&#x7684;&#x6B21;&#x6570;&#xFF0C;&#x6216;&#x8005;&#x8BB0;&#x5F55;&#x7528;&#x6237;&#x4F7F;&#x7528;&#x7684;IP&#x5217;&#x8868;&#xFF0C;&#x7528;&#x6765;&#x68C0;&#x6D4B;&#x767B;&#x5F55;&#x5F02;&#x5E38;&#x3002;&#x4F46;&#x662F; <strong>Redis</strong>&#x88AB;&#x8D8A;&#x6765;&#x8D8A;&#x591A;&#x7528;&#x5728;&#x6570;&#x636E;&#x7BA1;&#x7406;&#x9886;&#x57DF;&#xFF0C;&#x800C;&#x8BE5;&#x9886;&#x57DF;&#x6570;&#x636E;&#x5F3A;&#x4E00;&#x81F4;&#x6027;&#x548C;&#x53EF;&#x9760;&#x6027;&#x8981;&#x6C42;&#x800C;&#x8457;&#x79F0;&#xFF0C;&#x8FD9;&#x663E;&#x7136;&#x4E0D;&#x662F;<strong>Redis</strong>&#x64C5;&#x957F;&#x7684;&#x3002;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x5C31;&#x662F;&#x5C5E;&#x4E8E;&#x8FD9;&#x4E2A;&#x9886;&#x57DF;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x6211;&#x63A5;&#x6765;&#x4E0B;&#x8BE6;&#x7EC6;&#x5C55;&#x5F00;&#x3002;</p>
+<h2 id="&#x4F7F;&#x7528;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x6765;&#x5E72;&#x4EC0;&#x4E48;&#xFF1F;">&#x4F7F;&#x7528;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x6765;&#x5E72;&#x4EC0;&#x4E48;&#xFF1F;</h2>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4F7F;&#x7528;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x7684;&#x76EE;&#x7684;&#x662F;&#x4E3A;&#x4E86;&#x80FD;&#x591F;&#x5728;&#x8FDB;&#x884C;&#x76F8;&#x540C;&#x5DE5;&#x4F5C;&#x7684;&#x591A;&#x4E2A;&#x8282;&#x70B9;&#x4E2D;&#x786E;&#x4FDD;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x5728;&#x540C;&#x4E00;&#x65F6;&#x523B;&#x5904;&#x7406;&#x5DE5;&#x4F5C;&#x3002;&#x8FD9;&#x4E2A;&#x5DE5;&#x4F5C;&#x53EF;&#x80FD;&#x662F;&#x5411;&#x4E00;&#x4E2A;&#x5171;&#x4EAB;&#x5B58;&#x50A8;&#x5199;&#x5165;&#x6570;&#x636E;&#x6216;&#x8FDB;&#x884C;&#x4E00;&#x4E9B;&#x8BA1;&#x7B97;&#xFF0C;&#x4E5F;&#x6709;&#x53EF;&#x80FD;&#x662F;&#x8C03;&#x7528;&#x5916;&#x90E8;&#x7684;API&#x3002;&#x5728;&#x66F4;&#x9AD8;&#x7684;&#x5C42;&#x9762;&#xFF0C;&#x5728;&#x5206;&#x5E03;&#x5F0F;&#x73AF;&#x5883;&#x4E2D;&#x4F7F;&#x7528;&#x9501;&#xFF0C;&#x4E00;&#x822C;&#x4F1A;&#x6709;&#x4E24;&#x4E2A;&#x539F;&#x56E0;&#xFF1A;&#x8981;&#x4E48;&#x662F;&#x4E3A;&#x4E86;&#x6548;&#x7387;&#xFF0C;&#x8981;&#x4E48;&#x662F;&#x4E3A;&#x4E86;&#x6B63;&#x786E;&#x6027;&#x3002;&#x4E3A;&#x4E86;&#x80FD;&#x591F;&#x533A;&#x5206;&#x4F60;&#x662F;&#x54EA;&#x4E00;&#x79CD;&#xFF0C;&#x4F60;&#x9700;&#x8981;&#x95EE;&#x81EA;&#x5DF1;&#xFF0C;&#x5982;&#x679C;&#x9501;&#x5931;&#x8D25;&#xFF0C;&#x4F60;&#x7684;&#x573A;&#x666F;&#x4F1A;&#x51FA;&#x73B0;&#x4EC0;&#x4E48;&#x95EE;&#x9898;&#x5462;&#xFF1F;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>&#x6548;&#x7387;</strong>&#xFF1A;&#x4F7F;&#x7528;&#x9501;&#x53EF;&#x4EE5;&#x907F;&#x514D;&#x4E0D;&#x5FC5;&#x8981;&#x7684;&#x4E24;&#x6B21;&#x76F8;&#x540C;&#x5DE5;&#x4F5C;&#xFF08;&#x4F8B;&#x5982;&#x4E00;&#x4E9B;&#x6602;&#x8D35;&#x7684;&#x8BA1;&#x7B97;&#xFF09;&#x3002;&#x5982;&#x679C;&#x9501;&#x5931;&#x8D25;&#xFF0C;&#x4E24;&#x4E2A;&#x8282;&#x70B9;&#x6700;&#x7EC8;&#x5B8C;&#x6210;&#x76F8;&#x540C;&#x7684;&#x5DE5;&#x4F5C;&#xFF0C;&#x7ED3;&#x679C;&#x662F;&#x6210;&#x672C;&#x7565;&#x6709;&#x589E;&#x52A0;&#xFF08;&#x60A8;&#x6700;&#x7EC8;&#x5411;<strong>AWS</strong>&#x652F;&#x4ED8;&#x7684;&#x8D39;&#x7528;&#x6BD4;&#x5E73;&#x65F6;&#x591A;5&#x7F8E;&#x5206;&#xFF09;&#x6216;&#x5C0F;&#x7684;&#x4E0D;&#x4FBF;&#xFF08;&#x4F8B;&#x5982;&#xFF1A;&#x7528;&#x6237;&#x6700;&#x7EC8;&#x6536;&#x5230;&#x4E24;&#x5C01;&#x76F8;&#x540C;&#x7684;&#x7535;&#x5B50;&#x90AE;&#x4EF6;&#xFF09;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>&#x6B63;&#x786E;&#x6027;</strong>&#xFF1A;&#x4F7F;&#x7528;&#x9501;&#x53EF;&#x4EE5;&#x9632;&#x6B62;&#x8FDB;&#x7A0B;&#x5E76;&#x53D1;&#x7684;&#x5904;&#x7406;&#x4EFB;&#x52A1;&#xFF0C;&#x4ECE;&#x800C;&#x5BFC;&#x81F4;&#x4E92;&#x76F8;&#x5F71;&#x54CD;&#xFF0C;&#x6700;&#x7EC8;&#x628A;&#x7CFB;&#x7EDF;&#x641E;&#x4E71;&#x3002;&#x5982;&#x679C;&#x9501;&#x5931;&#x8D25;&#xFF0C;&#x4E24;&#x4E2A;&#x5E76;&#x884C;&#x7684;&#x8282;&#x70B9;&#x4F1A;&#x5728;&#x540C;&#x4E00;&#x884C;&#x6570;&#x636E;&#x4E0A;&#x5DE5;&#x4F5C;&#xFF0C;&#x7ED3;&#x679C;&#x8981;&#x4E48;&#x662F;&#x6587;&#x4EF6;&#x88AB;&#x5F04;&#x4E71;&#xFF0C;&#x6570;&#x636E;&#x4E22;&#x5931;&#x6216;&#x6DF7;&#x4E71;&#xFF0C;&#x597D;&#x6BD4;&#x533B;&#x836F;&#x7BA1;&#x7406;&#x5458;&#x7ED9;&#x75C5;&#x4EBA;&#x53D1;&#x9519;&#x4E86;&#x836F;&#xFF0C;&#x751A;&#x81F3;&#x4F1A;&#x5F15;&#x8D77;&#x4E25;&#x91CD;&#x7684;&#x95EE;&#x9898;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4E0A;&#x8FF0;&#x4E24;&#x4E2A;&#x4F7F;&#x7528;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x7684;&#x539F;&#x56E0;&#x90FD;&#x662F;&#x5408;&#x60C5;&#x5408;&#x7406;&#xFF0C;&#x4F46;&#x662F;&#x4F60;&#x9700;&#x8981;&#x6E05;&#x695A;&#x4F60;&#x7684;&#x539F;&#x56E0;&#x7A76;&#x7ADF;&#x662F;&#x54EA;&#x4E00;&#x4E2A;&#x3002;&#x6211;&#x60F3;&#x6307;&#x51FA;&#x5982;&#x679C;&#x4EC5;&#x4EC5;&#x662F;&#x56E0;&#x4E3A;&#x89E3;&#x51B3;&#x6548;&#x7387;&#x95EE;&#x9898;&#xFF0C;&#x90A3;&#x5B8C;&#x5168;&#x6CA1;&#x6709;&#x5FC5;&#x8981;&#x9009;&#x62E9;&#x6210;&#x672C;&#x6602;&#x8D35;&#x7684;<strong>Redlock</strong>&#xFF0C;&#x8FD0;&#x884C;<code>5</code>&#x4E2A;<strong>Redis</strong>&#x670D;&#x52A1;&#x5668;&#x6765;&#x63D0;&#x4F9B;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x670D;&#x52A1;&#x3002;&#x4F60;&#x6700;&#x597D;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x5355;<strong>Redis</strong>&#x5B9E;&#x4F8B;&#x6765;&#x89E3;&#x51B3;&#x4F60;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x5982;&#x679C;&#x597D;&#x7684;&#x8BDD;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x652F;&#x6301;&#x4E3B;&#x4ECE;&#x7684;<strong>Redis</strong>&#x96C6;&#x7FA4;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x679C;&#x4F7F;&#x7528;&#x5355;&#x4E2A;<strong>Redis</strong>&#x5B9E;&#x4F8B;&#xFF0C;&#x5F53;<strong>Redis</strong>&#x5B9E;&#x4F8B;&#x51FA;&#x73B0;&#x6389;&#x7535;&#x6216;&#x5176;&#x4ED6;&#x6545;&#x969C;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x4F7F;&#x90E8;&#x5206;&#x9501;&#x5931;&#x6548;&#x3002;&#x4F46;&#x662F;&#x5982;&#x679C;&#x51FA;&#x4E8E;&#x6548;&#x7387;&#x95EE;&#x9898;&#x4F7F;&#x7528;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#xFF0C;&#x77ED;&#x65F6;&#x7684;&#x5931;&#x6548;&#x662F;&#x53EF;&#x4EE5;&#x5BB9;&#x5FCD;&#x7684;&#xFF0C;&#x800C;&#x4E14;<strong>Redis</strong>&#x5B9E;&#x4F8B;&#x5E76;&#x4E0D;&#x4F1A;&#x7ECF;&#x5E38;&#x5D29;&#x6E83;&#x3002;&#x5BF9;&#x4E8E;&#x4F7F;&#x7528;&#x5355;&#x8282;&#x70B9;<strong>Redis</strong>&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x7684;&#x7CFB;&#x7EDF;&#xFF0C;&#x4F7F;&#x7528;&#x8005;&#x4F1A;&#x8BA4;&#x4E3A;&#x8FD9;&#x4E2A;&#x9501;&#x4E0D;&#x80FD;&#x591F;&#x63D0;&#x4F9B;&#x5B8C;&#x5168;&#x53EF;&#x9760;&#x7684;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x670D;&#x52A1;&#xFF0C;&#x8FD9;&#x6837;&#x4F1A;&#x7ED9;&#x4F7F;&#x7528;&#x8005;&#x4E00;&#x4E2A;&#x6697;&#x793A;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x53E6;&#x4E00;&#x65B9;&#x9762;&#xFF0C;<strong>Redlock</strong>&#x7B97;&#x6CD5;&#x53CA;&#x5176;<code>5</code>&#x4E2A;&#x526F;&#x672C;&#x548C;&#x591A;&#x6570;&#x7968;&#xFF0C;&#x4E4D;&#x4E00;&#x770B;&#xFF0C;&#x5B83;&#x4F3C;&#x4E4E;&#x9002;&#x5408;&#x89E3;&#x51B3;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x7528;&#x4E8E;&#x5E94;&#x5BF9;&#x6B63;&#x786E;&#x6027;&#x7684;&#x573A;&#x666F;&#x3002;&#x6211;&#x5C06;&#x5728;&#x4E0B;&#x9762;&#x7684;&#x7AE0;&#x8282;&#x4E2D;&#x8BBA;&#x8BC1;&#xFF0C;&#x5B83;&#x5E76;&#x4E0D;&#x9002;&#x5408;&#x89E3;&#x51B3;&#x6B63;&#x786E;&#x6027;&#x7684;&#x95EE;&#x9898;&#x3002;&#x5728;&#x672C;&#x6587;&#x7684;&#x5176;&#x4F59;&#x90E8;&#x5206;&#xFF0C;&#x6211;&#x4EEC;&#x5C06;&#x5047;&#x8BBE;&#x60A8;&#x7684;&#x9501;&#x5F88;&#x5173;&#x6CE8;&#x6B63;&#x786E;&#x6027;&#xFF0C;&#x5982;&#x679C;&#x4E24;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x8282;&#x70B9;&#x540C;&#x65F6;&#x8BA4;&#x4E3A;&#x5B83;&#x4EEC;&#x6301;&#x6709;&#x76F8;&#x540C;&#x7684;&#x9501;&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x4E25;&#x91CD;&#x7684;&#x9519;&#x8BEF;&#x3002;</p>
+<h2 id="&#x4F7F;&#x7528;&#x9501;&#x6765;&#x4FDD;&#x62A4;&#x8D44;&#x6E90;&#x7684;&#x8BBF;&#x95EE;">&#x4F7F;&#x7528;&#x9501;&#x6765;&#x4FDD;&#x62A4;&#x8D44;&#x6E90;&#x7684;&#x8BBF;&#x95EE;</h2>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x6211;&#x4EEC;&#x6682;&#x65F6;&#x628A;<strong>Redlock</strong>&#x653E;&#x5230;&#x4E00;&#x8FB9;&#xFF0C;&#x5148;&#x8BA8;&#x8BBA;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x7684;&#x4E00;&#x822C;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#xFF08;&#x72EC;&#x7ACB;&#x4E8E;&#x4F7F;&#x7528;&#x7684;&#x67D0;&#x4E9B;&#x7B97;&#x6CD5;&#xFF09;&#x3002;&#x91CD;&#x8981;&#x7684;&#x662F;&#x8981;&#x8BB0;&#x4F4F;&#xFF0C;&#x5206;&#x5E03;&#x5F0F;&#x7CFB;&#x7EDF;&#x4E2D;&#x7684;&#x9501;&#x4E0D;&#x50CF;&#x591A;&#x7EBF;&#x7A0B;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4E2D;&#x7684;&#x4E92;&#x65A5;&#x9501;&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x53EA;&#x66F4;&#x590D;&#x6742;&#x7684;&#x91CE;&#x517D;&#xFF0C;&#x56E0;&#x4E3A;&#x4E0D;&#x540C;&#x7684;&#x8282;&#x70B9;&#x548C;&#x7F51;&#x7EDC;&#x90FD;&#x53EF;&#x80FD;&#x4EE5;&#x5404;&#x79CD;&#x65B9;&#x5F0F;&#x51FA;&#x73B0;&#x6545;&#x969C;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4E3E;&#x4E2A;&#x4F8B;&#x5B50;&#xFF0C;&#x5047;&#x8BBE;&#x4F60;&#x6709;&#x4E00;&#x4E2A;&#x5E94;&#x7528;&#xFF0C;&#x5B83;&#x4F1A;&#x4FEE;&#x6539;&#x5171;&#x4EAB;&#x5B58;&#x50A8;&#xFF08;&#x5982;&#xFF1A;<strong>HDFS</strong>&#x6216;<strong>S3</strong>&#xFF09;&#x4E0A;&#x7684;&#x6587;&#x4EF6;&#x3002;&#x5BA2;&#x6237;&#x7AEF;&#x9996;&#x5148;&#x83B7;&#x53D6;&#x5230;&#x9501;&#xFF0C;&#x7136;&#x540E;&#x8BFB;&#x53D6;&#x6587;&#x4EF6;&#xFF0C;&#x4F5C;&#x51FA;&#x4E00;&#x4E9B;&#x66F4;&#x6539;&#xFF0C;&#x7136;&#x540E;&#x5C06;&#x4FEE;&#x6539;&#x540E;&#x7684;&#x6587;&#x4EF6;&#x5199;&#x4F1A;&#x5B58;&#x50A8;&#xFF0C;&#x6700;&#x540E;&#x91CA;&#x653E;&#x9501;&#x3002;&#x8FD9;&#x4E2A;&#x9501;&#x80FD;&#x591F;&#x786E;&#x4FDD;&#x4E24;&#x4E2A;&#x5BA2;&#x6237;&#x7AEF;&#x4E0D;&#x4F1A;&#x540C;&#x65F6;&#x5728;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x4E0A;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#xFF0C;&#x5982;&#x679C;&#x8FD9;&#x4E48;&#x505A;&#x4E86;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x4E22;&#x5931;&#x4E00;&#x4E9B;&#x66F4;&#x65B0;&#x3002;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-javascript">function writeData(filename, data) {
+    var lock = lockService.acquireLock(filename);
+    if (!lock) {
+        throw &apos;Failed to acquire lock&apos;;
+    }
+
+    try {
+        var file = storage.readFile(filename);
+        var updated = updateContents(file, data);
+        storage.writeFile(filename, updated);
+    } finally {
+        lock.release();
+    }
+}
+</code></pre>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x975E;&#x5E38;&#x4E0D;&#x5E78;&#xFF0C;&#x7EB5;&#x4F7F;&#x4F60;&#x6709;&#x4E00;&#x4E2A;&#x5B8C;&#x7F8E;&#x7684;&#x9501;&#x670D;&#x52A1;&#xFF0C;&#x8FD9;&#x5757;&#x4EE3;&#x7801;&#x4F9D;&#x65E7;&#x5B58;&#x5728;&#x95EE;&#x9898;&#x3002;&#x4E0B;&#x9762;&#x7684;&#x56FE;&#x793A;&#x4F1A;&#x6F14;&#x793A;&#x4F60;&#x5982;&#x4F55;&#x9047;&#x5230;&#x88AB;&#x635F;&#x574F;&#x7684;&#x6570;&#x636E;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/redlock-while-gc.jpg">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5728;&#x8FD9;&#x4E2A;&#x4F8B;&#x5B50;&#x4E2D;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x83B7;&#x53D6;&#x9501;&#x540E;&#xFF0C;&#x6301;&#x6709;&#x9501;&#x5F88;&#x957F;&#x65F6;&#x95F4;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;<strong>GC</strong>&#x5BFC;&#x81F4;&#x7684;&#x6682;&#x505C;&#x3002;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x5177;&#x6709;&#x7684;&#x8D85;&#x65F6;&#xFF0C;&#x4E00;&#x822C;&#x8FD9;&#x4F1A;&#x662F;&#x4E00;&#x4E2A;&#x597D;&#x4E3B;&#x610F;&#xFF08;&#x6BD5;&#x7ADF;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x5BA2;&#x6237;&#x7AEF;&#x83B7;&#x53D6;&#x4E86;&#x9501;&#xFF0C;&#x968F;&#x540E;&#x5B83;&#x5D29;&#x6E83;&#x4E86;&#xFF0C;&#x8FD9;&#x56DE;&#x5BFC;&#x81F4;&#x9501;&#x4E00;&#x76F4;&#x4E0D;&#x88AB;&#x91CA;&#x653E;&#xFF09;&#x3002;&#x7136;&#x800C;&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5982;&#x679C;<strong>GC</strong>&#x6682;&#x505C;&#x65F6;&#x95F4;&#x8D85;&#x8FC7;&#x9501;&#x7684;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#xFF0C;&#x5E76;&#x4E14;&#x5BA2;&#x6237;&#x7AEF;&#x6CA1;&#x6709;&#x610F;&#x8BC6;&#x5230;&#x5B83;&#x5DF2;&#x7ECF;&#x8FC7;&#x671F;&#xFF0C;&#x5982;&#x679C;&#x6B64;&#x65F6;&#x9501;&#x5DF2;&#x7ECF;&#x88AB;&#x53E6;&#x4E00;&#x4E2A;&#x5BA2;&#x6237;&#x7AEF;&#x83B7;&#x53D6;&#x5E76;&#x5B8C;&#x6210;&#x4E86;&#x5904;&#x7406;&#xFF0C;&#x90A3;&#x4E48;&#x5F53;&#x524D;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x7EE7;&#x7EED;&#x6267;&#x884C;&#x5C31;&#x4F1A;&#x9020;&#x6210;&#x95EE;&#x9898;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x8FD9;&#x4E2A;Bug&#x4E0D;&#x662F;&#x7406;&#x8BBA;&#x4E0A;&#x7684;&#xFF0C;<strong>HBase</strong>&#x5C31;&#x66FE;&#x53D1;&#x73B0;&#x6709;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;[3,4]&#x3002;&#x4E00;&#x822C;&#x60C5;&#x51B5;&#x4E0B;<strong>GC</strong>&#x7684;&#x505C;&#x987F;&#x5F88;&#x77ED;&#xFF0C;&#x4F46;&#x662F;<strong>stop-the-world</strong>&#x5F62;&#x5F0F;&#x7684;<strong>GC</strong>&#x6709;&#x53EF;&#x80FD;&#x4F1A;&#x9020;&#x6210;&#x957F;&#x8FBE;&#x6570;&#x5206;&#x949F;&#x7684;&#x505C;&#x987F;&#xFF0C;&#x8FD9;&#x8DB3;&#x4EE5;&#x957F;&#x5230;&#x9501;&#x8D85;&#x65F6;&#x3002;&#x867D;&#x7136;&#x4EE5;&#x5E76;&#x53D1;&#x6536;&#x96C6;&#x800C;&#x8457;&#x540D;<strong>Hotspot JVM</strong>&#x7684;<strong>CMS</strong>&#x56DE;&#x6536;&#x7B56;&#x7565;&#xFF0C;&#x4E5F;&#x4E0D;&#x80FD;&#x505A;&#x5230;&#x56DE;&#x6536;&#x4E0E;&#x5E94;&#x7528;&#x4EE3;&#x7801;&#x540C;&#x65F6;&#x8FDB;&#x884C;&#xFF0C;&#x5B83;&#x4E5F;&#x9700;&#x8981;<strong>stop-the-world</strong>&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4F60;&#x4E5F;&#x65E0;&#x6CD5;&#x901A;&#x8FC7;&#x5728;&#x5199;&#x4F1A;&#x5B58;&#x50A8;&#x4E4B;&#x524D;&#x505A;&#x6301;&#x6709;&#x9501;&#x7684;&#x68C0;&#x67E5;&#x6765;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x3002;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;<strong>GC</strong>&#x53EF;&#x4EE5;&#x5728;&#x4EFB;&#x4F55;&#x65F6;&#x5019;&#x6682;&#x505C;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x7684;&#x7EBF;&#x7A0B;&#xFF0C;&#x5305;&#x62EC;&#x5BF9;&#x4F60;&#x6765;&#x8BF4;&#x6700;&#x53EF;&#x80FD;&#x53D1;&#x751F;&#x7684;&#x70B9;&#xFF08;&#x5728;&#x68C0;&#x67E5;&#x548C;&#x5199;&#x5165;&#x64CD;&#x4F5C;&#x4E4B;&#x95F4;&#xFF09;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x679C;&#x4F60;&#x8BA4;&#x4E3A;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x4F7F;&#x7528;&#x6CA1;&#x6709;&#x8FD0;&#x884C;&#x65F6;&#xFF08;&#x6216;&#x8005;&#x8BF4;<strong>GC</strong>&#x505C;&#x987F;&#xFF09;&#x7684;&#x8BED;&#x8A00;&#x6765;&#x907F;&#x514D;&#x9762;&#x5BF9;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x90A3;&#x4F60;&#x9700;&#x8981;&#x77E5;&#x9053;&#x8FD8;&#x6709;&#x5F88;&#x591A;&#x60C5;&#x51B5;&#x8BA9;&#x4F60;&#x7684;&#x8FDB;&#x7A0B;&#x6682;&#x505C;&#x3002;&#x4E5F;&#x8BB8;&#x4F60;&#x7684;&#x8FDB;&#x7A0B;&#x8BD5;&#x56FE;&#x8BFB;&#x53D6;&#x4E00;&#x4E2A;&#x5C1A;&#x672A;&#x52A0;&#x8F7D;&#x5230;&#x5185;&#x5B58;&#x4E2D;&#x7684;&#x5730;&#x5740;&#xFF0C;&#x7ED3;&#x679C;&#x5728;&#x52A0;&#x8F7D;&#x5B83;&#x7684;&#x65F6;&#x5019;&#x51FA;&#x73B0;&#x4E86;&#x9875;&#x5931;&#x6548;&#xFF0C;&#x4ECE;&#x800C;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x4ECE;&#x78C1;&#x76D8;&#x4E2D;&#x52A0;&#x8F7D;&#x3002;&#x4E5F;&#x8BB8;&#x4F60;&#x7684;&#x78C1;&#x76D8;&#x662F;&#x4F7F;&#x7528;&#x7684;&#x4E9A;&#x9A6C;&#x900A;&#x7684;<strong>EBS</strong>&#x670D;&#x52A1;&#xFF0C;&#x56E0;&#x6B64;&#x5728;&#x4E9A;&#x9A6C;&#x900A;&#x62E5;&#x5835;&#x7684;&#x7F51;&#x7EDC;&#x4E0A;&#xFF0C;&#x8BFB;&#x53D6;&#x53D8;&#x91CF;&#x65E0;&#x610F;&#x4E2D;&#x53D8;&#x6210;&#x4E86;&#x540C;&#x6B65;&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#x3002;&#x4E5F;&#x8BB8;&#x8FD8;&#x6709;&#x8BB8;&#x591A;&#x5176;&#x4ED6;&#x8FDB;&#x7A0B;&#x4E89;&#x593A;<strong>CPU</strong>&#xFF0C;&#x800C;&#x60A8;&#x5728;&#x8C03;&#x5EA6;&#x5668;&#x6811;&#x4E2D;&#x9047;&#x5230;&#x4E86;&#x4E00;&#x4E2A;&#x9ED1;&#x8272;&#x8282;&#x70B9;&#x3002;&#x4E5F;&#x8BB8;&#x6709;&#x4EBA;&#x4E0D;&#x5C0F;&#x5FC3;&#x628A;<code>SIGSTOP</code>&#x53D1;&#x9001;&#x5230;&#x4E86;&#x8BE5;&#x8FDB;&#x7A0B;&#x3002;&#x603B;&#x4E4B;&#xFF0C;&#x8FD0;&#x884C;&#x7684;&#x8FDB;&#x7A0B;&#x88AB;&#x6682;&#x505C;&#x662F;&#x65E0;&#x6CD5;&#x907F;&#x514D;&#x7684;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x679C;&#x4F60;&#x8FD8;&#x662F;&#x4E0D;&#x76F8;&#x4FE1;&#x8FDB;&#x7A0B;&#x4F1A;&#x88AB;&#x6682;&#x505C;&#xFF0C;&#x90A3;&#x4E48;&#x53EF;&#x4EE5;&#x60F3;&#x8C61;&#x5BF9;&#x5B58;&#x50A8;&#x6587;&#x4EF6;&#x7684;&#x5199;&#x8BF7;&#x6C42;&#x51FA;&#x73B0;&#x4E86;&#x5EF6;&#x8FDF;&#x3002;&#x5728;&#x7F51;&#x7EDC;&#x4E0A;&#x7684;&#x4F20;&#x8F93;&#x7684;&#x5305;&#x51FA;&#x73B0;&#x4E86;&#x5EF6;&#x8FDF;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;&#x91CD;&#x4F20;&#x5BFC;&#x81F4;&#x3002;&#x5728;<strong>Github</strong>&#x51FA;&#x73B0;&#x7684;&#x4E00;&#x6B21;&#x7F51;&#x7EDC;&#x6545;&#x969C;&#x4E2D;&#xFF0C;&#x5728;&#x7F51;&#x7EDC;&#x4E2D;&#x4F20;&#x8F93;&#x7684;&#x5305;&#x88AB;&#x5EF6;&#x8FDF;&#x4E86;&#x5927;&#x7EA6;<code>90</code>&#x79D2;[9]&#x3002;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x5E94;&#x7528;&#x5B9E;&#x4F8B;&#x5728;&#x53D1;&#x9001;&#x5199;&#x8BF7;&#x6C42;&#x65F6;&#x51FA;&#x73B0;&#x4E86;&#x5EF6;&#x8FDF;&#xFF0C;&#x4F46;&#x662F;&#x9501;&#x5DF2;&#x7ECF;&#x8FC7;&#x671F;&#x91CA;&#x653E;&#xFF0C;&#x4ECE;&#x800C;&#x5BFC;&#x81F4;&#x53EF;&#x80FD;&#x51FA;&#x73B0;&#x591A;&#x4E2A;&#x5B9E;&#x4F8B;&#x5BF9;&#x5B58;&#x50A8;&#x7684;&#x5E76;&#x884C;&#x5199;&#x3002;&#x5373;&#x4F7F;&#x5728;&#x7BA1;&#x7406;&#x826F;&#x597D;&#x7684;&#x7F51;&#x7EDC;&#x4E2D;&#xFF0C;&#x8FD9;&#x79CD;&#x4E8B;&#x60C5;&#x4E5F;&#x53EF;&#x80FD;&#x53D1;&#x751F;&#x3002;&#x60A8;&#x6839;&#x672C;&#x65E0;&#x6CD5;&#x5BF9;&#x65F6;&#x95F4;&#x5B89;&#x6392;&#x505A;&#x51FA;&#x4EFB;&#x4F55;&#x5047;&#x8BBE;&#xFF0C;&#x8FD9;&#x5C31;&#x662F;&#x4E3A;&#x4EC0;&#x4E48;&#x65E0;&#x8BBA;&#x60A8;&#x4F7F;&#x7528;&#x4EC0;&#x4E48;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#xFF0C;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x57FA;&#x672C;&#x4E0A;&#x90FD;&#x662F;&#x4E0D;&#x5B89;&#x5168;&#x7684;&#x539F;&#x56E0;&#x3002;</p>
+<h2 id="&#x4F7F;&#x7528;&#x4EE4;&#x724C;&#x6765;&#x63D0;&#x5347;&#x9501;&#x7684;&#x6B63;&#x786E;&#x6027;&#x4FDD;&#x969C;">&#x4F7F;&#x7528;&#x4EE4;&#x724C;&#x6765;&#x63D0;&#x5347;&#x9501;&#x7684;&#x6B63;&#x786E;&#x6027;&#x4FDD;&#x969C;</h2>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x5B9E;&#x9645;&#x4E0A;&#x4E5F;&#x633A;&#x7B80;&#x5355;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5728;&#x5411;&#x5B58;&#x50A8;&#x670D;&#x52A1;&#x5199;&#x65F6;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x4EE4;&#x724C;&#x5373;&#x53EF;&#xFF0C;&#x6216;&#x8005;&#x8BF4;&#x4E50;&#x89C2;&#x9501;&#x3002;&#x5728;&#x8FD9;&#x4E2A;&#x573A;&#x666F;&#x4E2D;&#xFF0C;&#x4EE4;&#x724C;&#x53EF;&#x4EE5;&#x662F;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x81EA;&#x589E;&#x6570;&#x5B57;&#xFF08;&#x901A;&#x8FC7;&#x9501;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#xFF09;&#xFF0C;&#x5F53;&#x83B7;&#x53D6;&#x9501;&#x65F6;&#xFF0C;&#x5982;&#x679C;&#x83B7;&#x53D6;&#x6210;&#x529F;&#xFF0C;&#x9501;&#x670D;&#x52A1;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x4EE4;&#x724C;&#x3002;&#x8BE5;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/distribute-lock-brief-summary/redlock-with-fence.jpg">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>Client1</strong>&#x83B7;&#x53D6;&#x5230;&#x4E86;&#x9501;&#x5E76;&#x540C;&#x65F6;&#x5F97;&#x5230;&#x4E86;&#x4EE4;&#x724C;<code>33</code>&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x6267;&#x884C;&#x64CD;&#x4F5C;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x7531;&#x4E8E;&#x6682;&#x505C;&#x800C;&#x5BFC;&#x81F4;&#x9501;&#x5B9E;&#x8D28;&#x5DF2;&#x7ECF;&#x8FC7;&#x671F;&#x3002;<strong>Client2</strong>&#x5728;<strong>Client1</strong>&#x6682;&#x505C;&#x671F;&#x95F4;&#xFF08;&#x7531;&#x4E8E;&#x9501;&#x8D85;&#x65F6;&#x91CA;&#x653E;&#x800C;&#xFF09;&#x83B7;&#x53D6;&#x5230;&#x4E86;&#x9501;&#xFF0C;&#x540C;&#x65F6;&#x83B7;&#x5F97;&#x4E86;&#x66F4;&#x65B0;&#x7684;&#x4EE4;&#x724C;<code>34</code>&#xFF0C;&#x7136;&#x540E;&#x6267;&#x884C;&#x64CD;&#x4F5C;&#xFF0C;&#x5C06;&#x6570;&#x636E;&#x5B8C;&#x6210;&#x5199;&#x5165;&#xFF0C;&#x4E5F;&#x5305;&#x62EC;&#x4E86;&#x4EE4;&#x724C;<code>34</code>&#x3002;<strong>Client1</strong>&#x968F;&#x540E;&#x6062;&#x590D;&#x8FC7;&#x6765;&#xFF0C;&#x7136;&#x540E;&#x5F00;&#x59CB;&#x5C1D;&#x8BD5;&#x5411;&#x5B58;&#x50A8;&#x5199;&#x6570;&#x636E;&#xFF0C;&#x540C;&#x65F6;&#x5305;&#x62EC;&#x4E4B;&#x524D;&#x83B7;&#x53D6;&#x5230;&#x4E86;&#x4EE4;&#x724C;<code>33</code>&#x3002;&#x7531;&#x4E8E;&#x5B58;&#x50A8;&#x670D;&#x52A1;&#x8BB0;&#x5F97;&#x4E4B;&#x524D;&#x5904;&#x7406;&#x8FC7;&#x4E00;&#x4E2A;&#x4EE4;&#x724C;&#x4E3A;<code>34</code>&#x7684;&#x8BF7;&#x6C42;&#xFF0C;&#x6240;&#x4EE5;&#x5C06;&#x4F1A;&#x62D2;&#x7EDD;<strong>Client1</strong>&#x7684;&#x8FD9;&#x6B21;&#x8BF7;&#x6C42;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x8BF7;&#x6CE8;&#x610F;&#xFF0C;&#x8FD9;&#x8981;&#x6C42;&#x5B58;&#x50A8;&#x670D;&#x52A1;&#x80FD;&#x591F;&#x652F;&#x6301;&#x4EE4;&#x724C;&#x7684;&#x68C0;&#x6D4B;&#xFF0C;&#x5728;&#x53D1;&#x751F;&#x4EE4;&#x724C;&#x5012;&#x9000;&#x65F6;&#xFF0C;&#x62D2;&#x7EDD;&#x5199;&#x5165;&#x8BF7;&#x6C42;&#x3002;&#x4E00;&#x65E6;&#x4F60;&#x77E5;&#x9053;&#x4E86;&#x8BC0;&#x7A8D;&#xFF0C;&#x8FD9;&#x5E76;&#x4E0D;&#x7279;&#x522B;&#x96BE;&#x3002;&#x5982;&#x679C;&#x9501;&#x670D;&#x52A1;&#x751F;&#x6210;&#x4E25;&#x683C;&#x5355;&#x8C03;&#x589E;&#x52A0;&#x7684;&#x4EE4;&#x724C;&#xFF0C;&#x8FD9;&#x6837;&#x80FD;&#x591F;&#x5145;&#x5206;&#x7684;&#x786E;&#x4FDD;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x7684;&#x6B63;&#x786E;&#x6027;&#x3002;&#x4F8B;&#x5982;&#xFF1A;&#x5982;&#x679C;&#x4F60;&#x4F7F;&#x7528;<strong>ZooKeeper</strong>&#x4F5C;&#x4E3A;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x7684;&#x5E95;&#x5C42;&#xFF0C;&#x90A3;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>zxid</code>&#x6216;<code>znode</code>&#x7248;&#x672C;&#x53F7;&#x4F5C;&#x4E3A;&#x4EE4;&#x724C;&#xFF0C;&#x5E76;&#x4E14;&#x5B83;&#x4EEC;&#x80FD;&#x5F88;&#x597D;&#x7684;&#x5DE5;&#x4F5C;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x56DE;&#x8FC7;&#x5934;&#x6765;&#x770B;&#x4E00;&#x4E0B;<strong>Redlock</strong>&#x7B97;&#x6CD5;&#xFF0C;&#x5B83;&#x6CA1;&#x6709;&#x4F7F;&#x7528;&#x4EE4;&#x724C;&#x6765;&#x4FDD;&#x8BC1;&#x5728;&#x51FA;&#x73B0;&#x8FDB;&#x7A0B;&#x6682;&#x505C;&#x6216;&#x8005;&#x7F51;&#x7EDC;&#x5EF6;&#x8FDF;&#x65F6;&#x4E0D;&#x51FA;&#x73B0;&#x95EE;&#x9898;&#x3002;&#x867D;&#x7136;&#x8FD9;&#x4E2A;&#x7B97;&#x6CD5;&#x770B;&#x8D77;&#x6765;&#x5F88;&#x4E0D;&#x9519;&#xFF0C;&#x4F46;&#x662F;&#x7528;&#x8D77;&#x6765;&#x4E0D;&#x662F;&#x90A3;&#x4E48;&#x5B89;&#x5168;&#xFF0C;&#x56E0;&#x4E3A;&#x4E00;&#x65E6;&#x51FA;&#x73B0;&#x4E86;&#x8FDB;&#x7A0B;&#x6682;&#x505C;&#x6216;&#x8005;&#x7F51;&#x7EDC;&#x5EF6;&#x8FDF;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x4E4B;&#x95F4;&#x7684;&#x6570;&#x636E;&#x7ADE;&#x4E89;&#x5C31;&#x4F1A;&#x6709;&#x51FA;&#x73B0;&#x7684;&#x6982;&#x7387;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x6211;&#x6CA1;&#x6709;&#x5B8C;&#x5584;<strong>Redlock</strong>&#x7B97;&#x6CD5;&#xFF0C;&#x4EE5;&#x671F;&#x671B;&#x5176;&#x80FD;&#x591F;&#x652F;&#x6301;&#x81EA;&#x589E;&#x7684;&#x4EE4;&#x724C;&#x3002;&#x8FD9;&#x662F;&#x6709;&#x4E9B;&#x96BE;&#x5EA6;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x4F7F;&#x7528;&#x968F;&#x673A;&#x503C;&#x4E0D;&#x4F1A;&#x4EA7;&#x751F;&#x6548;&#x679C;&#xFF0C;&#x800C;&#x518D;&#x4E00;&#x4E2A;<strong>Redis</strong>&#x8282;&#x70B9;&#x4E0A;&#x5B8C;&#x6210;&#x81EA;&#x589E;&#x8BA1;&#x6570;&#x53EF;&#x9760;&#x6027;&#x53C8;&#x4E0D;&#x9AD8;&#xFF0C;&#x56E0;&#x4E3A;&#x8FD9;&#x4E2A;&#x8282;&#x70B9;&#x53EF;&#x80FD;&#x5931;&#x6548;&#xFF0C;&#x800C;&#x5728;&#x591A;&#x4E2A;&#x8282;&#x70B9;&#x8FDB;&#x884C;&#x8BA1;&#x7B97;&#x4F1A;&#x5BFC;&#x81F4;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x540C;&#x6B65;&#xFF0C;&#x4ECE;&#x800C;&#x5F15;&#x5165;&#x5206;&#x5E03;&#x5F0F;&#x5171;&#x8BC6;&#x7B97;&#x6CD5;&#x6765;&#x4FDD;&#x8BC1;&#x81EA;&#x589E;&#x3002;</p>
+<h2 id="&#x7528;&#x65F6;&#x95F4;&#x6765;&#x89E3;&#x51B3;&#x5171;&#x8BC6;&#x95EE;&#x9898;">&#x7528;&#x65F6;&#x95F4;&#x6765;&#x89E3;&#x51B3;&#x5171;&#x8BC6;&#x95EE;&#x9898;</h2>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>Redlock</strong>&#x6CA1;&#x6709;&#x4F7F;&#x7528;&#x4EE4;&#x724C;&#xFF0C;&#x8FD9;&#x4E5F;&#x8868;&#x660E;&#x5728;&#x5BF9;&#x9501;&#x7684;&#x6B63;&#x786E;&#x6027;&#x6709;&#x4F9D;&#x8D56;&#x7684;&#x573A;&#x666F;&#x4E0D;&#x9002;&#x5408;&#x4F7F;&#x7528;<strong>Redlock</strong>&#x3002;&#x4F46;&#x662F;&#x8FD9;&#x91CC;&#x6709;&#x66F4;&#x591A;&#x7684;&#x95EE;&#x9898;&#x503C;&#x5F97;&#x8BA8;&#x8BBA;&#x3002;&#x7406;&#x8BBA;&#x4E0A;&#x8BB2;&#xFF0C;&#x4E00;&#x4E2A;&#x66F4;&#x5177;&#x6709;&#x5B9E;&#x8DF5;&#x6027;&#x8D28;&#x7684;&#x7B97;&#x6CD5;&#x5E94;&#x8BE5;&#x662F;&#x7C7B;&#x4F3C;<a href="http://103.95.217.9/courses.csail.mit.edu/6.852/08/papers/CT96-JACM.pdf" target="_blank">&#x57FA;&#x4E8E;&#x5931;&#x8D25;&#x68C0;&#x6D4B;&#x7684;&#x5F02;&#x6B65;&#x7F51;&#x7EDC;&#x6A21;&#x578B;</a>&#x3002;&#x7B80;&#x5355;&#x7684;&#x8BF4;&#xFF0C;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x8BE5;&#x7B97;&#x6CD5;&#x5BF9;&#x4E8E;&#x65F6;&#x95F4;&#xFF08;&#x6216;&#x8005;&#x5EF6;&#x8FDF;&#xFF09;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x5047;&#x8BBE;&#xFF1A;&#x8FDB;&#x7A0B;&#x88AB;&#x6682;&#x505C;&#x4EFB;&#x610F;&#x65F6;&#x957F;&#xFF0C;&#x7F51;&#x7EDC;&#x51FA;&#x73B0;&#x4E86;&#x4EFB;&#x610F;&#x65F6;&#x957F;&#x7684;&#x5EF6;&#x8FDF;&#xFF0C;&#x7CFB;&#x7EDF;&#x65F6;&#x949F;&#x4E4B;&#x524D;&#x51FA;&#x73B0;&#x4E86;&#x504F;&#x5DEE;&#xFF0C;&#x8FD9;&#x4E9B;&#x90FD;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x5230;&#x7B97;&#x6CD5;&#x7684;&#x6B63;&#x786E;&#x6027;&#x3002;&#x9274;&#x4E8E;&#x6211;&#x4EEC;&#x4E4B;&#x524D;&#x8BA8;&#x8BBA;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x8FD9;&#x662F;&#x5BF9;&#x4E8E;&#x5047;&#x8BBE;&#x4E00;&#x4E2A;&#x975E;&#x5E38;&#x5408;&#x7406;&#x7684;&#x8981;&#x6C42;&#x3002;</p>
+<blockquote>
+<p><img src="https://weipeng2k.github.io/hot-wind/resources/self-think.png" alt="self-think"> &#x5176;&#x5B9E;<strong>Redlock</strong>&#x7684;&#x95EE;&#x9898;&#x6240;&#x5728;&#xFF0C;&#x5C31;&#x662F;&#x5BF9;&#x65F6;&#x95F4;&#x7684;&#x5047;&#x8BBE;&#xFF0C;&#x5E26;&#x6765;&#x53EF;&#x7528;&#x6027;&#x7684;&#x540C;&#x65F6;&#xFF0C;&#x964D;&#x4F4E;&#x4E86;&#x6B63;&#x786E;&#x6027;&#xFF08;&#x6216;&#x4E00;&#x81F4;&#x6027;&#xFF09;&#x3002;</p>
+</blockquote>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4F7F;&#x7528;&#x65F6;&#x949F;&#x4EE5;&#x53CA;&#x8D85;&#x65F6;&#x7684;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x7B97;&#x6CD5;&#xFF08;&#x6BD4;&#x5982;&#xFF1A;<strong>Redlock</strong>&#xFF09;&#xFF0C;&#x5176;&#x76EE;&#x7684;&#x5C31;&#x662F;&#x4E3A;&#x4E86;&#x907F;&#x514D;&#x51FA;&#x73B0;&#x7531;&#x4E8E;&#x5B9E;&#x4F8B;&#x7684;&#x6545;&#x969C;&#x5BFC;&#x81F4;&#x6B7B;&#x9501;&#x3002;&#x4F46;&#x662F;&#x8D85;&#x65F6;&#x5F80;&#x5F80;&#x4E0D;&#x4F1A;&#x90A3;&#x4E48;&#x7CBE;&#x786E;&#xFF0C;&#x53EA;&#x662F;&#x4E00;&#x6B21;&#x8BF7;&#x6C42;&#x8D85;&#x65F6;&#x5E76;&#x4E0D;&#x610F;&#x5473;&#x7740;&#x5BF9;&#x7AEF;&#x673A;&#x5668;&#xFF08;<strong>Redis</strong>&#x5B9E;&#x4F8B;&#xFF09;&#x6302;&#x6389;&#xFF0C;&#x56E0;&#x4E3A;&#x8FD9;&#x53EF;&#x80FD;&#x65F6;&#x7F51;&#x7EDC;&#x4E0A;&#x7A81;&#x7136;&#x51FA;&#x73B0;&#x7684;&#x6296;&#x52A8;&#xFF0C;&#x6216;&#x8005;&#x672C;&#x5730;&#x65F6;&#x949F;&#x51FA;&#x73B0;&#x95EE;&#x9898;&#x3002;&#x4F7F;&#x7528;&#x8D85;&#x65F6;&#x4F5C;&#x4E3A;&#x6545;&#x969C;&#x68C0;&#x6D4B;&#x7684;&#x624B;&#x6BB5;&#xFF0C;&#x53EA;&#x80FD;&#x83B7;&#x53D6;&#x4E00;&#x4E2A;&#x5927;&#x6982;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x731C;&#x6D4B;&#x5BF9;&#x7AEF;&#x53EF;&#x80FD;&#x51FA;&#x73B0;&#x4E86;&#x95EE;&#x9898;&#xFF08;&#x5982;&#x679C;&#x53EF;&#x4EE5;&#x7684;&#x8BDD;&#xFF0C;&#x5206;&#x5E03;&#x5F0F;&#x7B97;&#x6CD5;&#x5B8C;&#x5168;&#x6CA1;&#x6709;&#x65F6;&#x949F;&#xFF0C;&#x4F46;&#x5171;&#x8BC6;&#x5C31;&#x4E0D;&#x53EF;&#x80FD;[10]&#x3002;&#x83B7;&#x53D6;&#x9501;&#x5C31;&#x50CF;&#x6BD4;&#x8F83;&#x548C;&#x8BBE;&#x7F6E;&#x64CD;&#x4F5C;&#xFF0C;&#x8FD9;&#x9700;&#x8981;&#x8FBE;&#x6210;&#x5171;&#x8BC6;[11]&#xFF09;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x9700;&#x8981;&#x6CE8;&#x610F;<strong>Redis</strong>&#x4F7F;&#x7528;&#x4E86;<code>gettimeofday</code>&#x51FD;&#x6570;&#xFF0C;&#x800C;&#x975E;<code>monotonic clock</code>&#x6765;&#x5224;&#x5B9A;&#x662F;&#x5426;&#x8FC7;&#x671F;&#x3002;&#x6839;&#x636E;<code>gettimeofday</code>&#x7684;&#x8BF4;&#x660E;&#x6587;&#x6863;&#x8868;&#x660E;&#xFF0C;&#x5B83;&#x8FD4;&#x56DE;&#x7684;&#x65F6;&#x95F4;&#x53EF;&#x80FD;&#x4F1A;&#x51FA;&#x73B0;&#x8DF3;&#x8F6C;&#x2014;&#x2014;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#xFF0C;&#x5B83;&#x53EF;&#x80FD;&#x4F1A;&#x7A81;&#x7136;&#x5411;&#x524D;&#x8DF3;&#x51E0;&#x5206;&#x949F;&#xFF0C;&#x751A;&#x81F3;&#x8DF3;&#x56DE;&#x65F6;&#x95F4;&#xFF08;&#x4F8B;&#x5982;&#xFF1A;&#x5982;&#x679C;&#x65F6;&#x949F;&#x56E0;&#x4E0E;<strong>NTP</strong>&#x670D;&#x52A1;&#x5668;&#x5DEE;&#x5F02;&#x592A;&#x5927;&#x800C;&#x7531;<strong>NTP</strong>&#x4ECB;&#x5165;&#xFF0C;&#x6216;&#x8005;&#x5982;&#x679C;&#x65F6;&#x949F;&#x7531;&#x7BA1;&#x7406;&#x5458;&#x624B;&#x52A8;&#x8C03;&#x6574;&#xFF09;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x5982;&#x679C;&#x7CFB;&#x7EDF;&#x65F6;&#x949F;&#x6B63;&#x5728;&#x505A;&#x5947;&#x602A;&#x7684;&#x4E8B;&#x60C5;&#xFF0C;&#x5F88;&#x5BB9;&#x6613;&#x53D1;&#x751F;<strong>Redis</strong>&#x4E2D;<strong>KEY</strong>&#x7684;&#x8FC7;&#x671F;&#x901F;&#x5EA6;&#x6BD4;&#x9884;&#x671F;&#x8981;&#x5FEB;&#x5F97;&#x591A;&#x6216;&#x6162;&#x5F97;&#x591A;&#x7684;&#x95EE;&#x9898;&#x3002;</p>
+<blockquote>
+<p><img src="https://weipeng2k.github.io/hot-wind/resources/self-think.png" alt="self-think"> <code>monotonic clock</code>&#x662F;&#x4EE5;&#x7CFB;&#x7EDF;&#x542F;&#x52A8;&#x65F6;&#x95F4;&#x5F00;&#x59CB;&#x8BA1;&#x7B97;&#x7684;&#xFF0C;&#x5B83;&#x4E0D;&#x53D7;&#x65F6;&#x949F;&#x8C03;&#x6574;&#x7684;&#x5F71;&#x54CD;&#xFF0C;&#x662F;&#x4E00;&#x4E2A;&#x4E25;&#x683C;&#x5355;&#x8C03;&#x9012;&#x589E;&#x7684;&#x65F6;&#x949F;&#x5E8F;&#x5217;&#x3002;</p>
+</blockquote>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5BF9;&#x4E8E;&#x5F02;&#x6B65;&#x7F51;&#x7EDC;&#x6A21;&#x578B;&#x4E2D;&#x7684;&#x5206;&#x5E03;&#x5F0F;&#x7B97;&#x6CD5;&#x6765;&#x8BF4;&#xFF0C;&#x8FD9;&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x5927;&#x95EE;&#x9898;&#xFF1A;&#x8FD9;&#x4E9B;&#x7B97;&#x6CD5;&#x901A;&#x5E38;&#x786E;&#x4FDD;&#x5176;&#x6B63;&#x786E;&#x6027;&#xFF0C;&#x800C;&#x4E0D;&#x505A;&#x51FA;&#x4EFB;&#x4F55;&#x5173;&#x4E8E;&#x65F6;&#x95F4;&#x7684;&#x5047;&#x8BBE;[12]&#x3002;&#x53EA;&#x6709;&#x53EF;&#x7528;&#x6027;&#x8981;&#x6C42;&#x4F9D;&#x8D56;&#x4E8E;&#x8D85;&#x65F6;&#x6216;&#x5176;&#x4ED6;&#x6545;&#x969C;&#x68C0;&#x6D4B;&#x5668;&#x3002;&#x7B80;&#x5355;&#x7684;&#x8BF4;&#xFF0C;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x5373;&#x4F7F;&#x7CFB;&#x7EDF;&#x4E2D;&#x7684;&#x8BA1;&#x65F6;&#x5230;&#x5904;&#x90FD;&#x662F;&#xFF08;&#x8FDB;&#x7A0B;&#x6682;&#x505C;&#x3001;&#x7F51;&#x7EDC;&#x5EF6;&#x8FDF;&#x3001;&#x65F6;&#x949F;&#x5411;&#x524D;&#x548C;&#x5411;&#x540E;&#x8DF3;&#x8DC3;&#xFF09;&#x95EE;&#x9898;&#xFF0C;&#x5C31;&#x7B97;&#x7B97;&#x6CD5;&#x7684;&#x6027;&#x80FD;&#x7CDF;&#x900F;&#x4E86;&#xFF0C;&#x4F46;&#x7B97;&#x6CD5;&#x6C38;&#x8FDC;&#x4E0D;&#x4F1A;&#x505A;&#x51FA;&#x9519;&#x8BEF;&#x7684;&#x51B3;&#x5B9A;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x7136;&#x800C;<strong>Redlock</strong>&#x4E0D;&#x662F;&#x8FD9;&#x6837;&#x7684;&#xFF0C;&#x5176;&#x6B63;&#x786E;&#x6027;&#x53D6;&#x51B3;&#x4E8E;&#x5B83;&#x5BF9;&#x4E8E;&#x65F6;&#x95F4;&#x7684;&#x591A;&#x4E2A;&#x5047;&#x8BBE;&#xFF1A;&#x5B83;&#x5047;&#x8BBE;&#x6240;&#x6709;<strong>Redis</strong>&#x8282;&#x70B9;&#x4E0A;&#x7684;&#x76F8;&#x540C;<strong>KEY</strong>&#x5728;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#x4E0A;&#x5927;&#x81F4;&#x76F8;&#x540C;&#xFF1B;&#x7F51;&#x7EDC;&#x5EF6;&#x8FDF;&#x76F8;&#x5BF9;&#x4E8E;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#x77ED;&#x5F88;&#x591A;&#xFF1B;&#x8FDB;&#x7A0B;&#x6682;&#x505C;&#x6BD4;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#x77ED;&#x5F97;&#x591A;&#x3002;</p>
+<h2 id="&#x4F7F;&#x7528;&#x7CDF;&#x7CD5;&#x7684;&#x5EF6;&#x8FDF;&#x8BA9;redlock&#x5931;&#x6548;">&#x4F7F;&#x7528;&#x7CDF;&#x7CD5;&#x7684;&#x5EF6;&#x8FDF;&#x8BA9;<strong>Redlock</strong>&#x5931;&#x6548;</h2>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x8BA9;&#x6211;&#x4EEC;&#x770B;&#x4E00;&#x4E9B;&#x4F8B;&#x5B50;&#x6765;&#x8BC1;&#x660E;<strong>Redlock</strong>&#x5BF9;&#x65F6;&#x95F4;&#x5047;&#x8BBE;&#x7684;&#x4F9D;&#x8D56;&#x3002;&#x5047;&#x8BBE;&#x7CFB;&#x7EDF;&#x6709;&#x4E94;&#x4E2A;<strong>Redis</strong>&#x8282;&#x70B9;&#xFF08;A&#x3001;B&#x3001;C&#x3001;D&#x548C;E&#xFF09;&#x548C;&#x4E24;&#x4E2A;&#x5BA2;&#x6237;&#x7AEF;&#xFF08;1&#x548C;2&#xFF09;&#x3002;&#x5982;&#x679C;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;<strong>Redis</strong>&#x8282;&#x70B9;&#x4E0A;&#x7684;&#x65F6;&#x949F;&#x5411;&#x524D;&#x8DF3;&#x52A8;&#x4F1A;&#x53D1;&#x751F;&#x4EC0;&#x4E48;&#xFF1F;</p>
+<ol>
+<li><strong>&#x5BA2;&#x6237;&#x7AEF;1</strong>&#x83B7;&#x53D6;&#x4E86;&#x8282;&#x70B9;A&#xFF0C;B&#xFF0C;C&#xFF0C;&#x7531;&#x4E8E;&#x7F51;&#x7EDC;&#x95EE;&#x9898;&#xFF0C;D&#x548C;E&#x4E0D;&#x53EF;&#x8FBE;</li>
+<li>&#x5728;&#x8282;&#x70B9;C&#x4E0A;&#x7684;&#x65F6;&#x949F;&#x51FA;&#x73B0;&#x524D;&#x8DF3;&#xFF0C;&#x5BFC;&#x81F4;C&#x4E0A;&#x7684;&#x9501;&#x8FC7;&#x671F;</li>
+<li><strong>&#x5BA2;&#x6237;&#x7AEF;2</strong>&#x83B7;&#x53D6;&#x4E86;&#x8282;&#x70B9;C&#xFF0C;D&#xFF0C;E&#xFF0C;&#x7531;&#x4E8E;&#x7F51;&#x7EDC;&#x95EE;&#x9898;&#xFF0C;A&#x548C;B&#x4E0D;&#x53EF;&#x8FBE;</li>
+<li><strong>&#x5BA2;&#x6237;&#x7AEF;1&#x548C;2</strong>&#xFF0C;&#x5728;&#x8FD9;&#x4E00;&#x65F6;&#x523B;&#xFF0C;&#x90FD;&#x83B7;&#x5F97;&#x4E86;&#x9501;</li>
+</ol>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x679C;&#x8282;&#x70B9;C&#x5728;&#x5C06;&#x9501;&#x6301;&#x4E45;&#x5316;&#x4E4B;&#x524D;&#x5D29;&#x6E83;&#x4E86;&#xFF0C;&#x5E76;&#x91CD;&#x65B0;&#x542F;&#x52A8;&#xFF0C;&#x4E5F;&#x53EF;&#x80FD;&#x4F1A;&#x53D1;&#x751F;&#x4E0A;&#x8FF0;&#x95EE;&#x9898;&#x3002;&#x5728;<strong>Redlock</strong>&#x7B97;&#x6CD5;&#x6587;&#x6863;&#x4E2D;&#xFF0C;&#x5EFA;&#x8BAE;&#x8282;&#x70B9;&#x91CD;&#x542F;&#x65F6;&#x8FDB;&#x884C;&#x5EF6;&#x8FDF;&#xFF0C;&#x4EE5;&#x671F;&#x671B;&#x9501;&#x80FD;&#x591F;&#x8FC7;&#x671F;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x79CD;&#x91CD;&#x542F;&#x5EF6;&#x8FDF;&#x8FD8;&#x662F;&#x8BB2;&#x95EE;&#x9898;&#x629B;&#x7ED9;&#x4E86;&#x65F6;&#x95F4;&#xFF0C;&#x5982;&#x679C;&#x5904;&#x7406;&#x4E0D;&#x5F53;&#xFF0C;&#x8FD8;&#x662F;&#x4F1A;&#x51FA;&#x73B0;&#x95EE;&#x9898;&#x3002;&#x5F53;&#x7136;&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x8BA4;&#x4E3A;&#x65F6;&#x949F;&#x7684;&#x8DF3;&#x8DC3;&#x662F;&#x96BE;&#x4EE5;&#x53D1;&#x751F;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x5728;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#x91CC;&#x5DF2;&#x7ECF;&#x914D;&#x7F6E;&#x597D;&#x4E86;<strong>NTP</strong>&#xFF0C;&#x5E76;&#x4FDD;&#x8BC1;&#x5176;&#x670D;&#x52A1;&#x8D28;&#x91CF;&#x3002;&#x57FA;&#x4E8E;&#x8FD9;&#x4E2A;&#x5047;&#x8BBE;&#xFF0C;&#x6211;&#x4EEC;&#x770B;&#x4E00;&#x4E0B;&#x5982;&#x679C;&#x8FDB;&#x7A0B;&#x6682;&#x505C;&#xFF0C;&#x662F;&#x5426;&#x4E5F;&#x4F1A;&#x5BFC;&#x81F4;&#x5931;&#x8D25;&#xFF1A;</p>
+<ol>
+<li><strong>&#x5BA2;&#x6237;&#x7AEF;1</strong>&#x5728;A&#xFF0C;B&#xFF0C;C&#xFF0C;D&#xFF0C;E&#x8282;&#x70B9;&#x4E0A;&#x83B7;&#x53D6;&#x9501;</li>
+<li><strong>Redis</strong>&#x5B9E;&#x4F8B;&#x90FD;&#x8FD4;&#x56DE;&#x83B7;&#x53D6;&#x6210;&#x529F;&#xFF0C;&#x4F46;&#x54CD;&#x5E94;&#x5728;&#x5BA2;&#x6237;&#x7AEF;1&#x7F51;&#x53E3;&#x5F00;&#x59CB;&#x6392;&#x961F;&#x65F6;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;1&#x53D1;&#x751F;fullGC&#xFF0C;&#x51FA;&#x73B0;&#x4E86;&#x6682;&#x505C;</li>
+<li>&#x9501;&#x5728;&#x6240;&#x6709;&#x7684;<strong>Redis</strong>&#x5B9E;&#x4F8B;&#x4E0A;&#x8FC7;&#x671F;</li>
+<li><strong>&#x5BA2;&#x6237;&#x7AEF;2</strong>&#x83B7;&#x53D6;A&#xFF0C;B&#xFF0C;C&#xFF0C;D&#xFF0C;E&#x8282;&#x70B9;&#x4E0A;&#x7684;&#x9501;</li>
+<li><strong>&#x5BA2;&#x6237;&#x7AEF;1</strong>&#x7684;<strong>GC</strong>&#x5B8C;&#x6210;&#xFF0C;&#x5E76;&#x6536;&#x5230;&#x5EF6;&#x8FDF;&#x540E;&#x7684;&#x54CD;&#x5E94;&#xFF0C;&#x6839;&#x636E;&#x54CD;&#x5E94;&#x5224;&#x65AD;&#x5BA2;&#x6237;&#x7AEF;1&#x83B7;&#x53D6;&#x5230;&#x4E86;&#x9501;</li>
+<li><strong>&#x5BA2;&#x6237;&#x7AEF;1&#x548C;2</strong>&#x90FD;&#x8BA4;&#x4E3A;&#x83B7;&#x53D6;&#x5230;&#x4E86;&#x9501;</li>
+</ol>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x867D;&#x7136;<strong>Redis</strong>&#x65F6;&#x7528;<strong>C</strong>&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x5B83;&#x4E0D;&#x5B58;&#x5728;<strong>GC</strong>&#xFF0C;&#x4F46;&#x662F;&#x5BF9;&#x5F53;&#x524D;&#x95EE;&#x9898;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x5E2E;&#x52A9;&#xFF0C;&#x56E0;&#x4E3A;&#x5BA2;&#x6237;&#x7AEF;&#x53EF;&#x80FD;&#x662F;&#x4F7F;&#x7528;&#x4E86;&#x6709;<strong>GC</strong>&#x7279;&#x6027;&#x7684;&#x8BED;&#x8A00;&#x7F16;&#x5199;&#x7684;&#x3002;&#x5982;&#x679C;&#x60F3;&#x8981;&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#x4FDD;&#x8BC1;&#x6B63;&#x786E;&#x6027;&#xFF0C;&#x5C31;&#x4E00;&#x5B9A;&#x8981;&#x5728;<strong>&#x5BA2;&#x6237;&#x7AEF;2</strong>&#x83B7;&#x53D6;&#x5230;&#x9501;&#x540E;&#xFF0C;<strong>&#x5BA2;&#x6237;&#x7AEF;1</strong>&#x4E0D;&#x4F1A;&#x6267;&#x884C;&#x76F8;&#x5173;&#x64CD;&#x4F5C;&#xFF0C;&#x800C;&#x89E3;&#x6CD5;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x524D;&#x9762;&#x63D0;&#x5230;&#x7684;&#x4EE4;&#x724C;&#x65B9;&#x5F0F;&#x3002;&#x7F51;&#x7EDC;&#x5EF6;&#x8FDF;&#xFF08;<strong>TCP</strong>&#x7A97;&#x53E3;&#x6392;&#x961F;&#xFF09;&#x4E5F;&#x53EF;&#x4EE5;&#x4EA7;&#x751F;&#x4E0E;&#x8FDB;&#x7A0B;&#x6682;&#x505C;&#x76F8;&#x540C;&#x7684;&#x95EE;&#x9898;&#x3002;</p>
+<h2 id="redlock&#x57FA;&#x4E8E;&#x540C;&#x6B65;&#x7684;&#x5047;&#x8BBE;"><strong>Redlock</strong>&#x57FA;&#x4E8E;&#x540C;&#x6B65;&#x7684;&#x5047;&#x8BBE;</h2>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>Redlock</strong>&#x9700;&#x8981;&#x5728;&#x540C;&#x6B65;&#x7CFB;&#x7EDF;&#x6A21;&#x578B;&#x7684;&#x5047;&#x8BBE;&#x4E0B;&#x624D;&#x80FD;&#x6B63;&#x5E38;&#x5DE5;&#x4F5C;&#xFF0C;&#x6240;&#x8C13;&#x540C;&#x6B65;&#x7CFB;&#x7EDF;&#x6A21;&#x578B;&#x6709;&#x4EE5;&#x4E0B;&#x7279;&#x6027;&#xFF1A;</p>
+<ol>
+<li>&#x6709;&#x754C;&#x7F51;&#x7EDC;&#x5EF6;&#x8FDF;&#xFF08;&#x60A8;&#x53EF;&#x4EE5;&#x4FDD;&#x8BC1;&#x6570;&#x636E;&#x5305;&#x603B;&#x662F;&#x5728;&#x6709;&#x4FDD;&#x8BC1;&#x7684;&#x6700;&#x5927;&#x5EF6;&#x8FDF;&#x5185;&#x5230;&#x8FBE;&#xFF09;</li>
+<li>&#x6709;&#x754C;&#x8FDB;&#x7A0B;&#x6682;&#x505C;&#xFF08;&#x6362;&#x53E5;&#x8BDD;&#x8BF4;&#x5C31;&#x662F;&#x5F3A;&#x5B9E;&#x65F6;&#x7EA6;&#x675F;&#xFF0C;&#x5C31;&#x50CF;&#x6C7D;&#x8F66;&#x4E0A;&#x7684;&#x5B89;&#x5168;&#x6C14;&#x56CA;&#x4E00;&#x6837;&#x53CA;&#x65F6;&#xFF09;</li>
+<li>&#x6709;&#x754C;&#x65F6;&#x949F;&#x9519;&#x8BEF;&#xFF08;&#x7948;&#x7977;&#x4E0D;&#x4F1A;&#x4ECE;&#x6709;&#x95EE;&#x9898;&#x7684;NTP&#x670D;&#x52A1;&#x7AEF;&#x83B7;&#x53D6;&#x65F6;&#x95F4;&#xFF09;</li>
+</ol>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x540C;&#x6B65;&#x7CFB;&#x7EDF;&#x6A21;&#x578B;&#x5E76;&#x4E0D;&#x662F;&#x610F;&#x5473;&#x7740;&#x8282;&#x70B9;&#x7684;&#x7CFB;&#x7EDF;&#x65F6;&#x949F;&#x5B8C;&#x5168;&#x540C;&#x6B65;&#xFF0C;&#x53EA;&#x662F;&#x610F;&#x5473;&#x7740;&#x4F60;&#x5047;&#x8BBE;&#x4E86;&#x4E00;&#x4E2A;&#x7F51;&#x7EDC;&#x5EF6;&#x8FDF;&#x3001;&#x8FDB;&#x7A0B;&#x6682;&#x505C;&#x4EE5;&#x53CA;&#x65F6;&#x949F;&#x504F;&#x5DEE;&#x7684;&#x4E0A;&#x9650;[12]&#x3002;<strong>Redlock</strong>&#x7B97;&#x6CD5;&#x5047;&#x8BBE;&#x8FD9;&#x4E9B;&#x5EF6;&#x8FDF;&#x548C;&#x504F;&#x5DEE;&#x8981;&#x8FDC;&#x5C0F;&#x4E8E;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#xFF08;<strong>TTL</strong>&#xFF09;&#xFF0C;&#x5982;&#x679C;&#x8FD9;&#x4E2A;&#x65F6;&#x95F4;&#x5047;&#x8BBE;&#x957F;&#x4E8E;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#xFF0C;&#x8BE5;&#x7B97;&#x6CD5;&#x5C31;&#x4F1A;&#x5931;&#x6548;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5728;&#x7F51;&#x7EDC;&#x73AF;&#x5883;&#x5F88;&#x597D;&#x7684;&#x6570;&#x636E;&#x4E2D;&#x5FC3;&#x5185;&#xFF0C;&#x5BF9;&#x4E8E;&#x65F6;&#x95F4;&#x7684;&#x5047;&#x8BBE;&#x57FA;&#x672C;&#x4E0A;&#x90FD;&#x80FD;&#x591F;&#x6EE1;&#x8DB3;&#xFF0C;&#x8FD9;&#x5C31;&#x662F;&#x90E8;&#x5206;&#x540C;&#x6B65;&#x7F51;&#x7EDC;[12]&#x3002;&#x4F46;&#x662F;&#x8FD9;&#x6837;&#x5C31;&#x591F;&#x4E86;&#x5417;&#xFF1F;&#x53EA;&#x8981;&#x65F6;&#x95F4;&#x7684;&#x5047;&#x8BBE;&#x88AB;&#x63A8;&#x7FFB;&#xFF0C;<strong>Redlock</strong>&#x7B97;&#x6CD5;&#x5C31;&#x4E0D;&#x80FD;&#x591F;&#x4FDD;&#x8BC1;&#x5176;&#x6B63;&#x786E;&#x6027;&#xFF0C;&#x4F1A;&#x51FA;&#x73B0;&#x4E00;&#x4E2A;&#x5BA2;&#x6237;&#x7AEF;&#x83B7;&#x53D6;&#x4E86;&#x4E00;&#x4E2A;&#x8FC7;&#x671F;&#xFF08;&#x4F46;&#x88AB;&#x53E6;&#x4E00;&#x4E2A;&#x5BA2;&#x6237;&#x7AEF;&#x8BA4;&#x4E3A;&#x5176;&#x6301;&#x6709;&#x7684;&#xFF09;&#x9501;&#x3002;&#x5982;&#x679C;&#x4F60;&#x9700;&#x8981;&#x9501;&#x5177;&#x6709;&#x6700;&#x5927;&#x7A0B;&#x5EA6;&#x7684;&#x6B63;&#x786E;&#x6027;&#xFF0C;&#x90A3;&#x4E48;&#x57FA;&#x672C;&#x4E0A;&#x8FD9;&#x4E2A;&#x5047;&#x8BBE;&#x5C31;&#x662F;&#x4E0D;&#x8DB3;&#x591F;&#x7684;&#xFF0C;&#x4F60;&#x9700;&#x8981;&#x7684;&#x786E;&#x5B9A;&#x6027;&#x7684;&#x6B63;&#x786E;&#x6027;&#x3002;&#x5728;&#x540C;&#x6B65;&#x7F51;&#x7EDC;&#x4E2D;&#x53EF;&#x4EE5;&#x8FD0;&#x884C;&#x7684;&#x6A21;&#x5F0F;&#x6216;&#x8005;&#x5047;&#x8BBE;&#x5728;&#x90E8;&#x5206;&#x540C;&#x6B65;&#x7F51;&#x7EDC;&#x4E2D;&#x4E0D;&#x9002;&#x7528;&#x5DF2;&#x7ECF;&#x6709;&#x4E86;&#x5F88;&#x591A;&#x4F8B;&#x5B50;[7,8]&#x3002;&#x63D0;&#x9192;&#x81EA;&#x5DF1;&#x4E0D;&#x8981;&#x5FD8;&#x4E86;Github&#x7684;<code>90</code>&#x79D2;&#x7684;&#x5305;&#x5EF6;&#x8FDF;&#x95EE;&#x9898;[9]&#xFF0C;&#x540C;&#x65F6;<strong>Redlock</strong>&#x5F88;&#x5927;&#x53EF;&#x80FD;&#x65E0;&#x6CD5;&#x901A;&#x8FC7;<a href="https://aphyr.com/tags/jepsen" target="_blank">Jepsen</a>&#x6D4B;&#x8BD5;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x53E6;&#x4E00;&#x65B9;&#x9762;&#xFF0C;&#x4F7F;&#x7528;&#x4E86;&#x4E3A;&#x90E8;&#x5206;&#x540C;&#x6B65;&#x7F51;&#x7EDC;&#xFF08;&#x6216;&#x8005;&#x5E26;&#x6709;&#x6545;&#x969C;&#x68C0;&#x6D4B;&#x7684;&#x5F02;&#x6B65;&#x7F51;&#x7EDC;&#xFF09;&#x800C;&#x8BBE;&#x8BA1;&#x7684;&#x5171;&#x8BC6;&#x7B97;&#x6CD5;&#x5BF9;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x662F;&#x6709;&#x5E2E;&#x52A9;&#x7684;&#x3002;<strong>Raft</strong>&#x3001;<strong>Viewstamped Replication</strong>&#x3001;<strong>Zab</strong>&#x548C;<strong>Paxos</strong>&#x90FD;&#x5C5E;&#x4E8E;&#x8FD9;&#x4E00;&#x7C7B;&#x7B97;&#x6CD5;&#x3002;&#x8FD9;&#x79CD;&#x7B97;&#x6CD5;&#x5FC5;&#x987B;&#x653E;&#x5F03;&#x6240;&#x6709;&#x5BF9;&#x4E8E;&#x65F6;&#x95F4;&#x7684;&#x5047;&#x8BBE;&#x3002;&#x5F88;&#x5BB9;&#x6613;&#x5047;&#x8BBE;&#x7F51;&#x7EDC;&#x3001;&#x8FDB;&#x7A0B;&#x548C;&#x65F6;&#x949F;&#x6BD4;&#x5B9E;&#x9645;&#x66F4;&#x53EF;&#x9760;&#xFF0C;&#x4F46;&#x5728;&#x5206;&#x5E03;&#x5F0F;&#x7CFB;&#x7EDF;&#x8FD9;&#x79CD;&#x4E0D;&#x53EF;&#x9760;&#x7684;&#x73AF;&#x5883;&#x4E2D;&#xFF0C;&#x4F60;&#x5FC5;&#x987B;&#x975E;&#x5E38;&#x8C28;&#x614E;&#x5730;&#x5BF9;&#x5F85;&#x4F60;&#x7684;&#x5047;&#x8BBE;&#x3002;</p>
+<h2 id="&#x7ED3;&#x8BBA;">&#x7ED3;&#x8BBA;</h2>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x6211;&#x8BA4;&#x4E3A;<strong>Redlock</strong>&#x7B97;&#x6CD5;&#x662F;&#x4E00;&#x4E2A;&#x7CDF;&#x7CD5;&#x7684;&#x9009;&#x62E9;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x4E0D;&#x4F26;&#x4E0D;&#x7C7B;&#xFF0C;&#x5B8C;&#x5168;&#x4E0D;&#x5FC5;&#x8981;&#x7684;&#x91CD;&#x91CF;&#x7EA7;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x4EE5;&#x53CA;&#x6602;&#x8D35;&#x7684;&#x5B9E;&#x65BD;&#x4EE3;&#x4EF7;&#xFF0C;&#x4F46;&#x662F;&#x82B1;&#x4E86;&#x8FD9;&#x4E48;&#x5927;&#x7684;&#x4EE3;&#x4EF7;&#x5374;&#x65E0;&#x6CD5;&#x5151;&#x73B0;&#x8DB3;&#x591F;&#x7684;&#x6B63;&#x786E;&#x6027;&#x4FDD;&#x969C;&#x3002;&#x5C24;&#x5176;&#x662F;&#x8BE5;&#x7B97;&#x6CD5;&#x4F5C;&#x51FA;&#x4E86;&#x5173;&#x4E8E;&#x65F6;&#x95F4;&#x548C;&#x7CFB;&#x7EDF;&#x65F6;&#x949F;&#x6709;&#x5371;&#x9669;&#x6027;&#x7684;&#x5047;&#x8BBE;&#xFF0C;&#x800C;&#x8FD9;&#x79CD;&#x5047;&#x8BBE;&#x4E00;&#x65E6;&#x4E0D;&#x88AB;&#x6EE1;&#x8DB3;&#xFF0C;&#x5C06;&#x4F1A;&#x5BF9;&#x5176;&#x6B63;&#x786E;&#x6027;&#x5E26;&#x6765;&#x635F;&#x5931;&#x3002;&#x6B64;&#x5916;&#xFF0C;&#x5B83;&#x8FD8;&#x6216;&#x7F3A;&#x4E00;&#x4E2A;&#x4EE4;&#x724C;&#x751F;&#x6210;&#x7684;&#x88C5;&#x7F6E;&#xFF0C;&#x7528;&#x6765;&#x6700;&#x7EC8;&#x786E;&#x4FDD;&#x7B97;&#x6CD5;&#x4E0D;&#x4F1A;&#x6536;&#x5230;&#x7F51;&#x7EDC;&#x5EF6;&#x8FDF;&#x548C;&#x8FDB;&#x7A0B;&#x6682;&#x505C;&#x7684;&#x5F71;&#x54CD;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x679C;&#x4F60;&#x53EA;&#x662F;&#x5173;&#x6CE8;&#x9501;&#x7684;&#x6548;&#x7387;&#xFF0C;&#x6211;&#x5EFA;&#x8BAE;&#x4F60;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x5355;&#x8282;&#x70B9;&#x7684;<strong>Redis</strong>&#x6765;&#x5B9E;&#x73B0; &#x5206;&#x5E03;&#x5F0F;&#x9501;&#xFF0C;&#x5E76;&#x4E14;&#x5728;&#x6587;&#x6863;&#x4E2D;&#x8BF4;&#x660E;&#xFF0C;&#x8BE5;&#x9501;&#x80FD;&#x591F;&#x63D0;&#x4F9B;&#x8FD1;&#x4F3C;&#x6B63;&#x786E;&#x7684;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x670D;&#x52A1;&#xFF0C;&#x53EF;&#x80FD;&#x5B58;&#x5728;&#x5076;&#x5C14;&#x7684;&#x5931;&#x8D25;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x81F3;&#x5C11;&#x9700;&#x8981;<code>5</code>&#x4E2A;<strong>Redis</strong>&#x8282;&#x70B9;&#x7684;<strong>Redlock</strong>&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x679C;&#x4F60;&#x5173;&#x6CE8;&#x9501;&#x7684;&#x6B63;&#x786E;&#x6027;&#xFF0C;&#x90A3;&#x5C31;&#x4E0D;&#x8981;&#x4F7F;&#x7528;<strong>Redlock</strong>&#xFF0C;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x9002;&#x5408;&#x7684;&#x5171;&#x8BC6;&#x7CFB;&#x7EDF;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;zookeeper&#xFF0C;&#x901A;&#x8FC7;&#x4E00;&#x4E9B;&#x7EC4;&#x4EF6;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;<a href="https://curator.apache.org/curator-recipes/index.html" target="_blank">Curator</a>&#x7684;&#x652F;&#x6301;&#xFF08;&#x751A;&#x81F3;&#x5B83;&#x5DF2;&#x7ECF;&#x5B9E;&#x73B0;&#x4E86;&#x4E00;&#x4E2A;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#xFF09;&#x6765;&#x5B9E;&#x73B0;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x3002;&#x8FD8;&#x9700;&#x8981;&#x786E;&#x4FDD;&#x5E95;&#x5C42;&#x5B58;&#x50A8;&#x90FD;&#x652F;&#x6301;&#x4EE4;&#x724C;&#x3002;</p>
+<blockquote>
+<p><img src="https://weipeng2k.github.io/hot-wind/resources/self-think.png" alt="self-think"> &#x53D1;&#x6D88;&#x606F;&#x600E;&#x4E48;&#x529E;&#xFF0C;&#x6E05;&#x7406;&#x7F13;&#x5B58;&#x600E;&#x4E48;&#x529E;&#xFF0C;&#x8FD9;&#x4E9B;&#x90FD;&#x662F;&#x5B58;&#x50A8;&#x670D;&#x52A1;&#xFF0C;&#x8BA9;&#x5176;&#x5E95;&#x5C42;&#x652F;&#x6301;&#x4EE4;&#x724C;&#xFF0C;&#x4E0D;&#x5207;&#x5B9E;&#x9645;&#x3002;&#x5982;&#x679C;&#x5B58;&#x50A8;&#x90FD;&#x652F;&#x6301;&#x4EE4;&#x724C;&#x4E86;&#xFF0C;&#x90A3;&#x4E48;&#x8981;&#x9501;&#x5E72;&#x4EC0;&#x4E48;&#xFF0C;&#x5176;&#x5B9E;&#x770B;&#x6765;&#x8FD9;&#x4E2A;&#x4EE4;&#x724C;&#x4E5F;&#x6CA1;&#x4EC0;&#x4E48;&#x4EF7;&#x503C;&#xFF0C;&#x53EA;&#x662F;&#x628A;&#x95EE;&#x9898;&#x8F6C;&#x5AC1;&#x7ED9;&#x4E86;&#x540E;&#x7EED;&#x6D41;&#x7A0B;&#x3002;</p>
+</blockquote>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5C31;&#x50CF;&#x6211;&#x5F00;&#x59CB;&#x8BF4;&#x7684;&#xFF0C;<strong>Redis</strong>&#x5982;&#x679C;&#x7528;&#x5728;&#x6B63;&#x786E;&#x7684;&#x573A;&#x666F;&#x4E2D;&#xFF0C;&#x662F;&#x4E00;&#x4E2A;&#x975E;&#x5E38;&#x51FA;&#x8272;&#x7684;&#x5DE5;&#x5177;&#x3002;&#x4E0A;&#x8FF0;&#x6240;&#x6709;&#x7684;&#x89C2;&#x70B9;&#x90FD;&#x6CA1;&#x6709;&#x964D;&#x4F4E;<strong>Redis</strong>&#x672C;&#x8EAB;&#x7684;&#x6210;&#x7EE9;&#x3002;<a href="http://antirez.com" target="_blank">Salvatore</a>&#x5728;<strong>Redis</strong>&#x8FD9;&#x4E2A;&#x9879;&#x76EE;&#x4E0A;&#x5DE5;&#x4F5C;&#x4E86;&#x5F88;&#x591A;&#x5E74;&#xFF0C;&#x5B83;&#x7684;&#x6210;&#x529F;&#x662F;&#x7406;&#x6240;&#x56E0;&#x5F53;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x4EFB;&#x4F55;&#x5DE5;&#x5177;&#x90FD;&#x6709;&#x5B83;&#x7684;&#x5C40;&#x9650;&#x6027;&#xFF0C;&#x8BC6;&#x522B;&#x5B83;&#x4EEC;&#x4EE5;&#x53CA;&#x7528;&#x597D;&#x5B83;&#x4EEC;&#x66F4;&#x52A0;&#x91CD;&#x8981;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x679C;&#x4F60;&#x66F4;&#x6DF1;&#x5165;&#x7684;&#x4E86;&#x89E3;&#x8FD9;&#x4E9B;&#x95EE;&#x9898;&#xFF0C;&#x6211;&#x5728;&#x81EA;&#x5DF1;&#x7684;&#x4E66;&#x4E2D;&#x7B2C;8&#x548C;&#x7B2C;9&#x7AE0;&#x8282;&#x505A;&#x4E86;&#x66F4;&#x6DF1;&#x5165;&#x7684;&#x9610;&#x8FF0;&#x3002;&#x5982;&#x679C;&#x60F3;&#x66F4;&#x6DF1;&#x5165;&#x7684;&#x4E86;&#x89E3;<strong>zookeeper</strong>&#xFF0C;&#x6211;&#x63A8;&#x8350;<strong>Junqueira and Reed</strong>&#x7684;&#x4E66;[3]&#x3002;&#x5BF9;&#x4E8E;&#x5206;&#x5E03;&#x5F0F;&#x7CFB;&#x7EDF;&#x5982;&#x679C;&#x9700;&#x8981;&#x66F4;&#x597D;&#x7684;&#x4E86;&#x89E3;&#xFF0C;&#x6211;&#x63A8;&#x8350;<strong>Cachin, Guerraoui &#x548C; Rodrigues</strong>&#x7684;&#x4E66;[13]&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x8C22;&#x8C22; <strong>Kyle Kingsbury</strong>, <strong>Camille Fournier</strong>, <strong>Flavio Junqueira</strong>&#x548C;<strong>Salvatore Sanfilippo</strong>&#x7684;&#x6821;&#x5BA1;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>&#x66F4;&#x65B0;&#x81EA;2016&#x5E74;2&#x6708;9&#x65E5;</strong>&#xFF1A;<strong>Salvatore</strong>&#xFF0C;<strong>Redlock</strong>&#x7684;&#x4F5C;&#x8005;&#xFF0C;&#x4E5F;&#x662F;<strong>Redis</strong>&#x7684;&#x4F5C;&#x8005;&#xFF0C;&#x4ED6;&#x53D1;&#x8868;&#x4E86;<a href="http://antirez.com/news/101" target="_blank">&#x4E00;&#x7BC7;&#x6587;&#x7AE0;</a>&#x6765;&#x53CD;&#x9A73;&#x6211;&#x7684;&#x89C2;&#x70B9;&#x3002;&#x4ED6;&#x6709;&#x4E00;&#x4E9B;&#x8BBA;&#x70B9;&#x662F;&#x4E0D;&#x9519;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x8FD8;&#x662F;&#x575A;&#x6301;&#x6211;&#x7684;&#x7ED3;&#x8BBA;&#x3002;&#x5982;&#x679C;&#x6709;&#x65F6;&#x95F4;&#x6211;&#x4F1A;&#x66F4;&#x52A0;&#x8BE6;&#x7EC6;&#x7684;&#x9610;&#x8FF0;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x662F;&#x8BF7;&#x4F60;&#x81EA;&#x5DF1;&#x80FD;&#x591F;&#x6709;&#x4E3B;&#x610F;&#xFF0C;&#x5F53;&#x7136;&#x4F60;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x6211;&#x7684;&#x5F15;&#x6587;&#xFF0C;&#x5927;&#x591A;&#x6570;&#x90FD;&#x662F;&#x4E25;&#x8C28;&#x7684;&#x5B66;&#x672F;&#x6587;&#x7AE0;&#xFF0C;&#x5B83;&#x4EEC;&#x66F4;&#x52A0;&#x53EF;&#x4FE1;&#x3002;</p>
+<blockquote>
+<p><img src="https://weipeng2k.github.io/hot-wind/resources/self-think.png" alt="self-think"> <strong>Martin Kleppmann</strong>&#x5728;&#x89C2;&#x70B9;&#x7684;&#x9610;&#x660E;&#x4E0A;&#x505A;&#x7684;&#x5F88;&#x4E0D;&#x9519;&#xFF0C;&#x6293;&#x4F4F;&#x4E86;&#x9501;&#x7684;&#x91CA;&#x653E;&#x5728;<strong>Redlock</strong>&#x4E2D;&#x4E0D;&#x662F;&#x7531;&#x9501;&#x7684;&#x6301;&#x6709;&#x8005;&#x6765;&#x505A;&#x7684;&#xFF0C;&#x800C;&#x53EF;&#x80FD;&#x662F;&#x901A;&#x8FC7;&#x8D85;&#x65F6;&#x505A;&#x5230;&#x7684;&#x3002;&#x6293;&#x4F4F;<strong>Redlock</strong>&#x57FA;&#x4E8E;&#x65F6;&#x95F4;&#x7684;&#x5047;&#x8BBE;&#x4E00;&#x901A;&#x731B;&#x6253;&#x3002;</p>
+<p>&#x7136;&#x540E;&#x62AC;&#x51FA;&#x4E86;&#x5B66;&#x672F;&#x5316;&#x7684;&#x53C2;&#x8003;&#x5F15;&#x7528;&#xFF0C;&#x529B;&#x6C42;&#x5BF9;<strong>Salvatore</strong>&#x5F62;&#x6210;&#x7EDD;&#x6740;&#xFF0C;&#x540C;&#x65F6;&#x4E5F;&#x7ED9;&#x81EA;&#x5DF1;&#x7684;&#x4E66;&#x505A;&#x4E86;&#x4E00;&#x4E9B;&#x5E7F;&#x544A;&#x3002;</p>
+<p>&#x8BDA;&#x7136;&#x8BA4;&#x53EF;<strong>Martin Kleppmann</strong>&#x7684;&#x89C2;&#x70B9;&#xFF0C;&#x5176;&#x672C;&#x8D28;&#x5C31;&#x662F;<strong>Redlock</strong>&#x5728;P&#x7684;&#x524D;&#x63D0;&#x4E0B;&#xFF0C;&#x901A;&#x8FC7;&#x5F3A;&#x5316;&#x4E86;<strong>A</strong>&#xFF0C;&#x4ECE;&#x800C;&#x5BFC;&#x81F4;<strong>C</strong>&#x53D7;&#x5230;&#x4E86;&#x5F71;&#x54CD;&#xFF0C;&#x53EA;&#x8981;&#x6293;&#x4F4F;P&#x7684;&#x95EE;&#x9898;&#x53EF;&#x80FD;&#x51FA;&#x73B0;&#xFF0C;&#x5C31;&#x4E00;&#x5B9A;&#x80FD;&#x591F;&#x6253;&#x6389;&#x5BF9;&#x65B9;&#x7684;&#x89C2;&#x70B9;&#x3002;&#x4F46;&#x662F;&#x6587;&#x4E2D;&#x5BF9;&#x4E8E;<strong>Redis</strong>&#x8D85;&#x65F6;&#x5B9E;&#x73B0;&#x65B9;&#x6848;&#x7684;&#x6279;&#x8BC4;&#x5B9E;&#x5C5E;&#x8D85;&#x51FA;&#x4E86;&#x5206;&#x5E03;&#x5F0F;&#x9501;&#x7684;&#x8303;&#x7574;&#xFF0C;&#x663E;&#x5F97;&#x6CA1;&#x6709;&#x5FC5;&#x8981;&#x3002;</p>
+</blockquote>
+<h2 id="&#x53C2;&#x8003;&#x5F15;&#x7528;">&#x53C2;&#x8003;&#x5F15;&#x7528;</h2>
+<p>[1] Cary G Gray and David R Cheriton: <a href="https://www.semanticscholar.org/paper/Leases%3A-an-efficient-fault-tolerant-mechanism-for-Gray-Cheriton/8965057405c1de742346eba16f20eaca2612f576?p2df" target="_blank">&#x201C;Leases: An Efficient Fault-Tolerant Mechanism for Distributed File Cache Consistency,&#x201D;</a> at 12th ACM Symposium on Operating Systems Principles (SOSP), December 1989. doi:10.1145/74850.74870</p>
+<p>[2] Mike Burrows: <a href="http://research.google.com/archive/chubby.html" target="_blank">&#x201C;The Chubby lock service for loosely-coupled distributed systems,&#x201D;</a> at 7th USENIX Symposium on Operating System Design and Implementation (OSDI), November 2006.</p>
+<p>[3] Flavio P Junqueira and Benjamin Reed: <a href="https://www.oreilly.com/library/view/~/9781449361297/" target="_blank">ZooKeeper: Distributed Process Coordination</a>. O&#x2019;Reilly Media, November 2013. ISBN: 978-1-4493-6130-3</p>
+<p>[4] Enis S&#xF6;ztutar: <a href="https://www.slideshare.net/enissoz/hbase-and-hdfs-understanding-filesystem-usage" target="_blank">&#x201C;HBase and HDFS: Understanding filesystem usage in HBase,&#x201D;</a> at HBaseCon, June 2013.</p>
+<p>[5] Todd Lipcon: <a href="https://blog.cloudera.com/blog/2011/02/avoiding-full-gcs-in-hbase-with-memstore-local-allocation-buffers-part-1/" target="_blank">&#x201C;Avoiding Full GCs in Apache HBase with MemStore-Local Allocation Buffers: Part 1,&#x201D;</a> blog.cloudera.com, 24 February 2011.</p>
+<p>[6] Martin Thompson: <a href="https://mechanical-sympathy.blogspot.co.uk/2013/07/java-garbage-collection-distilled.html" target="_blank">&#x201C;Java Garbage Collection Distilled,&#x201D;</a> mechanical-sympathy.blogspot.co.uk, 16 July 2013.</p>
+<p>[7] Peter Bailis and Kyle Kingsbury: <a href="https://queue.acm.org/detail.cfm?id=2655736" target="_blank">&#x201C;The Network is Reliable,&#x201D;</a> ACM Queue, volume 12, number 7, July 2014. doi:10.1145/2639988.2639988</p>
+<p>[8] Mark Imbriaco: <a href="https://github.com/blog/1364-downtime-last-saturday" target="_blank">&#x201C;Downtime last Saturday,&#x201D;</a> github.com, 26 December 2012.</p>
+<p>[9] Tushar Deepak Chandra and Sam Toueg: <a href="http://103.95.217.9/courses.csail.mit.edu/6.852/08/papers/CT96-JACM.pdf" target="_blank">&#x201C;Unreliable Failure Detectors for Reliable Distributed Systems,&#x201D;</a> Journal of the ACM, volume 43, number 2, pages 225&#x2013;267, March 1996. doi:10.1145/226643.226647</p>
+<p>[10] Michael J Fischer, Nancy Lynch, and Michael S Paterson: <a href="https://www.cs.princeton.edu/courses/archive/fall07/cos518/papers/flp.pdf" target="_blank">&#x201C;Impossibility of Distributed Consensus with One Faulty Process,&#x201D; </a>Journal of the ACM, volume 32, number 2, pages 374&#x2013;382, April 1985. doi:10.1145/3149.214121</p>
+<p>[11] Maurice P Herlihy: <a href="https://cs.brown.edu/~mph/Herlihy91/p124-herlihy.pdf" target="_blank">&#x201C;Wait-Free Synchronization,&#x201D;</a> ACM Transactions on Programming Languages and Systems, volume 13, number 1, pages 124&#x2013;149, January 1991.doi:10.1145/114005.102808</p>
+<p>[12] Cynthia Dwork, Nancy Lynch, and Larry Stockmeyer: <a href="http://www.net.t-labs.tu-berlin.de/~petr/ADC-07/papers/DLS88.pdf" target="_blank">&#x201C;Consensus in the Presence of Partial Synchrony,&#x201D;</a> Journal of the ACM, volume 35, number 2, pages 288&#x2013;323, April 1988. doi:10.1145/42282.42283</p>
+<p>[13] Christian Cachin, Rachid Guerraoui, and Lu&#xED;s Rodrigues: <a href="http://www.distributedprogramming.net" target="_blank">Introduction to Reliable and Secure Distributed Programming, Second Edition.</a> Springer, February 2011. ISBN: 978-3-642-15259-7, doi:10.1007/978-3-642-15260-3</p>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/weipeng2k/hot-wind" target="_blank">hot-wind</a>&#xFF0C;&#x4F7F;&#x7528;<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank">&#x77E5;&#x8BC6;&#x5171;&#x4EAB; &#x7F72;&#x540D;-&#x76F8;&#x540C;&#x65B9;&#x5F0F;&#x5171;&#x4EAB; 4.0&#x534F;&#x8BAE;</a>&#x53D1;&#x5E03; </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> &#x6B64;&#x9875;&#x9762;&#x4FEE;&#x8BA2;&#x4E8E;&#xFF1A; 2024-12-02 03:24:02 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="distribute-lock-with-redis.html" class="navigation navigation-prev " aria-label="Previous page: 热风-使用Redis实现分布式锁">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="distribute-lock-is-redlock-safe.html" class="navigation navigation-next " aria-label="Next page: 热风-Redlock能保证锁的正确性吗？">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"热风-如何实现分布式锁","level":"1.17.8","depth":2,"next":{"title":"热风-Redlock能保证锁的正确性吗？","level":"1.17.9","depth":2,"path":"book/distribute-lock-is-redlock-safe.md","ref":"book/distribute-lock-is-redlock-safe.md","articles":[]},"previous":{"title":"热风-使用Redis实现分布式锁","level":"1.17.7","depth":2,"path":"book/distribute-lock-with-redis.md","ref":"book/distribute-lock-with-redis.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-pro","-sharing","github-buttons","editlink","ga","-highlight","bibtex-indexed-cite","page-footer-ex","splitter","copy-code-button","expandable-chapters-small","donate","github"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/weipeng2k/hot-wind"},"editlink":{"label":"Edit","multilingual":false,"base":"https://github.com/weipeng2k/hot-wind/blob/master"},"page-footer-ex":{"copyright":"By [hot-wind](https://github.com/weipeng2k/hot-wind)，使用[知识共享 署名-相同方式共享 4.0协议](https://creativecommons.org/licenses/by-sa/4.0/deed.zh)发布","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"此页面修订于："},"splitter":{},"search-pro":{"cutWordLib":"nodejieba","defineWord":["Gitbook Use"]},"donate":{"alipay":"https://weipeng2k.github.io/hot-wind/alipay_qr.JPG","alipayText":"支付宝打赏","button":"赏","title":"","wechat":"https://weipeng2k.github.io/hot-wind/wechat_qr.JPG","wechatText":"微信打赏"},"fontsettings":{"theme":"white","family":"sans","size":2},"bibtex-indexed-cite":{"path":"/"},"github-buttons":{"buttons":[{"user":"weipeng2k","repo":"hot-wind","type":"star","size":"small","count":true}]},"expandable-chapters-small":{},"copy-code-button":{},"ga":{"configuration":"auto","token":"UA-131910384-3"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"weipeng2k","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"bibCount":0,"variables":{},"title":"hot-wind","bib":[],"gitbook":"*"},"file":{"path":"book/distribute-lock-how-to-do-it.md","mtime":"2024-12-02T03:24:02.321Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-12-02T03:24:42.830Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-donate/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

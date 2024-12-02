@@ -1,0 +1,1599 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>热风-基于Spring的单元测试 · hot-wind</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="weipeng2k">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-bibtex-indexed-cite/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-donate/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="do-unit-test-better-04.html" />
+    
+    
+    <link rel="prev" href="do-unit-test-better-02.html" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"weipeng2k","repo":"hot-wind","type":"star","size":"small","count":true}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    热风-简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../ABOUTME.html">
+            
+                <a href="../ABOUTME.html">
+            
+                    
+                    热风-关于作者
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="cap-brief-summary.html">
+            
+                <a href="cap-brief-summary.html">
+            
+                    
+                    热风-CAP小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="explanation-of-compensation-mechanism.html">
+            
+                <a href="explanation-of-compensation-mechanism.html">
+            
+                    
+                    热风-补偿机制说明
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="byzantine-generals-problem.html">
+            
+                <a href="byzantine-generals-problem.html">
+            
+                    
+                    热风-拜占庭将军问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="2pc-summary.html">
+            
+                <a href="2pc-summary.html">
+            
+                    
+                    热风-共识协议：两阶段提交
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="compensation-and-tcc.html">
+            
+                <a href="compensation-and-tcc.html">
+            
+                    
+                    热风-一种基于补偿的事务处理机制（TCC）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="how-to-design-a-distribute-database-feeling.html">
+            
+                <a href="how-to-design-a-distribute-database-feeling.html">
+            
+                    
+                    热风-《如何设计一个分布式数据库》观后感
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="tcc-using-seata.html">
+            
+                <a href="tcc-using-seata.html">
+            
+                    
+                    热风-使用Seata来实现TCC
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="what-about-the-future.html">
+            
+                <a href="what-about-the-future.html">
+            
+                    
+                    热风-未来的预测
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="seata-problem.html">
+            
+                <a href="seata-problem.html">
+            
+                    
+                    热风-Seata存在的一些问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="java-network-inetaddress-and-dns.html">
+            
+                <a href="java-network-inetaddress-and-dns.html">
+            
+                    
+                    热风-InetAddress与DNS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="java-network-arp-and-pcap4j.html">
+            
+                <a href="java-network-arp-and-pcap4j.html">
+            
+                    
+                    热风-ARP与pcap4j
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="java-network-tcpdump-and-redis-client.html">
+            
+                <a href="java-network-tcpdump-and-redis-client.html">
+            
+                    
+                    热风-TcpDump与Redis客户端
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="java-dev-learn-c.html">
+            
+                <a href="java-dev-learn-c.html">
+            
+                    
+                    热风-Java开发者看C
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="java-dev-learn-c-01.html">
+            
+                <a href="java-dev-learn-c-01.html">
+            
+                    
+                    热风-C语言概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="java-dev-learn-c-02.html">
+            
+                <a href="java-dev-learn-c-02.html">
+            
+                    
+                    热风-C语言的基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="basic-paxos-9-pages-notes.html">
+            
+                <a href="basic-paxos-9-pages-notes.html">
+            
+                    
+                    热风-基础Paxos算法的9页笔记
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="basic-paxos-9-pages-notes-01.html">
+            
+                <a href="basic-paxos-9-pages-notes-01.html">
+            
+                    
+                    热风-基础Paxos算法笔记(1/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="basic-paxos-9-pages-notes-02.html">
+            
+                <a href="basic-paxos-9-pages-notes-02.html">
+            
+                    
+                    热风-基础Paxos算法笔记(2/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.3" data-path="basic-paxos-9-pages-notes-03.html">
+            
+                <a href="basic-paxos-9-pages-notes-03.html">
+            
+                    
+                    热风-基础Paxos算法笔记(3/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.4" data-path="basic-paxos-9-pages-notes-04.html">
+            
+                <a href="basic-paxos-9-pages-notes-04.html">
+            
+                    
+                    热风-基础Paxos算法笔记(4/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.5" data-path="basic-paxos-9-pages-notes-05.html">
+            
+                <a href="basic-paxos-9-pages-notes-05.html">
+            
+                    
+                    热风-基础Paxos算法笔记(5/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.6" data-path="basic-paxos-9-pages-notes-06.html">
+            
+                <a href="basic-paxos-9-pages-notes-06.html">
+            
+                    
+                    热风-基础Paxos算法笔记(6/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.7" data-path="basic-paxos-9-pages-notes-07.html">
+            
+                <a href="basic-paxos-9-pages-notes-07.html">
+            
+                    
+                    热风-基础Paxos算法笔记(7/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.8" data-path="basic-paxos-9-pages-notes-08.html">
+            
+                <a href="basic-paxos-9-pages-notes-08.html">
+            
+                    
+                    热风-基础Paxos算法笔记(8/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.9" data-path="basic-paxos-9-pages-notes-09.html">
+            
+                <a href="basic-paxos-9-pages-notes-09.html">
+            
+                    
+                    热风-基础Paxos算法笔记(9/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="distribute-lock-brief-summary.html">
+            
+                <a href="distribute-lock-brief-summary.html">
+            
+                    
+                    热风-分布式锁
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.17.1" data-path="distribute-lock-what-is-lock.html">
+            
+                <a href="distribute-lock-what-is-lock.html">
+            
+                    
+                    热风-锁是什么？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.2" data-path="distribute-lock-what-is-distribute-lock.html">
+            
+                <a href="distribute-lock-what-is-distribute-lock.html">
+            
+                    
+                    热风-分布式锁是什么？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.3" data-path="distribute-lock-problem.html">
+            
+                <a href="distribute-lock-problem.html">
+            
+                    
+                    热风-实现分布式锁会遇到的问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.4" data-path="distribute-lock-framework.html">
+            
+                <a href="distribute-lock-framework.html">
+            
+                    
+                    热风-分布式锁框架
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.5" data-path="distribute-lock-spin-impl.html">
+            
+                <a href="distribute-lock-spin-impl.html">
+            
+                    
+                    热风-拉模式的分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.6" data-path="distribute-lock-event-impl.html">
+            
+                <a href="distribute-lock-event-impl.html">
+            
+                    
+                    热风-推模式的分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.7" data-path="distribute-lock-with-redis.html">
+            
+                <a href="distribute-lock-with-redis.html">
+            
+                    
+                    热风-使用Redis实现分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.8" data-path="distribute-lock-how-to-do-it.html">
+            
+                <a href="distribute-lock-how-to-do-it.html">
+            
+                    
+                    热风-如何实现分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.9" data-path="distribute-lock-is-redlock-safe.html">
+            
+                <a href="distribute-lock-is-redlock-safe.html">
+            
+                    
+                    热风-Redlock能保证锁的正确性吗？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.10" data-path="distribute-lock-another-way.html">
+            
+                <a href="distribute-lock-another-way.html">
+            
+                    
+                    热风-再看分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="change-to-temurin.html">
+            
+                <a href="change-to-temurin.html">
+            
+                    
+                    热风-更新到Eclipse Temurin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="using-jetbrains-toolbox.html">
+            
+                <a href="using-jetbrains-toolbox.html">
+            
+                    
+                    热风-使用JetBrains Toolbox来管理IDE
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="8-books-to-be-better-dev.html">
+            
+                <a href="8-books-to-be-better-dev.html">
+            
+                    
+                    热风-成为更好程序员的8本书
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="juc-summary.html">
+            
+                <a href="juc-summary.html">
+            
+                    
+                    热风-JUC总结
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.21.1" data-path="juc-stamped-lock-doc.html">
+            
+                <a href="juc-stamped-lock-doc.html">
+            
+                    
+                    热风-JUC中的StampedLock文档
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.2" data-path="juc-seqlock.html">
+            
+                <a href="juc-seqlock.html">
+            
+                    
+                    热风-《Linux系统高效同步》SeqLock摘译
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.3" data-path="juc-stampedlock-summary.html">
+            
+                <a href="juc-stampedlock-summary.html">
+            
+                    
+                    热风-StampedLock简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.4" data-path="juc-stampedlock-inf-and-case.html">
+            
+                <a href="juc-stampedlock-inf-and-case.html">
+            
+                    
+                    热风-StampedLock的接口与示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.5" data-path="juc-stampedlock-implement-analysis.html">
+            
+                <a href="juc-stampedlock-implement-analysis.html">
+            
+                    
+                    热风-StampedLock的实现分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="program-how-to-run.html">
+            
+                <a href="program-how-to-run.html">
+            
+                    
+                    热风-程序是怎样跑起来的
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.22.1" data-path="program-how-to-run-01.html">
+            
+                <a href="program-how-to-run-01.html">
+            
+                    
+                    热风-对程序员来说CPU是什么
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.2" data-path="program-how-to-run-02.html">
+            
+                <a href="program-how-to-run-02.html">
+            
+                    
+                    热风-数据是用二进制数表示的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.3" data-path="program-how-to-run-03.html">
+            
+                <a href="program-how-to-run-03.html">
+            
+                    
+                    热风-计算机进行小数运算时出错的原因
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.4" data-path="program-how-to-run-04.html">
+            
+                <a href="program-how-to-run-04.html">
+            
+                    
+                    热风-熟练使用有棱有角的内存
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.5" data-path="program-how-to-run-05.html">
+            
+                <a href="program-how-to-run-05.html">
+            
+                    
+                    热风-内存和磁盘的亲密关系
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.6" data-path="program-how-to-run-06.html">
+            
+                <a href="program-how-to-run-06.html">
+            
+                    
+                    热风-亲自尝试压缩数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.7" data-path="program-how-to-run-07.html">
+            
+                <a href="program-how-to-run-07.html">
+            
+                    
+                    热风-程序是在何种环境中运行的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.8" data-path="program-how-to-run-08.html">
+            
+                <a href="program-how-to-run-08.html">
+            
+                    
+                    热风-从源文件到可执行文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.9" data-path="program-how-to-run-09.html">
+            
+                <a href="program-how-to-run-09.html">
+            
+                    
+                    热风-操作系统和应用的关系
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.10" data-path="program-how-to-run-10.html">
+            
+                <a href="program-how-to-run-10.html">
+            
+                    
+                    热风-通过汇编语言了解程序的实际构成
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.11" data-path="program-how-to-run-11.html">
+            
+                <a href="program-how-to-run-11.html">
+            
+                    
+                    热风-硬件控制方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="program-program-program.html">
+            
+                <a href="program-program-program.html">
+            
+                    
+                    热风-程序！程序！程序！
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.23.1" data-path="program-program-program-01.html">
+            
+                <a href="program-program-program-01.html">
+            
+                    
+                    热风-程序的视角
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.2" data-path="program-program-program-02.html">
+            
+                <a href="program-program-program-02.html">
+            
+                    
+                    热风-硬件的执念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.3" data-path="program-program-program-03.html">
+            
+                <a href="program-program-program-03.html">
+            
+                    
+                    热风-编译的力量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.4" data-path="program-program-program-04.html">
+            
+                <a href="program-program-program-04.html">
+            
+                    
+                    热风-数据的表达
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.5" data-path="program-program-program-05.html">
+            
+                <a href="program-program-program-05.html">
+            
+                    
+                    热风-协同的奥义
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="do-unit-test-better.html">
+            
+                <a href="do-unit-test-better.html">
+            
+                    
+                    热风-如何更好的做单元测试
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.24.1" data-path="do-unit-test-better-01.html">
+            
+                <a href="do-unit-test-better-01.html">
+            
+                    
+                    热风-软件开发与单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.2" data-path="do-unit-test-better-02.html">
+            
+                <a href="do-unit-test-better-02.html">
+            
+                    
+                    热风-Java程序员使用JUnit做单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.24.3" data-path="do-unit-test-better-03.html">
+            
+                <a href="do-unit-test-better-03.html">
+            
+                    
+                    热风-基于Spring的单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.4" data-path="do-unit-test-better-04.html">
+            
+                <a href="do-unit-test-better-04.html">
+            
+                    
+                    热风-维护好单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.5" data-path="do-unit-test-better-05.html">
+            
+                <a href="do-unit-test-better-05.html">
+            
+                    
+                    热风-体验测试驱动开发
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="computer-network-01.html">
+            
+                <a href="computer-network-01.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.25.1" data-path="computer-network-01.html">
+            
+                <a href="computer-network-01.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（01.概述）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.2" data-path="computer-network-02.html">
+            
+                <a href="computer-network-02.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（02.应用层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.3" data-path="computer-network-03a.html">
+            
+                <a href="computer-network-03a.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（03a.传输层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.4" data-path="computer-network-03b.html">
+            
+                <a href="computer-network-03b.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（03b.传输层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.5" data-path="computer-network-04a.html">
+            
+                <a href="computer-network-04a.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（04a.网络层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.6" data-path="computer-network-04b.html">
+            
+                <a href="computer-network-04b.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（04b.网络层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.7" data-path="computer-network-05a.html">
+            
+                <a href="computer-network-05a.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（05a.数据链路层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.8" data-path="computer-network-05b.html">
+            
+                <a href="computer-network-05b.html">
+            
+                    
+                    热风-《计算机网络》第5章-数据链路层（b.以太网）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.9" data-path="computer-network-06a.html">
+            
+                <a href="computer-network-06a.html">
+            
+                    
+                    热风-《计算机网络》第6章-物理层（a.基本概念）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="talk-about-architecture.html">
+            
+                <a href="talk-about-architecture.html">
+            
+                    
+                    热风-聊一聊架构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="javac-release-option.html">
+            
+                <a href="javac-release-option.html">
+            
+                    
+                    热风-使用Javac's Release选项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="talk-about-design-paradigm.html">
+            
+                <a href="talk-about-design-paradigm.html">
+            
+                    
+                    热风-谈一谈设计范式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="talk-about-system-complex.html">
+            
+                <a href="talk-about-system-complex.html">
+            
+                    
+                    热风-说一说系统复杂性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="how-do-i-write-a-design-doc.html">
+            
+                <a href="how-do-i-write-a-design-doc.html">
+            
+                    
+                    热风-我怎么写概要设计？
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >热风-基于Spring的单元测试</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x57FA;&#x4E8E;spring&#x7684;&#x5355;&#x5143;&#x6D4B;&#x8BD5;">&#x57FA;&#x4E8E;Spring&#x7684;&#x5355;&#x5143;&#x6D4B;&#x8BD5;</h1>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4F01;&#x4E1A;&#x7EA7;<strong>Java</strong>&#x7A0B;&#x5E8F;&#x57FA;&#x672C;&#x90FD;&#x79BB;&#x4E0D;&#x5F00;<a href="https://spring.io/projects/spring-framework" target="_blank">Spring</a>&#x548C;<a href="https://spring.io/projects/spring-boot" target="_blank">SpringBoot</a>&#xFF0C;&#x5B83;&#x4EEC;&#x662F;&#x76EE;&#x524D;&#x4F01;&#x4E1A;&#x7EA7;<strong>Java</strong>&#x4E8B;&#x5B9E;&#x4E0A;&#x7684;&#x6807;&#x51C6;&#x3002;&#x6211;&#x4EEC;&#x7684;&#x4EE3;&#x7801;&#x4E2D;&#x6216;&#x591A;&#x6216;&#x5C11;&#x90FD;&#x4F1A;&#x4F7F;&#x7528;&#x5230; <strong>@Autowired</strong>&#x6CE8;&#x89E3;&#x6765;&#x5F15;&#x5165;&#x4F9D;&#x8D56;&#xFF0C;&#x6216;&#x8005;&#x5728;&#x7C7B;&#x578B;&#x4E0A;&#x58F0;&#x660E; <strong>@Compoenent</strong>&#x6CE8;&#x89E3;&#x6765;&#x5C06;&#x7C7B;&#x578B;&#x5B9E;&#x4F8B;&#x6258;&#x7BA1;&#x5230;&#xFF08;<strong>Spring</strong>&#xFF09;&#x5BB9;&#x5668;&#x4E2D;&#xFF0C;&#x8FD9;&#x5C31;&#x5E26;&#x6765;&#x4E86;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;<strong>Spring</strong>&#xFF0C;&#x8C01;&#x6765;&#x5E2E;&#x6211;&#x4EEC;&#x7EC4;&#x88C5;&#x7C7B;&#x4E4B;&#x95F4;&#x7684;&#x4F9D;&#x8D56;&#x5173;&#x7CFB;&#xFF1F;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/do-unit-test-better/chapter03-preface.jpg" width="70%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5728;&#x524D;&#x6587;&#x4E2D;&#x53EF;&#x4EE5;&#x770B;&#x5230;<strong>MemberServiceImpl</strong>&#x4F9D;&#x8D56;&#x4E86;<strong>UserDAO</strong>&#xFF0C;&#x901A;&#x8FC7;&#x8C03;&#x7528;<strong>setUserDAO</strong>&#x65B9;&#x6CD5;&#xFF0C;&#x53EF;&#x4EE5;&#x5C06;<strong>MemberServiceImpl</strong>&#x4F9D;&#x8D56;&#x7684;&#x5B9E;&#x4F8B;&#x8BBE;&#x7F6E;&#x7ED9;&#x5B83;&#xFF0C;&#x53EF;&#x662F;&#x5982;&#x679C;&#x9700;&#x8981;&#x6D4B;&#x8BD5;&#x7684;&#x7C7B;&#x578B;&#x6709;&#x5F88;&#x591A;&#x4F9D;&#x8D56;&#x600E;&#x4E48;&#x529E;&#x5462;&#xFF1F;&#x8FD8;&#x9700;&#x8981;&#x4E00;&#x4E00;&#x8C03;&#x7528;set&#x65B9;&#x6CD5;&#x8BBE;&#x7F6E;&#x5417;&#xFF1F;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x7B54;&#x6848;&#x662F;&#x5426;&#x5B9A;&#x7684;&#x3002;<strong>Spring</strong>&#x4ECE;&#x8BDE;&#x751F;&#x7684;&#x5F00;&#x59CB;&#xFF0C;&#x5C31;&#x8003;&#x8651;&#x5230;&#x5982;&#x4F55;&#x5728;<strong>Spring</strong>&#x73AF;&#x5883;&#x4E0B;&#x505A;&#x5355;&#x5143;&#x6D4B;&#x8BD5;&#xFF0C;&#x800C;<strong>Spring-Test</strong>&#x5C31;&#x662F;<strong>Spring</strong>&#x63D0;&#x4F9B;&#x7684;&#x5355;&#x6D4B;&#x5957;&#x4EF6;&#x3002;<strong>Spring-Test</strong>&#x662F;<strong>springframework</strong>&#x4E2D;&#x4E00;&#x4E2A;&#x6A21;&#x5757;&#xFF0C;&#x4E5F;&#x662F;&#x7531;spring&#x4F5C;&#x8005;<a href="https://spring.io/team/jhoeller" target="_blank">Juergen Hoeller</a>&#x4EB2;&#x81EA;&#x64CD;&#x5200;&#x8BBE;&#x8BA1;&#x5F00;&#x53D1;&#x7684;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x65B9;&#x4FBF;&#x7684;&#x6D4B;&#x8BD5;&#x57FA;&#x4E8E;<strong>spring</strong>&#x7684;&#x4EE3;&#x7801;&#x3002;</p>
+<h2 id="&#x4F7F;&#x7528;spring-test&#x6765;&#x8FDB;&#x884C;&#x5355;&#x5143;&#x6D4B;&#x8BD5;">&#x4F7F;&#x7528;<strong>Spring</strong>-Test&#x6765;&#x8FDB;&#x884C;&#x5355;&#x5143;&#x6D4B;&#x8BD5;</h2>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>Spring-Test</strong>&#x662F;&#x57FA;&#x4E8E;<strong>JUnit</strong>&#x7684;&#x5355;&#x6D4B;&#x5957;&#x4EF6;&#xFF0C;&#x7531;&#x4E8E;&#x6D4B;&#x8BD5;&#x4F1A;&#x542F;&#x52A8;<strong>spring</strong>&#x5BB9;&#x5668;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x4F9D;&#x8D56;<strong>Spring</strong>&#x914D;&#x7F6E;&#xFF0C;&#x540C;&#x65F6;&#x8981;&#x7EE7;&#x627F;<strong>Spring-Test</strong>&#x63D0;&#x4F9B;&#x7684;&#x8D85;&#x7C7B;&#x3002;&#x5728;&#x4F7F;&#x7528;<strong>Spring-Test</strong>&#x524D;&#xFF0C;&#x9996;&#x5148;&#x8981;&#x8FDB;&#x884C;&#x4F9D;&#x8D56;&#x914D;&#x7F6E;&#xFF0C;&#x4F9D;&#x8D56;&#x7684;maven&#x5750;&#x6807;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-test&lt;/artifactId&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.mockito&lt;/groupId&gt;
+    &lt;artifactId&gt;mockito-core&lt;/artifactId&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;junit&lt;/groupId&gt;
+    &lt;artifactId&gt;junit&lt;/artifactId&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;MemberServiceImpl&#x4F9D;&#x8D56;UserDAO&#xFF0C;&#x800C;<strong>Mockito.mock(Class clazz)</strong>&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;clazz&#x7C7B;&#x578B;&#x7684;Mock&#x5BF9;&#x8C61;&#xFF0C;&#x5728;spring&#x4F53;&#x7CFB;&#x4E2D;&#xFF0C;Mockito&#x5C31;&#x5982;&#x540C;&#x4E00;&#x4E2A;FactoryBean&#xFF0C;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E00;&#x6BB5;spring&#x914D;&#x7F6E;&#xFF0C;&#x5C06;MemberServiceImpl&#x88C5;&#x914D;&#x8D77;&#x6765;&#xFF0C;&#x5BF9;&#x5E94;&#x7684;spring&#x914D;&#x7F6E;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;
+       default-autowire=&quot;byName&quot;&gt;
+
+    &lt;bean id=&quot;memberService&quot; class=&quot;com.murdock.tools.mockito.service.MemberServiceImpl&quot;/&gt;
+
+    &lt;bean id=&quot;userDAO&quot; class=&quot;org.mockito.Mockito&quot; factory-method=&quot;mock&quot;&gt;
+        &lt;constructor-arg value=&quot;com.murdock.tools.mockito.dao.UserDAO&quot;/&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x4E0A;&#x8FF0;&#x914D;&#x7F6E;&#x6240;&#x793A;&#xFF0C;&#x719F;&#x6089;spring&#x7684;&#x540C;&#x5B66;&#x4E00;&#x5B9A;&#x4F1A;&#x89C9;&#x5F97;&#x5F88;&#x4EB2;&#x5207;&#xFF0C;MemberServiceImpl&#x88AB;&#x58F0;&#x660E;&#x4E3A;id&#x4E3A;memberService&#x7684;bean&#xFF0C;&#x800C;userDAO&#x5BF9;&#x5E94;&#x7684;bean&#x662F;&#x7531;Mockito&#x521B;&#x5EFA;&#x51FA;&#x6765;&#x7684;Mock&#x5BF9;&#x8C61;&#x3002;&#x63A5;&#x4E0B;&#x6765;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x4F7F;&#x7528;<strong>Spring-Test</strong>&#x63D0;&#x4F9B;&#x7684;&#x8D85;&#x7C7B;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x7F16;&#x5199;&#x57FA;&#x4E8E;<strong>Spring-Test</strong>&#x7684;&#x6D4B;&#x8BD5;&#x4E86;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>MemberService</strong>&#x7684;&#x5355;&#x6D4B;&#xFF08;&#x90E8;&#x5206;&#x4EE3;&#x7801;&#xFF09;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-java">@ContextConfiguration(locations = {&quot;classpath:MemberService.xml&quot;})
+public class MemberSpringTest extends AbstractJUnit4SpringContextTests {
+    @Autowired
+    private MemberService memberService;
+    @Autowired
+    private UserDAO userDAO;
+
+    /**
+     * &#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x5728;&#x6D4B;&#x8BD5;&#x5F00;&#x59CB;&#x7684;&#x65F6;&#x5019;&#x6765;&#x8FDB;&#x884C;mock&#x7684;&#x903B;&#x8F91;&#x7F16;&#x5199;
+     */
+    @Before
+    public void mockUserDAO() {
+        Mockito.when(userDAO.insertMember(Mockito.any())).thenReturn(
+                System.currentTimeMillis());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void insert_member_error() {
+        memberService.insertMember(null, &quot;123&quot;);
+
+        memberService.insertMember(null, null);
+    }
+
+    /**
+     * &#x4E5F;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x5728;&#x65B9;&#x6CD5;&#x4E2D;&#x8FDB;&#x884C;mock
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void insert_exist_member() {
+        MemberDO member = new MemberDO();
+        member.setName(&quot;weipeng&quot;);
+        member.setPassword(&quot;123456abcd&quot;);
+        Mockito.when(userDAO.findMember(&quot;weipeng&quot;)).thenReturn(member);
+
+        memberService.insertMember(&quot;weipeng&quot;, &quot;1234abc&quot;);
+    }
+}
+</code></pre>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4ECE;&#x4E0A;&#x8FF0;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;<strong>Spring-Test</strong>&#x4F1A;&#x8981;&#x6C42;&#x6D4B;&#x8BD5;&#x7C7B;&#x578B;&#x7EE7;&#x627F;<strong>AbstractJUnit4SpringContextTests</strong>&#xFF0C;&#x540C;&#x65F6;&#x4F7F;&#x7528;&#x6CE8;&#x89E3;@ContextConfiguration&#x6307;&#x5B9A;&#x5F53;&#x524D;&#x6D4B;&#x8BD5;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x7684;<strong>Spring</strong>&#x914D;&#x7F6E;&#x3002;&#x6211;&#x4EEC;&#x7F16;&#x5199;&#x7684;&#x5355;&#x5143;&#x6D4B;&#x8BD5;&#x80AF;&#x5B9A;&#x4E0D;&#x6B62;&#x4E00;&#x4E2A;&#xFF0C;&#x5F53;&#x7F16;&#x5199;&#x53E6;&#x4E00;&#x4E2A;&#x5355;&#x5143;&#x6D4B;&#x8BD5;&#x7C7B;&#x65F6;&#xFF0C;&#x5C31;&#x6709;&#x540C;&#x5B66;&#x4F1A;&#x60F3;&#x7740;&#x7528;&#x5DF2;&#x6709;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x8FD9;&#x4E48;&#x505A;&#xFF0C;&#x597D;&#x5417;&#xFF1F;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x793A;&#x4F8B;&#x4E2D;&#xFF0C;&#x914D;&#x7F6E;&#x4E13;&#x95E8;&#x653E;&#x5728;<strong>MemberService.xml</strong>&#x4E2D;&#xFF0C;&#x6CA1;&#x6709;&#x4F7F;&#x7528;&#x5171;&#x7528;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x76EE;&#x7684;&#x5C31;&#x662F;&#x8BA9;&#x5927;&#x5BB6;&#x5728;&#x6D4B;&#x8BD5;&#x7684;&#x65F6;&#x5019;&#x80FD;&#x591F;&#x76F8;&#x4E92;&#x72EC;&#x7ACB;&#xFF0C;&#x907F;&#x514D;&#x641E;&#x574F;&#x522B;&#x4EBA;&#x7684;&#x6D4B;&#x8BD5;&#xFF0C;&#x8BA9;&#x4E0D;&#x540C;&#x7684;&#x6D4B;&#x8BD5;&#x76F8;&#x4E92;&#x4E4B;&#x95F4;&#x4E0D;&#x5F71;&#x54CD;&#x3002;&#x5E76;&#x4E14;&#x5728;&#x4E00;&#x4E2A;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x914D;&#x7F6E;&#x7684;Bean&#x8D8A;&#x591A;&#xFF0C;&#x5C31;&#x8BC1;&#x660E;&#x4F60;&#x8981;&#x6D4B;&#x8BD5;&#x7684;&#x7C7B;&#x4F9D;&#x8D56;&#x8D8A;&#x590D;&#x6742;&#xFF0C;&#x627F;&#x62C5;&#x7684;&#x8D23;&#x4EFB;&#x8FC7;&#x591A;&#xFF0C;&#x4ECE;&#x800C;&#x63D0;&#x9192;&#x81EA;&#x5DF1;&#x505A;&#x91CD;&#x6784;&#x3002;</p>
+<h2 id="&#x73B0;&#x4EE3;&#x5316;&#x7684;spring-test&#x4F7F;&#x7528;&#x65B9;&#x5F0F;">&#x73B0;&#x4EE3;&#x5316;&#x7684;<strong>Spring</strong>-Test&#x4F7F;&#x7528;&#x65B9;&#x5F0F;</h2>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>Spring</strong>&#x4ECE;4.0&#x540E;&#xFF0C;&#x5C31;&#x5F00;&#x59CB;&#x63A8;&#x8350;&#x4F7F;&#x7528;<strong>Java</strong>&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#x4E86;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5927;&#x5BB6;&#x5E38;&#x7528;&#x7684;@Configuration&#x548C;@Bean&#xFF0C;&#x901A;&#x8FC7;&#x7F16;&#x5199;<strong>Java</strong>&#x914D;&#x7F6E;&#x7C7B;&#x6765;&#x88C5;&#x914D;<strong>Spring</strong>&#x7684;Bean&#x3002;&#x73B0;&#x9636;&#x6BB5;&#x5927;&#x5BB6;&#x4F7F;&#x7528;&#x7684;<strong>Spring</strong>&#x90FD;&#x6BD4;&#x8F83;&#x65B0;&#xFF0C;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5C06;&#x4EE5;&#x4F20;&#x7EDF;&#x5F62;&#x5F0F;&#x914D;&#x7F6E;&#x7684;<strong>Spring</strong>-Test&#x5355;&#x6D4B;&#x6539;&#x9020;&#x4E3A;&#x73B0;&#x4EE3;&#x5316;&#x7684;&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4F7F;&#x7528;<strong>Java</strong>&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#x7684;MemberService&#x5355;&#x6D4B;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/do-unit-test-better/chapter03-sprintut.png" width="70%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x57FA;&#x4E8E;<strong>Java</strong>&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#x7684;&#x5355;&#x6D4B;&#x6BD4;&#x4F20;&#x7EDF;&#x57FA;&#x4E8E;xml&#x7684;<strong>Spring-Test</strong>&#x8981;&#x663E;&#x5F97;&#x5185;&#x805A;&#x5F88;&#x591A;&#xFF0C;&#x6CA1;&#x6709;&#x4E86;&#x6D4B;&#x8BD5;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x5355;&#x5143;&#x6D4B;&#x8BD5;&#x7C7B;&#xFF0C;<strong>Spring</strong>&#x7684;&#x914D;&#x7F6E;&#x548C;&#x6D4B;&#x8BD5;&#x7C7B;&#x4E5F;&#x53EF;&#x4EE5;&#x662F;&#x4E00;&#x4F53;&#x7684;&#x3002;&#x901A;&#x8FC7;@Configuration&#x4FEE;&#x9970;&#x7684;MemberServiceConfig&#x53EF;&#x4EE5;&#x88AB;&#x914D;&#x7F6E;&#x5728;@ContextConfiguration&#x4E2D;&#xFF0C;&#x88AB;&#x7528;&#x6765;&#x88C5;&#x914D;&#x4E00;&#x4E2A;&#x6D4B;&#x8BD5;&#x7684;<strong>Spring</strong>&#x5BB9;&#x5668;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x6D4B;&#x8BD5;&#x7C7B;&#x4E5F;&#x4E0D;&#x9700;&#x8981;&#x7EE7;&#x627F;AbstractJUnit4SpringContextTests&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x4F7F;&#x7528;@RunWith&#x6CE8;&#x89E3;&#x4FEE;&#x9970;&#x5373;&#x53EF;&#x3002;&#x4E0D;&#x9700;&#x8981;xml&#x914D;&#x7F6E;&#xFF0C;&#x914D;&#x7F6E;&#x548C;&#x6D4B;&#x8BD5;&#x662F;&#x4E00;&#x4F53;&#x7684;&#xFF0C;&#x73B0;&#x4EE3;&#x5316;&#x7684;<strong>Spring-Test</strong>&#x53D8;&#x5F97;&#x66F4;&#x597D;&#x4E86;&#xFF0C;&#x548C;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E00;&#x6837;&#xFF0C;&#x5F53;&#x914D;&#x7F6E;&#x7C7B;&#x4E2D;&#x7684;@Bean&#x53D8;&#x591A;&#x65F6;&#xFF0C;&#x5C31;&#x8981;&#x53CD;&#x601D;&#x5B9E;&#x73B0;&#x7C7B;&#x662F;&#x5426;&#x804C;&#x8D23;&#x8FC7;&#x591A;&#x6216;&#x8005;&#x4F9D;&#x8D56;&#x8FC7;&#x91CD;&#x4E86;&#x3002;</p>
+<h2 id="springboot&#x73AF;&#x5883;&#x4E0B;&#x7684;&#x6D4B;&#x8BD5;&#x65B9;&#x6CD5;"><strong>Spring</strong>Boot&#x73AF;&#x5883;&#x4E0B;&#x7684;&#x6D4B;&#x8BD5;&#x65B9;&#x6CD5;</h2>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>Spring</strong>&#x6846;&#x67B6;&#x8BDE;&#x751F;&#x540E;&#xFF0C;&#x6210;&#x4E3A;&#x4E86;&#x4F01;&#x4E1A;&#x7EA7;<strong>Java</strong>&#xFF08;&#x4E0E;&#x4E92;&#x8054;&#x7F51;Powered by <strong>Java</strong>&#xFF09;&#x7684;&#x4E8B;&#x5B9E;&#x6807;&#x51C6;&#xFF0C;IoC&#x65E0;&#x5F80;&#x4E0D;&#x5229;&#xFF0C;&#x52BF;&#x5982;&#x7834;&#x7AF9;&#xFF0C;&#x4ECE;&#x4EE3;&#x7801;&#x7EC4;&#x6210;&#x548C;&#x601D;&#x7EF4;&#x65B9;&#x5F0F;&#x4E0A;&#x6539;&#x53D8;&#x4E86;&#x6574;&#x4E2A;<strong>Java</strong>&#x5F00;&#x53D1;&#x751F;&#x6001;&#x3002;&#x5728;<em>2.5.6</em>&#x53D1;&#x5E03;&#x540E;&#xFF0C;<strong>Spring</strong>&#x6846;&#x67B6;&#x5C31;&#x8FDB;&#x5165;&#x4E86;&#x4E00;&#x4E2A;&#x4F4E;&#x6F6E;&#x671F;&#xFF0C;<strong>Spring</strong>&#x4E0D;&#x613F;&#x610F;&#x89E6;&#x53CA;&#x90E8;&#x7F72;&#x4E0E;&#x5B9E;&#x73B0;&#xFF0C;&#x8FD9;&#x79CD;&#x4E0D;&#x613F;&#x4E0B;&#x573A;&#x7684;&#x505A;&#x6CD5;&#x4F7F;&#x5F97;&#x5176;&#x591A;&#x5E74;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x5B9E;&#x8D28;&#x53D8;&#x5316;&#xFF0C;&#x88AB;&#x6DD8;&#x6C70;&#x53EA;&#x662F;&#x65F6;&#x95F4;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x65F6;&#x5019;<a href="https://spring.io/team/philwebb" target="_blank">Phil Webb</a>&#x7B49;&#x4EBA;&#x53D1;&#x8D77;&#x7684;<a href="https://spring.io/projects/spring-boot" target="_blank">SpringBoot</a>&#x9879;&#x76EE;&#x633D;&#x72C2;&#x6F9C;&#x4E8E;&#x65E2;&#x5012;&#xFF0C;&#x70B9;&#x71C3;&#x4E86;<strong>Spring</strong>&#x7684;&#x7B2C;&#x4E8C;&#x6625;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>SpringBoot</strong>&#x63D0;&#x4F9B;&#x4E86;&#x5F00;&#x7BB1;&#x5373;&#x7528;&#x7684;starter&#x4F53;&#x7CFB;&#xFF0C;&#x901A;&#x8FC7;&#x81EA;&#x52A8;&#x88C5;&#x914D;&#x80FD;&#x591F;&#x63D0;&#x4F9B;&#x7ED9;&#x5E94;&#x7528;&#x66F4;&#x4FBF;&#x6377;&#x7684;bean&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#xFF0C;&#x540C;&#x65F6;&#x5B83;&#x652F;&#x6301;&#x8FC5;&#x901F;&#x6253;&#x5305;&#x4E3A;jar-in-jar&#x7684;&#x5F62;&#x5F0F;&#xFF0C;&#x5E76;&#x901A;&#x8FC7;java -jar&#x7684;&#x5F62;&#x5F0F;&#x8FDB;&#x884C;&#x8FD0;&#x884C;&#xFF0C;&#x6539;&#x53D8;&#x4E86;&#x4F01;&#x4E1A;&#x7EA7;<strong>Java</strong>&#x4F7F;&#x7528;&#x5BB9;&#x5668;&#x90E8;&#x7F72;&#x7684;&#x4E3B;&#x6D41;&#x65B9;&#x5F0F;&#x3002;&#x5728;&#x6539;&#x53D8;&#x90E8;&#x7F72;&#x5F62;&#x6001;&#x7684;&#x540C;&#x65F6;&#xFF0C;&#x63D0;&#x4F9B;&#x4E86;&#x591A;&#x73AF;&#x5883;&#x548C;&#x914D;&#x7F6E;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#xFF0C;&#x5728;&#x5FAE;&#x670D;&#x52A1;&#x548C;&#x5BB9;&#x5668;&#x5316;&#x5D1B;&#x8D77;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x987A;&#x52BF;&#x800C;&#x4E3A;&#xFF0C;&#x4E00;&#x4E3E;&#x6210;&#x4E3A;&#x4F01;&#x4E1A;&#x7EA7;<strong>Java</strong>&#x90E8;&#x7F72;&#x7684;&#x73B0;&#x5B9E;&#x6807;&#x51C6;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x76F8;&#x6BD4;<strong>Spring</strong>&#x6846;&#x67B6;&#xFF0C;<strong>Spring</strong>Boot&#x4F1A;&#x8F7D;&#x5165;&#x66F4;&#x591A;&#x7684;Bean&#xFF0C;&#x540C;&#x65F6;&#x7531;&#x4E8E;&#x6D4B;&#x8BD5;&#x7C7B;&#x53EF;&#x80FD;&#x4F9D;&#x8D56;&#x4E86;starter&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x5728;&#x5355;&#x6D4B;&#x6267;&#x884C;&#x524D;&#x5B8C;&#x6210;starter&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x56E0;&#x6B64;<strong>Spring</strong>Boot&#x4E5F;&#x63D0;&#x4F9B;&#x4E86;&#x76F8;&#x5E94;&#x7684;&#x6D4B;&#x8BD5;&#x5957;&#x4EF6;&#xFF0C;&#x5373;<strong>Spring-Boot-Test</strong>&#x3002;</p>
+<blockquote>
+<p><strong>Spring-Boot-Test</strong> &#x5BF9;Mockito&#x8FDB;&#x884C;&#x4E86;&#x6574;&#x5408;&#xFF0C;&#x5728;&#x8FDB;&#x884C;Mock&#x65F6;&#xFF0C;&#x76F8;&#x6BD4;<strong>Spring-Test</strong>&#x4F1A;&#x65B9;&#x4FBF;&#x4E00;&#x4E9B;&#x3002;</p>
+</blockquote>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x63A5;&#x4E0B;&#x6765;&#xFF0C;&#x8BA9;&#x6211;&#x4EEC;&#x7528;<strong>Spring-Boot-Test</strong>&#x6539;&#x9020;&#x4E00;&#x4E0B;MemberService&#x7684;&#x5355;&#x6D4B;&#xFF0C;&#x6539;&#x9020;&#x540E;&#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-java">@SpringBootTest(classes = SpringBootMemberTest.Config.class)
+@TestPropertySource(locations = &quot;classpath:test-application.properties&quot;)
+@RunWith(SpringRunner.class)
+public class SpringBootMemberTest {
+
+    @Autowired
+    private Environment env;
+    @MockBean
+    private UserDAO userDAO;
+    @Autowired
+    private MemberService memberService;
+
+    @Before
+    public void init() {
+        Mockito.when(userDAO.insertMember(Mockito.any())).thenReturn(System.currentTimeMillis());
+    }
+
+    @Test
+    public void insert_member() {
+        System.out.println(memberService.insertMember(&quot;windowsxp&quot;, &quot;abc123&quot;));
+        Assert.assertNotNull(memberService.insertMember(&quot;windowsxp&quot;, &quot;abc123&quot;));
+    }
+
+    @Configuration
+    static class Config {
+
+        @Bean
+        public MemberService memberService() {
+            return new MemberServiceImpl();
+        }
+    }
+
+}
+</code></pre>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x6240;&#x793A;&#xFF0C;&#x57FA;&#x4E8E;<strong>Spring</strong>-Boot-Test&#x7684;&#x5355;&#x6D4B;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x6CE8;&#x89E3;@<strong>SpringBootTest</strong>&#x6807;&#x6CE8;&#xFF0C;&#x58F0;&#x660E;&#x8BE5;&#x7C7B;&#x4E3A;&#x4E00;&#x4E2A;<strong>SpringBoot</strong>&#x6D4B;&#x8BD5;&#x7C7B;&#xFF0C;&#x540C;&#x65F6;&#x4E0E;<strong>Spring-Test</strong>&#x7C7B;&#x4F3C;&#xFF0C;&#x901A;&#x8FC7;classes&#x5C5E;&#x6027;&#x58F0;&#x660E;&#x5F53;&#x524D;&#x6D4B;&#x8BD5;&#x7C7B;&#x4F7F;&#x7528;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x672C;&#x793A;&#x4F8B;&#x4E2D;&#x662F;<strong>SpringBootMemberTest.Config</strong>&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5BF9;&#x4E8E;&#x9700;&#x8981;Mock&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;@MockBean&#x6CE8;&#x89E3;&#x6765;&#x4FEE;&#x9970;&#xFF0C;&#x5B83;&#x4F1A;&#x751F;&#x6210;&#x5BF9;&#x5E94;&#x7C7B;&#x578B;&#x7684;Mock&#x5BF9;&#x8C61;&#xFF0C;&#x5E76;&#x5C06;&#x5176;&#x6CE8;&#x5165;&#x5230;&#x5BB9;&#x5668;&#x4E2D;&#x3002;&#x5F53;&#x7136;<strong>SpringBoot</strong>&#x79BB;&#x4E0D;&#x5F00;application&#x914D;&#x7F6E;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;@TestPropertySource&#x6CE8;&#x89E3;&#x6307;&#x5B9A;&#x5F53;&#x524D;&#x6D4B;&#x8BD5;&#x7528;&#x4F8B;&#x6240;&#x4F7F;&#x7528;&#x7684;application&#x914D;&#x7F6E;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x679C;&#x6D4B;&#x8BD5;&#x7684;&#x7C7B;&#x9700;&#x8981;&#x4F9D;&#x8D56;&#x4E00;&#x4E9B;starter&#x624D;&#x80FD;&#x5DE5;&#x4F5C;&#xFF0C;&#x90A3;&#x5C31;&#x9700;&#x8981;&#x5728;&#x6D4B;&#x8BD5;&#x7C7B;&#x4E0A;&#x589E;&#x52A0;@EnableAutoConfiguration&#xFF0C;&#x540C;&#x65F6;&#x5728;application&#x914D;&#x7F6E;&#x4E2D;&#x589E;&#x52A0;&#x4E00;&#x4E9B;&#x5C5E;&#x6027;&#xFF0C;&#x8FD9;&#x6837;&#x8BE5;&#x6D4B;&#x8BD5;&#x5C31;&#x4F1A;&#x50CF;&#x4E00;&#x4E2A;<strong>SpringApplication</strong>&#x4E00;&#x6837;&#x88AB;&#x542F;&#x52A8;&#x8D77;&#x6765;&#x3002;</p>
+<h2 id="springboot&#x73AF;&#x5883;&#x4E0B;&#x6301;&#x4E45;&#x5C42;&#x6D4B;&#x8BD5;"><strong>Spring</strong>Boot&#x73AF;&#x5883;&#x4E0B;&#x6301;&#x4E45;&#x5C42;&#x6D4B;&#x8BD5;</h2>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x6301;&#x4E45;&#x5C42;&#x7684;&#x5355;&#x6D4B;&#x5F88;&#x91CD;&#x8981;&#xFF0C;&#x662F;&#x5E94;&#x7528;&#x5355;&#x6D4B;&#x7684;&#x57FA;&#x7840;&#xFF0C;&#x800C;&#x4E14;&#x7531;&#x4E8E;&#x6301;&#x4E45;&#x5C42;&#x7684;&#x5355;&#x6D4B;&#x4E00;&#x822C;&#x4E0D;&#x4F1A;&#x9009;&#x62E9;mock&#x6570;&#x636E;&#x6E90;&#xFF0C;&#x56E0;&#x6B64;&#x6D4B;&#x8BD5;&#x8FC7;&#x7A0B;&#x9664;&#x4E86;&#x6B63;&#x786E;&#x6027;&#x7684;&#x4FDD;&#x8BC1;&#x4E4B;&#x5916;&#xFF0C;&#x8FD8;&#x9700;&#x8981;&#x786E;&#x4FDD;&#x6D4B;&#x8BD5;&#x8FC7;&#x7A0B;&#x5BF9;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x4E0D;&#x4F1A;&#x4EA7;&#x751F;&#x5F71;&#x54CD;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x8FD8;&#x662F;&#x901A;&#x8FC7;UserDAO&#x7684;&#x5355;&#x6D4B;&#x6765;&#x6F14;&#x793A;<strong>SpringBoot</strong>&#x7684;&#x6301;&#x4E45;&#x5C42;&#x5355;&#x6D4B;&#x7F16;&#x5199;&#xFF0C;&#x7531;&#x4E8E;&#x6D4B;&#x8BD5;&#x9700;&#x8981;&#x4F9D;&#x8D56;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x56E0;&#x6B64;&#x5728;&#x793A;&#x4F8B;&#x4E2D;&#x9700;&#x8981;&#x5148;&#x4F7F;&#x7528;StartDB&#x542F;&#x52A8;&#x4E00;&#x4E2A;hsqldb&#xFF0C;&#x7136;&#x540E;&#x518D;&#x8FD0;&#x884C;&#x5355;&#x6D4B;UserDAOImplTest&#x3002;hsqldb&#x662F;&#x4E00;&#x6B3E;<strong>Java</strong>&#x7F16;&#x5199;&#x7684;&#x5D4C;&#x5165;&#x5F0F;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5185;&#x5B58;&#x6216;&#x4E3B;&#x673A;&#x6A21;&#x5F0F;&#x542F;&#x52A8;&#xFF0C;&#x672C;&#x793A;&#x4F8B;&#x4E2D;&#x91C7;&#x7528;&#x540E;&#x8005;&#xFF0C;&#x4EE5;&#x72EC;&#x7ACB;&#x8FDB;&#x7A0B;&#x7684;&#x65B9;&#x5F0F;&#x542F;&#x52A8;&#xFF0C;&#x5728;&#x6570;&#x636E;&#x5E93;&#x542F;&#x52A8;&#x540E;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x770B;&#x4E00;&#x4E0B;&#x5BF9;&#x5E94;&#x7684;&#x6D4B;&#x8BD5;&#xFF0C;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-java">@RunWith(SpringRunner.class)
+@SpringBootTest(classes = UserDAOImplTest.Config.class)
+@TestPropertySource(locations = &quot;classpath:test-application.properties&quot;)
+@EnableAutoConfiguration
+public class UserDAOImplTest extends AbstractTransactionalJUnit4SpringContextTests {
+    @Autowired
+    private UserDAO userDAO;
+    @Test
+    public void findMember() {
+        MemberDO member = new MemberDO();
+        member.setId(1L);
+        member.setName(&quot;name&quot;);
+        member.setPassword(&quot;password&quot;);
+        member.setGmtCreate(new Date());
+        member.setGmtModified(new Date());
+        userDAO.insertMember(member);
+        MemberDO name = userDAO.findMember(&quot;name&quot;);
+        Assert.assertNotNull(name);
+        Assert.assertEquals(&quot;password&quot;, name.getPassword());
+    }
+    @Import(MyBatisConfig.class)
+    @Configuration
+    static class Config {
+        @Bean
+        UserDAO userDAO() {
+            return new UserDAOImpl();
+        }
+    }
+}
+</code></pre>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x6D4B;&#x8BD5;&#x7C7B;&#x9700;&#x8981;&#x7EE7;&#x627F;<strong>AbstractTransactionalJUnit4SpringContextTests</strong>&#xFF0C;&#x8FD9;&#x6837;&#x4EFB;&#x610F;&#x6D4B;&#x8BD5;&#x65B9;&#x6CD5;&#x90FD;&#x4F1A;&#x8FDB;&#x884C;&#x56DE;&#x6EDA;&#xFF0C;&#x907F;&#x514D;&#x5BF9;&#x6570;&#x636E;&#x9020;&#x6210;&#x5B9E;&#x9645;&#x7684;&#x5F71;&#x54CD;&#x3002;&#x6211;&#x4EEC;&#x8FD0;&#x884C;&#x4E00;&#x4E2A;&#x6301;&#x4E45;&#x5C42;&#x7684;&#x6D4B;&#x8BD5;&#xFF0C;&#x4E0D;&#x5E0C;&#x671B;&#x5B83;&#x66F4;&#x6539;&#x5DF2;&#x6709;&#x7684;&#x6D4B;&#x8BD5;&#x6570;&#x636E;&#xFF0C;&#x4E5F;&#x5E0C;&#x671B;&#x6D4B;&#x8BD5;&#x65B9;&#x6CD5;&#x4E4B;&#x95F4;&#x76F8;&#x4E92;&#x4E0D;&#x5B58;&#x5728;&#x5F71;&#x54CD;&#xFF0C;&#x800C;&#x8BE5;&#x8D85;&#x7C7B;&#x80FD;&#x591F;&#x8BA9;&#x6240;&#x6709;&#x6D4B;&#x8BD5;&#x65B9;&#x6CD5;&#x7684;&#x6267;&#x884C;&#x6700;&#x7EC8;&#x90FD;&#x4F1A;&#x8FDB;&#x884C;&#x56DE;&#x6EDA;&#xFF0C;&#x4ECE;&#x800C;&#x907F;&#x514D;&#x5BF9;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x4EA7;&#x751F;&#x526F;&#x4F5C;&#x7528;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x6D4B;&#x8BD5;&#x65B9;&#x6CD5;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x6570;&#x636E;&#x51C6;&#x5907;&#xFF0C;&#x7136;&#x540E;&#x8FDB;&#x884C;&#x67E5;&#x8BE2;&#x9A8C;&#x8BC1;&#x3002;&#x9664;&#x4E86;&#x9A8C;&#x8BC1;&#x6570;&#x636E;&#x662F;&#x5426;&#x4E3A;&#x7A7A;&#xFF0C;&#x6700;&#x597D;&#x80FD;&#x591F;&#x62BD;&#x68C0;&#x51E0;&#x4E2A;&#x5B57;&#x6BB5;&#xFF0C;&#x770B;&#x770B;&#x662F;&#x5426;&#x7B26;&#x5408;&#x9884;&#x671F;&#x3002;</p>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/weipeng2k/hot-wind" target="_blank">hot-wind</a>&#xFF0C;&#x4F7F;&#x7528;<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank">&#x77E5;&#x8BC6;&#x5171;&#x4EAB; &#x7F72;&#x540D;-&#x76F8;&#x540C;&#x65B9;&#x5F0F;&#x5171;&#x4EAB; 4.0&#x534F;&#x8BAE;</a>&#x53D1;&#x5E03; </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> &#x6B64;&#x9875;&#x9762;&#x4FEE;&#x8BA2;&#x4E8E;&#xFF1A; 2024-12-02 03:24:02 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="do-unit-test-better-02.html" class="navigation navigation-prev " aria-label="Previous page: 热风-Java程序员使用JUnit做单元测试">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="do-unit-test-better-04.html" class="navigation navigation-next " aria-label="Next page: 热风-维护好单元测试">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"热风-基于Spring的单元测试","level":"1.24.3","depth":2,"next":{"title":"热风-维护好单元测试","level":"1.24.4","depth":2,"path":"book/do-unit-test-better-04.md","ref":"book/do-unit-test-better-04.md","articles":[]},"previous":{"title":"热风-Java程序员使用JUnit做单元测试","level":"1.24.2","depth":2,"path":"book/do-unit-test-better-02.md","ref":"book/do-unit-test-better-02.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-pro","-sharing","github-buttons","editlink","ga","-highlight","bibtex-indexed-cite","page-footer-ex","splitter","copy-code-button","expandable-chapters-small","donate","github"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/weipeng2k/hot-wind"},"editlink":{"label":"Edit","multilingual":false,"base":"https://github.com/weipeng2k/hot-wind/blob/master"},"page-footer-ex":{"copyright":"By [hot-wind](https://github.com/weipeng2k/hot-wind)，使用[知识共享 署名-相同方式共享 4.0协议](https://creativecommons.org/licenses/by-sa/4.0/deed.zh)发布","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"此页面修订于："},"splitter":{},"search-pro":{"cutWordLib":"nodejieba","defineWord":["Gitbook Use"]},"donate":{"alipay":"https://weipeng2k.github.io/hot-wind/alipay_qr.JPG","alipayText":"支付宝打赏","button":"赏","title":"","wechat":"https://weipeng2k.github.io/hot-wind/wechat_qr.JPG","wechatText":"微信打赏"},"fontsettings":{"theme":"white","family":"sans","size":2},"bibtex-indexed-cite":{"path":"/"},"github-buttons":{"buttons":[{"user":"weipeng2k","repo":"hot-wind","type":"star","size":"small","count":true}]},"expandable-chapters-small":{},"copy-code-button":{},"ga":{"configuration":"auto","token":"UA-131910384-3"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"weipeng2k","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"bibCount":0,"variables":{},"title":"hot-wind","bib":[],"gitbook":"*"},"file":{"path":"book/do-unit-test-better-03.md","mtime":"2024-12-02T03:24:02.321Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-12-02T03:24:42.830Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-donate/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

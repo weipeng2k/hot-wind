@@ -1,0 +1,1610 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>热风-感悟《计算机网络：自顶向下》（03a.传输层） · hot-wind</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="weipeng2k">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-bibtex-indexed-cite/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-donate/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="computer-network-03b.html" />
+    
+    
+    <link rel="prev" href="computer-network-02.html" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"weipeng2k","repo":"hot-wind","type":"star","size":"small","count":true}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    热风-简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../ABOUTME.html">
+            
+                <a href="../ABOUTME.html">
+            
+                    
+                    热风-关于作者
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="cap-brief-summary.html">
+            
+                <a href="cap-brief-summary.html">
+            
+                    
+                    热风-CAP小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="explanation-of-compensation-mechanism.html">
+            
+                <a href="explanation-of-compensation-mechanism.html">
+            
+                    
+                    热风-补偿机制说明
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="byzantine-generals-problem.html">
+            
+                <a href="byzantine-generals-problem.html">
+            
+                    
+                    热风-拜占庭将军问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="2pc-summary.html">
+            
+                <a href="2pc-summary.html">
+            
+                    
+                    热风-共识协议：两阶段提交
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="compensation-and-tcc.html">
+            
+                <a href="compensation-and-tcc.html">
+            
+                    
+                    热风-一种基于补偿的事务处理机制（TCC）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="how-to-design-a-distribute-database-feeling.html">
+            
+                <a href="how-to-design-a-distribute-database-feeling.html">
+            
+                    
+                    热风-《如何设计一个分布式数据库》观后感
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="tcc-using-seata.html">
+            
+                <a href="tcc-using-seata.html">
+            
+                    
+                    热风-使用Seata来实现TCC
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="what-about-the-future.html">
+            
+                <a href="what-about-the-future.html">
+            
+                    
+                    热风-未来的预测
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="seata-problem.html">
+            
+                <a href="seata-problem.html">
+            
+                    
+                    热风-Seata存在的一些问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="java-network-inetaddress-and-dns.html">
+            
+                <a href="java-network-inetaddress-and-dns.html">
+            
+                    
+                    热风-InetAddress与DNS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="java-network-arp-and-pcap4j.html">
+            
+                <a href="java-network-arp-and-pcap4j.html">
+            
+                    
+                    热风-ARP与pcap4j
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="java-network-tcpdump-and-redis-client.html">
+            
+                <a href="java-network-tcpdump-and-redis-client.html">
+            
+                    
+                    热风-TcpDump与Redis客户端
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="java-dev-learn-c.html">
+            
+                <a href="java-dev-learn-c.html">
+            
+                    
+                    热风-Java开发者看C
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="java-dev-learn-c-01.html">
+            
+                <a href="java-dev-learn-c-01.html">
+            
+                    
+                    热风-C语言概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="java-dev-learn-c-02.html">
+            
+                <a href="java-dev-learn-c-02.html">
+            
+                    
+                    热风-C语言的基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="basic-paxos-9-pages-notes.html">
+            
+                <a href="basic-paxos-9-pages-notes.html">
+            
+                    
+                    热风-基础Paxos算法的9页笔记
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="basic-paxos-9-pages-notes-01.html">
+            
+                <a href="basic-paxos-9-pages-notes-01.html">
+            
+                    
+                    热风-基础Paxos算法笔记(1/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="basic-paxos-9-pages-notes-02.html">
+            
+                <a href="basic-paxos-9-pages-notes-02.html">
+            
+                    
+                    热风-基础Paxos算法笔记(2/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.3" data-path="basic-paxos-9-pages-notes-03.html">
+            
+                <a href="basic-paxos-9-pages-notes-03.html">
+            
+                    
+                    热风-基础Paxos算法笔记(3/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.4" data-path="basic-paxos-9-pages-notes-04.html">
+            
+                <a href="basic-paxos-9-pages-notes-04.html">
+            
+                    
+                    热风-基础Paxos算法笔记(4/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.5" data-path="basic-paxos-9-pages-notes-05.html">
+            
+                <a href="basic-paxos-9-pages-notes-05.html">
+            
+                    
+                    热风-基础Paxos算法笔记(5/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.6" data-path="basic-paxos-9-pages-notes-06.html">
+            
+                <a href="basic-paxos-9-pages-notes-06.html">
+            
+                    
+                    热风-基础Paxos算法笔记(6/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.7" data-path="basic-paxos-9-pages-notes-07.html">
+            
+                <a href="basic-paxos-9-pages-notes-07.html">
+            
+                    
+                    热风-基础Paxos算法笔记(7/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.8" data-path="basic-paxos-9-pages-notes-08.html">
+            
+                <a href="basic-paxos-9-pages-notes-08.html">
+            
+                    
+                    热风-基础Paxos算法笔记(8/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.9" data-path="basic-paxos-9-pages-notes-09.html">
+            
+                <a href="basic-paxos-9-pages-notes-09.html">
+            
+                    
+                    热风-基础Paxos算法笔记(9/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="distribute-lock-brief-summary.html">
+            
+                <a href="distribute-lock-brief-summary.html">
+            
+                    
+                    热风-分布式锁
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.17.1" data-path="distribute-lock-what-is-lock.html">
+            
+                <a href="distribute-lock-what-is-lock.html">
+            
+                    
+                    热风-锁是什么？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.2" data-path="distribute-lock-what-is-distribute-lock.html">
+            
+                <a href="distribute-lock-what-is-distribute-lock.html">
+            
+                    
+                    热风-分布式锁是什么？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.3" data-path="distribute-lock-problem.html">
+            
+                <a href="distribute-lock-problem.html">
+            
+                    
+                    热风-实现分布式锁会遇到的问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.4" data-path="distribute-lock-framework.html">
+            
+                <a href="distribute-lock-framework.html">
+            
+                    
+                    热风-分布式锁框架
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.5" data-path="distribute-lock-spin-impl.html">
+            
+                <a href="distribute-lock-spin-impl.html">
+            
+                    
+                    热风-拉模式的分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.6" data-path="distribute-lock-event-impl.html">
+            
+                <a href="distribute-lock-event-impl.html">
+            
+                    
+                    热风-推模式的分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.7" data-path="distribute-lock-with-redis.html">
+            
+                <a href="distribute-lock-with-redis.html">
+            
+                    
+                    热风-使用Redis实现分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.8" data-path="distribute-lock-how-to-do-it.html">
+            
+                <a href="distribute-lock-how-to-do-it.html">
+            
+                    
+                    热风-如何实现分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.9" data-path="distribute-lock-is-redlock-safe.html">
+            
+                <a href="distribute-lock-is-redlock-safe.html">
+            
+                    
+                    热风-Redlock能保证锁的正确性吗？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.10" data-path="distribute-lock-another-way.html">
+            
+                <a href="distribute-lock-another-way.html">
+            
+                    
+                    热风-再看分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="change-to-temurin.html">
+            
+                <a href="change-to-temurin.html">
+            
+                    
+                    热风-更新到Eclipse Temurin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="using-jetbrains-toolbox.html">
+            
+                <a href="using-jetbrains-toolbox.html">
+            
+                    
+                    热风-使用JetBrains Toolbox来管理IDE
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="8-books-to-be-better-dev.html">
+            
+                <a href="8-books-to-be-better-dev.html">
+            
+                    
+                    热风-成为更好程序员的8本书
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="juc-summary.html">
+            
+                <a href="juc-summary.html">
+            
+                    
+                    热风-JUC总结
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.21.1" data-path="juc-stamped-lock-doc.html">
+            
+                <a href="juc-stamped-lock-doc.html">
+            
+                    
+                    热风-JUC中的StampedLock文档
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.2" data-path="juc-seqlock.html">
+            
+                <a href="juc-seqlock.html">
+            
+                    
+                    热风-《Linux系统高效同步》SeqLock摘译
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.3" data-path="juc-stampedlock-summary.html">
+            
+                <a href="juc-stampedlock-summary.html">
+            
+                    
+                    热风-StampedLock简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.4" data-path="juc-stampedlock-inf-and-case.html">
+            
+                <a href="juc-stampedlock-inf-and-case.html">
+            
+                    
+                    热风-StampedLock的接口与示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.5" data-path="juc-stampedlock-implement-analysis.html">
+            
+                <a href="juc-stampedlock-implement-analysis.html">
+            
+                    
+                    热风-StampedLock的实现分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="program-how-to-run.html">
+            
+                <a href="program-how-to-run.html">
+            
+                    
+                    热风-程序是怎样跑起来的
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.22.1" data-path="program-how-to-run-01.html">
+            
+                <a href="program-how-to-run-01.html">
+            
+                    
+                    热风-对程序员来说CPU是什么
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.2" data-path="program-how-to-run-02.html">
+            
+                <a href="program-how-to-run-02.html">
+            
+                    
+                    热风-数据是用二进制数表示的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.3" data-path="program-how-to-run-03.html">
+            
+                <a href="program-how-to-run-03.html">
+            
+                    
+                    热风-计算机进行小数运算时出错的原因
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.4" data-path="program-how-to-run-04.html">
+            
+                <a href="program-how-to-run-04.html">
+            
+                    
+                    热风-熟练使用有棱有角的内存
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.5" data-path="program-how-to-run-05.html">
+            
+                <a href="program-how-to-run-05.html">
+            
+                    
+                    热风-内存和磁盘的亲密关系
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.6" data-path="program-how-to-run-06.html">
+            
+                <a href="program-how-to-run-06.html">
+            
+                    
+                    热风-亲自尝试压缩数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.7" data-path="program-how-to-run-07.html">
+            
+                <a href="program-how-to-run-07.html">
+            
+                    
+                    热风-程序是在何种环境中运行的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.8" data-path="program-how-to-run-08.html">
+            
+                <a href="program-how-to-run-08.html">
+            
+                    
+                    热风-从源文件到可执行文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.9" data-path="program-how-to-run-09.html">
+            
+                <a href="program-how-to-run-09.html">
+            
+                    
+                    热风-操作系统和应用的关系
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.10" data-path="program-how-to-run-10.html">
+            
+                <a href="program-how-to-run-10.html">
+            
+                    
+                    热风-通过汇编语言了解程序的实际构成
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.11" data-path="program-how-to-run-11.html">
+            
+                <a href="program-how-to-run-11.html">
+            
+                    
+                    热风-硬件控制方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="program-program-program.html">
+            
+                <a href="program-program-program.html">
+            
+                    
+                    热风-程序！程序！程序！
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.23.1" data-path="program-program-program-01.html">
+            
+                <a href="program-program-program-01.html">
+            
+                    
+                    热风-程序的视角
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.2" data-path="program-program-program-02.html">
+            
+                <a href="program-program-program-02.html">
+            
+                    
+                    热风-硬件的执念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.3" data-path="program-program-program-03.html">
+            
+                <a href="program-program-program-03.html">
+            
+                    
+                    热风-编译的力量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.4" data-path="program-program-program-04.html">
+            
+                <a href="program-program-program-04.html">
+            
+                    
+                    热风-数据的表达
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.5" data-path="program-program-program-05.html">
+            
+                <a href="program-program-program-05.html">
+            
+                    
+                    热风-协同的奥义
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="do-unit-test-better.html">
+            
+                <a href="do-unit-test-better.html">
+            
+                    
+                    热风-如何更好的做单元测试
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.24.1" data-path="do-unit-test-better-01.html">
+            
+                <a href="do-unit-test-better-01.html">
+            
+                    
+                    热风-软件开发与单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.2" data-path="do-unit-test-better-02.html">
+            
+                <a href="do-unit-test-better-02.html">
+            
+                    
+                    热风-Java程序员使用JUnit做单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.3" data-path="do-unit-test-better-03.html">
+            
+                <a href="do-unit-test-better-03.html">
+            
+                    
+                    热风-基于Spring的单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.4" data-path="do-unit-test-better-04.html">
+            
+                <a href="do-unit-test-better-04.html">
+            
+                    
+                    热风-维护好单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.5" data-path="do-unit-test-better-05.html">
+            
+                <a href="do-unit-test-better-05.html">
+            
+                    
+                    热风-体验测试驱动开发
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="computer-network-01.html">
+            
+                <a href="computer-network-01.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.25.1" data-path="computer-network-01.html">
+            
+                <a href="computer-network-01.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（01.概述）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.2" data-path="computer-network-02.html">
+            
+                <a href="computer-network-02.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（02.应用层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.25.3" data-path="computer-network-03a.html">
+            
+                <a href="computer-network-03a.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（03a.传输层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.4" data-path="computer-network-03b.html">
+            
+                <a href="computer-network-03b.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（03b.传输层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.5" data-path="computer-network-04a.html">
+            
+                <a href="computer-network-04a.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（04a.网络层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.6" data-path="computer-network-04b.html">
+            
+                <a href="computer-network-04b.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（04b.网络层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.7" data-path="computer-network-05a.html">
+            
+                <a href="computer-network-05a.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（05a.数据链路层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.8" data-path="computer-network-05b.html">
+            
+                <a href="computer-network-05b.html">
+            
+                    
+                    热风-《计算机网络》第5章-数据链路层（b.以太网）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.9" data-path="computer-network-06a.html">
+            
+                <a href="computer-network-06a.html">
+            
+                    
+                    热风-《计算机网络》第6章-物理层（a.基本概念）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="talk-about-architecture.html">
+            
+                <a href="talk-about-architecture.html">
+            
+                    
+                    热风-聊一聊架构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="javac-release-option.html">
+            
+                <a href="javac-release-option.html">
+            
+                    
+                    热风-使用Javac's Release选项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="talk-about-design-paradigm.html">
+            
+                <a href="talk-about-design-paradigm.html">
+            
+                    
+                    热风-谈一谈设计范式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="talk-about-system-complex.html">
+            
+                <a href="talk-about-system-complex.html">
+            
+                    
+                    热风-说一说系统复杂性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="how-do-i-write-a-design-doc.html">
+            
+                <a href="how-do-i-write-a-design-doc.html">
+            
+                    
+                    热风-我怎么写概要设计？
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >热风-感悟《计算机网络：自顶向下》（03a.传输层）</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x611F;&#x609F;&#x300A;&#x8BA1;&#x7B97;&#x673A;&#x7F51;&#x7EDC;&#xFF1A;&#x81EA;&#x9876;&#x5411;&#x4E0B;&#x300B;&#xFF08;03a&#x4F20;&#x8F93;&#x5C42;&#xFF09;">&#x611F;&#x609F;&#x300A;&#x8BA1;&#x7B97;&#x673A;&#x7F51;&#x7EDC;&#xFF1A;&#x81EA;&#x9876;&#x5411;&#x4E0B;&#x300B;&#xFF08;03a.&#x4F20;&#x8F93;&#x5C42;&#xFF09;</h1>
+<h2 id="&#x4F20;&#x8F93;&#x5C42;&#x7B80;&#x4ECB;">&#x4F20;&#x8F93;&#x5C42;&#x7B80;&#x4ECB;</h2>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4F20;&#x8F93;&#x5C42;&#x4F4D;&#x4E8E;<a href="https://baike.baidu.com/item/TCP%2FIP&#x534F;&#x8BAE;/212915" target="_blank">TCP/IP</a>&#x4E94;&#x5C42;&#x7ED3;&#x6784;&#x4E2D;&#x81EA;&#x9876;&#x5411;&#x4E0B;&#x7684;&#x7B2C;&#x4E8C;&#x5C42;&#xFF0C;&#x5B83;&#x5411;&#x4E0A;&#x63D0;&#x4F9B;<code>socket</code>&#x7F16;&#x7A0B;&#x63A5;&#x53E3;&#xFF0C;&#x4E3A;&#x5E94;&#x7528;&#x5C42;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x9762;&#x5411;&#x7F51;&#x7EDC;&#x7684;&#x7F16;&#x7A0B;&#x754C;&#x9762;&#xFF0C;&#x5411;&#x4E0B;&#x4F7F;&#x7528;&#x7F51;&#x7EDC;&#x5C42;&#x63D0;&#x4F9B;&#x7684;&#x670D;&#x52A1;&#x8FDB;&#x884C;&#x6570;&#x636E;&#x4F20;&#x8F93;&#x3002;&#x4F20;&#x8F93;&#x5C42;&#x4E3A;&#x8FD0;&#x884C;&#x5728;&#x4E0D;&#x540C;&#x4E3B;&#x673A;&#x4E0A;&#x7684;&#x5E94;&#x7528;&#x8FDB;&#x7A0B;&#x63D0;&#x4F9B;&#x903B;&#x8F91;&#x901A;&#x4FE1;&#x7684;&#x80FD;&#x529B;&#xFF0C;&#x540C;&#x65F6;&#x4E3A;&#x4E86;&#x8BA9;&#x5E94;&#x7528;&#x5C42;&#x5C3D;&#x53EF;&#x80FD;&#x5C11;&#x7684;&#x5173;&#x6CE8;&#x5230;&#x7F51;&#x7EDC;&#x4F20;&#x8F93;&#x7EC6;&#x8282;&#xFF0C;&#x8FD8;&#x652F;&#x6301;&#x6D41;&#x91CF;&#x63A7;&#x5236;&#x548C;&#x62E5;&#x585E;&#x63A7;&#x5236;&#xFF0C;&#x4F7F;&#x5176;&#x80FD;&#x591F;&#x6700;&#x5927;&#x9650;&#x5EA6;&#x7684;&#x652F;&#x6301;&#x5E94;&#x7528;&#x5C42;&#x5BF9;&#x4E8E;&#x7F51;&#x7EDC;&#x670D;&#x52A1;&#x7684;&#x8BC9;&#x6C42;&#x3002;</p>
+<h3 id="&#x7ED3;&#x6784;">&#x7ED3;&#x6784;</h3>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>Socket</code>&#x4F5C;&#x4E3A;&#x4F20;&#x8F93;&#x5C42;&#x7684;&#x7F16;&#x7A0B;&#x754C;&#x9762;&#xFF0C;&#x5176;&#x5B9E;&#x73B0;&#x7531;&#x4E0D;&#x540C;&#x7684;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x5404;&#x81EA;&#x63D0;&#x4F9B;&#xFF0C;&#x4F46;&#x662F;socket&#x7F16;&#x7A0B;&#x65B9;&#x5F0F;&#x5927;&#x90FD;&#x76F8;&#x4F3C;&#xFF0C;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x4F20;&#x8F93;&#x5C42;&#x4ECE;&#x6807;&#x51C6;&#x4E0A;&#x5206;&#x4E3A;&#x4E86;&#x9762;&#x5411;&#x8FDE;&#x63A5;&#x7684;TCP&#x548C;&#x9762;&#x5411;&#x7528;&#x6237;&#x6570;&#x636E;&#x62A5;&#x7684;UDP&#xFF0C;&#x7531;&#x4E8E;&#x662F;&#x6807;&#x51C6;&#x534F;&#x8BAE;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x884C;&#x4E3A;&#x4E0A;&#x57FA;&#x672C;&#x7C7B;&#x4F3C;&#x3002;&#x4E0D;&#x540C;&#x7684;&#x8BED;&#x8A00;&#x4F1A;&#x5C01;&#x88C5;&#x4E0D;&#x540C;&#x7684;&#x63A5;&#x53E3;&#x4EE5;&#x53CA;&#x63D0;&#x4F9B;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x6765;&#x652F;&#x6301;<code>socket</code>&#x7F16;&#x7A0B;&#xFF0C;&#x4F46;&#x5B83;&#x4EEC;&#x7684;&#x5E95;&#x5C42;&#x5B9E;&#x73B0;&#x90FD;&#x4F1A;&#x4F9D;&#x8D56;&#x5177;&#x4F53;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x7684;API&#xFF0C;&#x76F4;&#x767D;&#x70B9;&#x5C31;&#x662F;&#xFF0C;&#x4EFB;&#x4F55;&#x8BED;&#x8A00;&#x7684;&#x7F51;&#x7EDC;&#x7F16;&#x7A0B;&#x672C;&#x8D28;&#x4E0A;&#x90FD;&#x662F;&#x7CFB;&#x7EDF;&#x7F16;&#x7A0B;&#x3002;&#x7CFB;&#x7EDF;API&#x7684;&#x5B9E;&#x73B0;&#x662F;&#x6765;&#x81EA;&#x4E0D;&#x540C;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x7684;&#x534F;&#x8BAE;&#x6808;&#x7A0B;&#x5E8F;&#xFF0C;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x900F;&#x8FC7;<code>socket</code>&#x4E0E;&#x7F51;&#x7EDC;&#x7684;&#x4EA4;&#x4E92;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x90FD;&#x662F;&#x548C;&#x672C;&#x5730;&#x534F;&#x8BAE;&#x6808;&#x7A0B;&#x5E8F;&#x7684;&#x4EA4;&#x4E92;&#xFF0C;&#x59D4;&#x6258;&#x5B83;&#x4E0E;&#x5BF9;&#x7AEF;&#x7CFB;&#x7EDF;&#xFF08;&#x7684;&#x534F;&#x8BAE;&#x6808;&#x7A0B;&#x5E8F;&#xFF09;&#x8FDB;&#x884C;&#x901A;&#x4FE1;&#xFF0C;&#x4E0A;&#x8FF0;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/socket-arch.png" width="90%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x4F20;&#x8F93;&#x5C42;&#x662F;&#x8054;&#x901A;&#x5E94;&#x7528;&#x4E0E;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x534F;&#x8BAE;&#x6808;&#x7684;&#x6865;&#x6881;&#xFF0C;&#x4E5F;&#x662F;&#x7F51;&#x7EDC;&#x7F16;&#x7A0B;&#x7684;&#x8D77;&#x70B9;&#xFF0C;&#x5B83;&#x4EE5;&#x8F6F;&#x4EF6;&#x7684;&#x65B9;&#x5F0F;&#x652F;&#x6301;&#x4E86;&#x5E94;&#x7528;&#x5C42;&#x7684;&#x6784;&#x5EFA;&#x3002;</p>
+<h3 id="tcp&#x548C;udp">TCP&#x548C;UDP</h3>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;TCP&#x662F;&#x9762;&#x5411;&#x8FDE;&#x63A5;&#x7684;&#x4F20;&#x8F93;&#x5C42;&#x534F;&#x8BAE;&#xFF0C;&#x5B83;&#x80FD;&#x591F;&#x63D0;&#x4F9B;&#x53EF;&#x9760;&#x7684;&#x4F20;&#x8F93;&#x670D;&#x52A1;&#xFF0C;UDP&#x4E0D;&#x662F;&#x9762;&#x5411;&#x8FDE;&#x63A5;&#x7684;&#x4F20;&#x8F93;&#x5C42;&#x534F;&#x8BAE;&#xFF0C;&#x4F20;&#x8F93;&#x670D;&#x52A1;&#x4E0D;&#x53EF;&#x9760;&#x3002;UDP&#x53EB;&#x7528;&#x6237;&#x6570;&#x636E;&#x62A5;&#x534F;&#x8BAE;&#xFF0C;&#x5565;&#x53EB;&#x7528;&#x6237;&#x6570;&#x636E;&#x62A5;&#xFF1F;&#x53EF;&#x4EE5;&#x770B;&#x770B;&#x4E0B;&#x56FE;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/ip-tcp-udp.png" width="40%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;UDP&#x76F8;&#x5F53;&#x4E8E;&#x5728;IP&#x4E4B;&#x4E0A;&#x589E;&#x52A0;&#x4E86;&#x5BF9;&#x7AEF;&#x53E3;&#xFF08;&#x8FDB;&#x7A0B;&#xFF09;&#x7684;&#x652F;&#x6301;&#xFF0C;&#x65F6;&#x9AE6;&#x7684;&#x8BDD;&#x53EF;&#x4EE5;&#x8FD9;&#x4E48;&#x8BF4;&#xFF1A;&#x4E3A;&#x57FA;&#x4E8E;IP&#x7684;&#x7F51;&#x7EDC;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x4E86;&#x79DF;&#x6237;&#xFF08;&#x6216;&#x547D;&#x540D;&#x7A7A;&#x95F4;&#xFF09;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x8FDB;&#x4E00;&#x6B65;&#x8D4B;&#x80FD;&#x4E86;&#x7F51;&#x7EDC;&#x5C42;&#x3002;&#x7F51;&#x7EDC;&#x5C42;&#x8FDB;&#x884C;&#x901A;&#x4FE1;&#x7684;&#x6570;&#x636E;&#x5355;&#x5143;&#x79F0;&#x4E3A;&#x5206;&#x7EC4;&#x6216;&#x8005;&#x5305;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x79F0;&#x4E3A;&#x6570;&#x636E;&#x62A5;&#xFF08;Datagram&#xFF09;&#xFF0C;&#x800C;UDP&#x662F;&#x6784;&#x5EFA;&#x5728;&#x7F51;&#x7EDC;&#x5C42;&#x4E4B;&#x4E0A;&#xFF0C;&#x9762;&#x5411;&#x7528;&#x6237;&#x4F7F;&#x7528;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x5C31;&#x79F0;&#x4E3A;&#x7528;&#x6237;&#x6570;&#x636E;&#x62A5;&#xFF08;User Datagram&#xFF09;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x8FD9;&#x4E48;&#x770B;UDP&#x4EE5;&#x6E90;IP&#x548C;Port&#x4E3A;&#x57FA;&#x7840;&#xFF0C;&#x5411;&#x5916;&#x8FDB;&#x884C;&#x591A;&#x70B9;&#x8C03;&#x7528;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8FDB;&#x884C;&#x5E7F;&#x64AD;&#x3002;&#x9664;&#x6B64;&#x5E7F;&#x64AD;&#x4EE5;&#x5916;&#xFF0C;UDP&#x80FD;&#x5E72;&#x7684;&#xFF0C;TCP&#x5168;&#x90E8;&#x80FD;&#x5E72;&#xFF0C;&#x800C;&#x4E14;&#x53EF;&#x9760;&#xFF0C;&#x90A3;&#x8981;UDP&#x5E72;&#x5565;&#xFF1F;&#x539F;&#x56E0;&#x5728;&#x4E8E;&#xFF0C;UDP&#x534F;&#x8BAE;&#x77ED;&#x5C0F;&#xFF0C;&#x540C;&#x65F6;&#x6CA1;&#x6709;&#x6D41;&#x91CF;&#x63A7;&#x5236;&#x548C;&#x62E5;&#x585E;&#x63A7;&#x5236;&#xFF0C;&#x7B80;&#x5355;&#x8BF4;&#x5C31;&#x662F;&#x4E0D;&#x8BB2;&#x7A76;&#xFF0C;&#x53EA;&#x7BA1;&#x53D1;&#x9001;&#x548C;&#x63A5;&#x6536;&#xFF0C;&#x76F8;&#x5BF9;&#x5EF6;&#x8FDF;&#x5C0F;&#xFF0C;&#x6BD4;&#x8F83;&#x9002;&#x5408;&#x5B9E;&#x65F6;&#x6D41;&#x5A92;&#x4F53;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;webcam&#x3002;&#x73B0;&#x5B9E;&#x662F;&#x6709;&#x4E9B;&#x9632;&#x706B;&#x5899;&#x4F1A;&#x7981;&#x7528;UDP&#x534F;&#x8BAE;&#xFF0C;&#x6240;&#x4EE5;&#x5FEB;&#x8FD9;&#x4E2A;&#x597D;&#x5904;&#x4E5F;&#x4E0D;&#x89C1;&#x7684;&#x90A3;&#x4E48;&#x597D;&#x4F7F;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;TCP&#x662F;&#x9762;&#x5411;&#x8FDE;&#x63A5;&#x7684;&#x4F20;&#x8F93;&#x670D;&#x52A1;&#xFF0C;&#x53EB;&#x9762;&#x5411;&#x8FDE;&#x63A5;&#x800C;&#x4E0D;&#x662F;&#x57FA;&#x4E8E;&#x8FDE;&#x63A5;&#xFF0C;&#x5C31;&#x662F;&#x7AD9;&#x5728;&#x7F51;&#x7EDC;&#x4F20;&#x8F93;&#x7684;&#x4E24;&#x7AEF;&#x6765;&#x8BF4;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x4EEC;&#x5404;&#x81EA;&#x90FD;&#x5411;&#x8FDE;&#x63A5;&#x4E2D;&#x53D1;&#x9001;&#x6216;&#x63A5;&#x6536;&#x6570;&#x636E;&#xFF0C;&#x611F;&#x89C9;&#x4E0A;&#x597D;&#x50CF;&#x548C;&#x5BF9;&#x7AEF;&#x5EFA;&#x7ACB;&#x4E86;&#x4E00;&#x4E2A;&#x73B0;&#x5B9E;&#x5B58;&#x5728;&#x7684;&#x8FDE;&#x63A5;&#xFF0C;&#x4F46;&#x5B9E;&#x9645;&#x4E0A;&#x5E76;&#x6CA1;&#x6709;&#x3002;&#x4F7F;&#x7528;TCP&#x901A;&#x4FE1;&#x7684;&#x53CC;&#x65B9;&#x4F1A;&#x6709;&#x8FDE;&#x63A5;&#x5EFA;&#x7ACB;&#x7684;&#x8FC7;&#x7A0B;&#xFF0C;&#x90A3;&#x53EA;&#x4E0D;&#x8FC7;&#x662F;&#x4E00;&#x79CD;&#x8FBE;&#x6210;&#x5171;&#x8BC6;&#x7684;&#x624B;&#x6BB5;&#xFF0C;&#x5B83;&#x9700;&#x8981;&#x53CC;&#x65B9;&#x7CFB;&#x7EDF;&#x5185;&#x6838;&#xFF08;&#x6216;&#x8005;&#x8BF4;&#x534F;&#x8BAE;&#x6808;&#x7A0B;&#x5E8F;&#xFF09;&#x6765;&#x7EF4;&#x62A4;&#x8FD9;&#x4E2A;&#x5171;&#x8BC6;&#xFF0C;&#x5982;&#x679C;&#x5176;&#x4E2D;&#x4E00;&#x65B9;&#x7A81;&#x7136;&#x6389;&#x7535;&#x5173;&#x95ED;&#xFF0C;&#x5BF9;&#x7AEF;&#x7684;&#x8FDE;&#x63A5;&#x662F;&#x4E0D;&#x4F1A;&#x5173;&#x95ED;&#x7684;&#xFF0C;&#x800C;&#x662F;&#x4EE5;&#x4E3A;&#x8FD9;&#x4E2A;&#x8FDE;&#x63A5;&#x4ECD;&#x7136;&#x5B58;&#x5728;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x9762;&#x5BF9;&#x8FD9;&#x79CD;&#x610F;&#x6599;&#x4E4B;&#x5916;&#x7684;&#x7A81;&#x7136;&#x4E0B;&#x7EBF;&#xFF0C;&#x4F9D;&#x65E7;&#x5B58;&#x6D3B;&#x7684;&#x4E00;&#x65B9;&#x8FD8;&#x662F;&#x53EF;&#x4EE5;&#x5411;&#x8FD9;&#x4E2A;&#x8FDE;&#x63A5;&#x53D1;&#x9001;&#x6570;&#x636E;&#xFF0C;&#x53EA;&#x662F;&#x6CA1;&#x6709;&#x54CD;&#x5E94;&#xFF0C;&#x800C;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x5185;&#x6838;&#x4F1A;&#x68C0;&#x6D4B;&#x51FA;&#x53D1;&#x9001;&#x6570;&#x636E;&#x7684;&#x54CD;&#x5E94;&#x8D85;&#x65F6;&#xFF0C;&#x8FDB;&#x800C;&#x91C7;&#x53D6;&#x5173;&#x95ED;&#x8FDE;&#x63A5;&#x7684;&#x884C;&#x52A8;&#x3002;</p>
+<h2 id="rdt&#x7684;&#x8BBE;&#x8BA1;&#x4E0E;&#x6F14;&#x5316;">RDT&#x7684;&#x8BBE;&#x8BA1;&#x4E0E;&#x6F14;&#x5316;</h2>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;TCP&#x770B;&#x8D77;&#x6765;&#x5F88;&#x795E;&#x5947;&#xFF0C;&#x4F46;&#x5728;&#x590D;&#x6742;&#x7684;&#x4E1C;&#x897F;&#x90FD;&#x662F;&#x4ECE;&#x7B80;&#x5355;&#x7684;&#x4E8B;&#x7269;&#x6F14;&#x8FDB;&#x800C;&#x6765;&#x7684;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x5C31;&#x8DDF;&#x968F;&#x672C;&#x6587;&#x6765;&#x8BBE;&#x8BA1;&#x4E00;&#x6B3E;&#x53EF;&#x9760;&#x6570;&#x636E;&#x4F20;&#x8F93;&#x534F;&#x8BAE;&#x3002;RDT(Reliable Data Transfer)&#xFF0C;&#x5373;&#x53EF;&#x9760;&#x6570;&#x636E;&#x4F20;&#x8F93;&#xFF0C;&#x6211;&#x4EEC;&#x901A;&#x8FC7;&#x601D;&#x8003;&#x5982;&#x4F55;&#x6784;&#x5EFA;&#x4E00;&#x4E2A;&#x53EF;&#x9760;&#x7684;&#x6570;&#x636E;&#x4F20;&#x8F93;&#x534F;&#x8BAE;&#x6765;&#x7406;&#x89E3;TCP&#x534F;&#x8BAE;&#x9762;&#x5BF9;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x4EE5;&#x53CA;&#x6839;&#x636E;RDT&#x7684;&#x89E3;&#x6CD5;&#x6765;&#x601D;&#x8003;TCP&#x4E2D;&#x90A3;&#x4E9B;&#x4E0D;&#x6613;&#x7406;&#x89E3;&#x7684;&#x77E5;&#x8BC6;&#x70B9;&#x3002;RDT&#x534F;&#x8BAE;&#x662F;&#x6784;&#x5EFA;&#x5728;&#x7F51;&#x7EDC;&#x5C42;&#x4E4B;&#x4E0A;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x5B83;&#x652F;&#x6301;&#x5206;&#x7EC4;&#x4EA4;&#x6362;&#x7684;&#x57FA;&#x672C;&#x7279;&#x6027;&#xFF0C;&#x540C;&#x65F6;&#x5B83;&#x63A5;&#x6536;&#x5E94;&#x7528;&#x5C42;&#x6570;&#x636E;&#xFF0C;&#x5E76;&#x6309;&#x7167;&#x8981;&#x6C42;&#x8FDB;&#x884C;&#x4F20;&#x8F93;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x6211;&#x4EEC;&#x81EA;&#x5B9A;&#x4E49;&#x7684;RDT&#x534F;&#x8BAE;&#x63A5;&#x6536;&#x5E94;&#x7528;&#x5C42;&#x4F20;&#x8F93;&#x7684;&#x6570;&#x636E;&#x5E76;&#x5B8C;&#x6210;&#x4F20;&#x8F93;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5E94;&#x7528;&#x5C42;&#x9700;&#x8981;&#x8C03;&#x7528;RDT&#x63D0;&#x4F9B;&#x7684;&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x6570;&#x636E;&#x53D1;&#x9001;&#x548C;&#x63A5;&#x6536;&#xFF0C;&#x5728;&#x8FD9;&#x91CC;&#x5047;&#x8BBE;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#x5BF9;&#x5E94;&#x4E0A;&#x8FF0;&#x64CD;&#x4F5C;&#xFF1A;<code>rdt_snd(Segment segment)</code>&#x548C;<code>rdt_rcv(Packet packet)</code>&#x3002;&#x5BF9;&#x4E8E;<code>rdt_snd</code>&#x65B9;&#x6CD5;&#x800C;&#x8A00;&#xFF0C;&#x5E94;&#x7528;&#x5C42;&#x9700;&#x8981;&#x521B;&#x5EFA;&#x597D;<code>Segment</code>&#x62A5;&#x6587;&#x5BF9;&#x8C61;&#xFF0C;&#x5176;&#x4E2D;&#x5305;&#x62EC;&#x9700;&#x8981;&#x4F20;&#x8F93;&#x7684;&#x5B57;&#x8282;&#x6570;&#x7EC4;&#xFF0C;&#x7136;&#x540E;<code>rdt_snd</code>&#x65B9;&#x6CD5;&#x8D1F;&#x8D23;&#x53D1;&#x9001;&#x5230;&#x5BF9;&#x7AEF;&#x3002;&#x5BF9;&#x4E8E;<code>rdt_rcv</code>&#x65B9;&#x6CD5;&#x800C;&#x8A00;&#xFF0C;&#x4ECE;&#x7F51;&#x7EDC;&#x5C42;&#x6536;&#x5230;&#x5206;&#x7EC4;<code>Packet</code>&#x540E;&#x8FDB;&#x884C;&#x8F6C;&#x6362;&#x5904;&#x7406;&#xFF0C;&#x5C06;&#x5176;&#x8F6C;&#x4E3A;<code>Segment</code>&#x540E;&#xFF0C;&#x8C03;&#x7528;&#x5E94;&#x7528;&#x5C42;&#x7684;&#x5904;&#x7406;&#x903B;&#x8F91;&#xFF0C;&#x8FD9;&#x6837;&#x5C31;&#x5B9E;&#x73B0;&#x4E86;&#x6570;&#x636E;&#x54CD;&#x5E94;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;RDT&#x534F;&#x8BAE;&#x6784;&#x5EFA;&#x5728;&#x7F51;&#x7EDC;&#x5C42;&#x4E4B;&#x4E0A;&#xFF0C;&#x53D1;&#x9001;&#x65F6;&#x9700;&#x8981;&#x5C06;<code>Segment</code>&#x8F6C;&#x6362;&#x4E3A;<code>Packet</code>&#x8FDB;&#x884C;&#x53D1;&#x9001;&#xFF0C;&#x63A5;&#x6536;&#x65F6;&#x5C06;&#x6536;&#x5230;<code>Packet</code>&#x8F6C;&#x4E3A;<code>Segment</code>&#x8FDB;&#x884C;&#x5E94;&#x7528;&#x56DE;&#x8C03;&#x3002;&#x5BF9;&#x7F51;&#x7EDC;&#x5C42;&#x7684;&#x53D1;&#x9001;&#x548C;&#x63A5;&#x6536;&#x5206;&#x522B;&#x5047;&#x8BBE;&#x5B58;&#x5728;<code>net_snd(Packet packet)</code>&#x548C;<code>net_rcv(Packet packet)</code>&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x81F3;&#x4E8E;&#x5B83;&#x4EEC;&#x548C;&#x6570;&#x636E;&#x94FE;&#x8DEF;&#x5C42;&#x7684;&#x5173;&#x7CFB;&#xFF0C;RDT&#x534F;&#x8BAE;&#x5C31;&#x4E0D;&#x5173;&#x5FC3;&#x4E86;&#xFF0C;&#x53EA;&#x77E5;&#x9053;<code>Packet</code>&#x5728;&#x4F20;&#x8F93;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x4F20;&#x5165;&#x6765;&#x6E90;&#x548C;&#x76EE;&#x6807;IP&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;RDT&#x534F;&#x8BAE;&#x7684;&#x8BBE;&#x8BA1;&#x65E0;&#x6CD5;&#x4E00;&#x8E74;&#x800C;&#x5C31;&#xFF0C;&#x9700;&#x8981;&#x7ECF;&#x8FC7;&#x9010;&#x6B65;&#x7684;&#x5047;&#x8BBE;&#x548C;&#x63A8;&#x6F14;&#x9010;&#x6B65;&#x5B8C;&#x5584;&#xFF0C;&#x800C;&#x5047;&#x8BBE;&#x662F;&#x57FA;&#x4E8E;&#x7F51;&#x7EDC;&#x5C42;&#x7684;&#x670D;&#x52A1;&#x8D28;&#x91CF;&#x800C;&#x6765;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x7F51;&#x7EDC;&#x5C42;&#x80FD;&#x4FDD;&#x8BC1;&#x53EF;&#x9760;&#xFF0C;<code>rdt_snd</code>&#x548C;<code>rdt_rcv</code>&#x5C31;&#x76F4;&#x63A5;&#x8C03;&#x7528;&#x7F51;&#x7EDC;&#x5C42;&#x63D0;&#x4F9B;&#x7684;&#x65B9;&#x6CD5;&#x5C31;&#x597D;&#x4E86;&#xFF0C;&#x4F46;&#x73B0;&#x5B9E;&#x6CA1;&#x6709;&#x8FD9;&#x4E48;&#x7B80;&#x5355;&#xFF0C;&#x4E0D;&#x8FC7;&#x6211;&#x4EEC;&#x8FD8;&#x662F;&#x4E00;&#x6B65;&#x4E00;&#x6B65;&#x6765;&#x3002;&#x5728;&#x6B63;&#x5F0F;&#x5F00;&#x59CB;&#x524D;&#xFF0C;&#x5BF9;&#x4E8E;&#x4F20;&#x8F93;&#x53EF;&#x9760;&#x6027;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x6709;&#x4E00;&#x4E2A;&#x6807;&#x51C6;&#xFF0C;&#x8FD9;&#x6837;&#x624D;&#x597D;&#x786E;&#x5B9A;&#x534F;&#x8BAE;&#x7684;&#x76EE;&#x6807;&#x4EE5;&#x53CA;&#x6548;&#x679C;&#xFF0C;&#x4E00;&#x822C;&#x6765;&#x8BF4;&#x4F20;&#x8F93;&#x5C42;&#x670D;&#x52A1;&#x7684;&#x53EF;&#x9760;&#x6027;&#x4F53;&#x73B0;&#x5728;&#xFF1A;<strong>&#x4E0D;&#x51FA;&#x9519;&#x3001;&#x4E0D;&#x4E22;&#x5931;&#x548C;&#x4E0D;&#x4E71;&#x5E8F;</strong>&#x8FD9;&#x4E09;&#x70B9;&#x4E0A;&#xFF0C;&#x7B80;&#x5355;&#x8BF4;&#x5C31;&#x662F;&#x4E0D;&#x9519;&#x3001;&#x4E0D;&#x4E22;&#x548C;&#x4E0D;&#x4E71;&#x3002;</p>
+<h3 id="rdt-10">RDT 1.0</h3>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5047;&#x8BBE;&#x7F51;&#x7EDC;&#x5C42;&#x63D0;&#x4F9B;&#x7684;&#x901A;&#x4FE1;&#x670D;&#x52A1;&#x662F;&#x53EF;&#x9760;&#x7684;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6570;&#x636E;&#x4F20;&#x8F93;&#xFF1A;</p>
+<ol>
+<li>&#x6CA1;&#x6709;&#x6BD4;&#x7279;&#x51FA;&#x9519;&#xFF0C;&#x5373;&#x4E0D;&#x9519;&#xFF1B;</li>
+<li>&#x6CA1;&#x6709;&#x5206;&#x7EC4;&#x4E22;&#x5931;&#xFF0C;&#x5373;&#x4E0D;&#x4E22;&#xFF1B;</li>
+<li>&#x6CA1;&#x6709;&#x5206;&#x7EC4;&#x4E71;&#x5E8F;&#xFF0C;&#x5373;&#x4E0D;&#x4E71;&#x3002;</li>
+</ol>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5728;&#x8FD9;&#x4E48;&#x9760;&#x8C31;&#x7684;&#x7F51;&#x7EDC;&#x5C42;&#x9762;&#x524D;&#xFF0C;&#x8FDE;&#x795E;&#x4ED9;&#x90FD;&#x4F1A;&#x7ED9;&#x5B83;&#x70B9;&#x4E2A;&#x8D5E;&#xFF0C;&#x6211;&#x4EEC;RDT&#x5C31;&#x80FD;&#x50CF;<a href="https://spring.io" target="_blank">Spring</a>&#x4E00;&#x6837;&#xFF0C;&#x5565;&#x90FD;&#x4E0D;&#x5E72;&#x7684;&#x5305;&#x4E00;&#x5C42;&#xFF0C;&#x81F3;&#x4E8E;&#x82E6;&#x529B;&#x6D3B;&#x4E48;&#xFF1F;&#x4EA4;&#x7ED9;&#x7F51;&#x7EDC;&#x5C42;&#xFF08;<a href="http://tomcat.apache.org" target="_blank">Tomcat</a>&#xFF09;&#x5E72;&#x53BB;&#xFF0C;&#x81EA;&#x5DF1;&#x5199;&#xFF0C;&#x6307;&#x4E0D;&#x5B9A;&#x591A;&#x5C11;bug&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>RDT 1.0</code>&#x6570;&#x636E;&#x53D1;&#x9001;&#x7684;&#x8C03;&#x7528;&#x5173;&#x7CFB;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/rdt-1.0-snd.png" width="50%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x4F20;&#x8F93;&#x5C42;&#x9700;&#x8981;&#x63D0;&#x4F9B;&#x8FDB;&#x7A0B;&#x5230;&#x8FDB;&#x7A0B;&#x7684;&#x901A;&#x4FE1;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#xFF0C;&#x56E0;&#x6B64;RDT&#x534F;&#x8BAE;&#x8981;&#x6C42;&#xFF1A;&#x53D1;&#x9001;&#x6570;&#x636E;&#x7684;&#x5E94;&#x7528;&#x8FDB;&#x7A0B;&#x9700;&#x8981;&#x7ED9;&#x5B9A;&#x4E00;&#x4E2A;&#x6807;&#x8BC6;&#xFF0C;&#x540C;&#x65F6;&#x4E5F;&#x9700;&#x8981;&#x7ED9;&#x5B9A;&#x5BF9;&#x7AEF;&#x5E94;&#x7528;&#x8FDB;&#x7A0B;&#x4E00;&#x4E2A;&#x6807;&#x8BC6;&#x3002;&#x6700;&#x5408;&#x7406;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#x8FDB;&#x7A0B;ID&#xFF0C;&#x4F46;&#x662F;&#x7531;&#x4E8E;&#x8FD9;&#x4E2A;ID&#x7ECF;&#x5E38;&#x53D8;&#x52A8;&#xFF0C;&#x6240;&#x4EE5;&#x5C31;&#x7528;&#x4E00;&#x4E2A;&#x547D;&#x540D;&#x7A7A;&#x95F4;&#x6765;&#x66FF;&#x4EE3;&#xFF0C;&#x53EB;&#xFF1A;<strong>&#x7AEF;&#x53E3;</strong>&#xFF0C;&#x4E00;&#x4E2A;&#x6574;&#x578B;&#x5C31;&#x597D;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x53D1;&#x9001;&#x65B9;&#x8BBE;&#x7F6E;&#x597D;<code>Segment</code>&#x7684;<code>srcPort</code>&#x548C;<code>dstPort</code>&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6765;&#x6E90;&#x7AEF;&#x53E3;&#x548C;&#x76EE;&#x6807;&#x7AEF;&#x53E3;&#x540E;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x586B;&#x5145;&#x6570;&#x636E;<code>data</code>&#x8FDB;&#x884C;&#x53D1;&#x9001;&#x4E86;&#x3002;<code>rdt_snd</code>&#x65B9;&#x6CD5;&#x7684;&#x5B9E;&#x73B0;&#x975E;&#x5E38;&#x7B80;&#x5355;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x8C03;&#x7528;<code>encode</code>&#x65B9;&#x6CD5;&#xFF0C;&#x5C06;<code>Segment</code>&#x8F6C;&#x4E3A;<code>Packet</code>&#xFF0C;&#x7136;&#x540E;&#x8C03;&#x7528;&#x7F51;&#x7EDC;&#x5C42;&#x63D0;&#x4F9B;&#x7684;<code>net_snd</code>&#x65B9;&#x6CD5;&#x5373;&#x53EF;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>RDT 1.0</code>&#x6570;&#x636E;&#x63A5;&#x6536;&#x7684;&#x8C03;&#x7528;&#x5173;&#x7CFB;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/rdt-1.0-rcv.png" width="50%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x63A5;&#x6536;&#x65B9;&#x4ECE;<code>net_rcv</code>&#x65B9;&#x6CD5;&#x6536;&#x5230;<code>Packet</code>&#xFF0C;&#x7136;&#x540E;&#x8C03;&#x7528;<code>rdt_rcv</code>&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x3002;<code>rdt_rcv</code>&#x53EA;&#x9700;&#x8981;&#x8C03;&#x7528;<code>decode</code>&#x65B9;&#x6CD5;&#xFF0C;&#x5C06;<code>Packet</code>&#x8F6C;&#x6362;&#x4E3A;<code>Segment</code>&#xFF0C;&#x968F;&#x540E;&#x53EF;&#x4EE5;&#x6839;&#x636E;<code>Segment.dstPort</code>&#x6765;&#x786E;&#x8BA4;&#x6570;&#x636E;&#x5305;&#x662F;&#x53D1;&#x7ED9;&#x54EA;&#x4E2A;&#x5E94;&#x7528;&#x8FDB;&#x7A0B;&#x7684;&#x3002;&#x534F;&#x8BAE;&#x6808;&#x7A0B;&#x5E8F;&#x67E5;&#x627E;&#x786E;&#x8BA4;&#x8FDB;&#x7A0B;&#x540E;&#xFF0C;&#x5C06;&#x6570;&#x636E;&#x4ECE;&#x5185;&#x6838;&#x62F7;&#x8D1D;&#x5230;&#x5BF9;&#x5E94;&#x7684;&#x8FDB;&#x7A0B;&#x7A7A;&#x95F4;&#x4E2D;&#xFF0C;&#x7531;&#x4E8E;&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x963B;&#x585E;&#x5728;IO&#x8BFB;&#x53D6;&#x7684;&#x64CD;&#x4F5C;&#x4E0A;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x5524;&#x9192;&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#xFF0C;&#x4F7F;&#x5176;&#x4ECE;IO&#x8BFB;&#x53D6;&#x64CD;&#x4F5C;&#x4E0A;&#x62FF;&#x5230;&#x6570;&#x636E;&#x5E76;&#x8FD4;&#x56DE;&#x5373;&#x53EF;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>RDT 1.0</code>&#x57FA;&#x4E8E;&#x53EF;&#x9760;&#x7684;&#x7F51;&#x8DEF;&#x5C42;&#xFF0C;&#x62BD;&#x8C61;&#x51FA;&#x4E86;&#x7AEF;&#x53E3;&#x8FD9;&#x4E2A;&#x6982;&#x5FF5;&#xFF0C;&#x89E3;&#x51B3;&#x4E86;&#x8FDB;&#x7A0B;&#x5230;&#x8FDB;&#x7A0B;&#x7684;&#x901A;&#x4FE1;&#x3002;</p>
+<h3 id="rdt-20">RDT 2.0</h3>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x63A5;&#x4E0B;&#x6765;&#xFF0C;&#x6211;&#x4EEC;&#x9010;&#x6B65;&#x62C6;&#x9664;&#x7F51;&#x7EDC;&#x5C42;&#x901A;&#x4FE1;&#x670D;&#x52A1;&#x53EF;&#x9760;&#x4F20;&#x8F93;&#x7684;&#x5047;&#x8BBE;&#xFF0C;&#x76EE;&#x7684;&#x662F;&#x6700;&#x7EC8;&#x80FD;&#x591F;&#x5728;&#x4E0D;&#x53EF;&#x9760;&#x4F20;&#x8F93;&#x7684;&#x7F51;&#x7EDC;&#x5C42;&#x4E0A;&#xFF0C;&#x6784;&#x5EFA;&#x51FA;&#x4E00;&#x4E2A;&#x80FD;&#x591F;&#x652F;&#x6301;&#x53EF;&#x9760;&#x4F20;&#x8F93;&#x7684;&#x4F20;&#x8F93;&#x5C42;&#x534F;&#x8BAE;&#x3002;&#x5BF9;&#x4E8E;&#x7F51;&#x7EDC;&#x5C42;&#x7684;&#x901A;&#x4FE1;&#x670D;&#x52A1;&#xFF0C;&#x5047;&#x8BBE;&#x53D8;&#x66F4;&#x4E3A;&#xFF1A;</p>
+<ol>
+<li>&#x53EF;&#x80FD;&#x6BD4;&#x7279;&#x51FA;&#x9519;&#xFF0C;&#x5373;&#x6709;&#x9519;&#xFF1B;</li>
+<li>&#x6CA1;&#x6709;&#x5206;&#x7EC4;&#x4E22;&#x5931;&#xFF0C;&#x5373;&#x4E0D;&#x4E22;&#xFF1B;</li>
+<li>&#x6CA1;&#x6709;&#x5206;&#x7EC4;&#x4E71;&#x5E8F;&#xFF0C;&#x5373;&#x4E0D;&#x4E71;&#x3002;</li>
+</ol>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4F20;&#x8F93;&#x5C42;&#x63A5;&#x6536;&#x5230;&#x5E94;&#x7528;&#x9700;&#x8981;&#x53D1;&#x9001;&#x7684;&#x5B57;&#x8282;&#x6570;&#x7EC4;&#xFF0C;&#x8F6C;&#x6362;&#x4E3A;<code>Packet</code>&#x540E;&#x8FDB;&#x884C;&#x53D1;&#x9001;&#xFF0C;&#x5982;&#x679C;&#x5BF9;&#x7AEF;&#x6536;&#x5230;&#x5185;&#x5BB9;&#xFF0C;&#x5B57;&#x8282;&#x6570;&#x7EC4;&#x4E2D;&#x67D0;&#x4E9B;&#x4F4D;&#x7531;&#x4E8E;&#x4F20;&#x8F93;&#x65F6;&#x4FE1;&#x53F7;&#x5E72;&#x6270;&#x5BFC;&#x81F4;&#x89E3;&#x7801;&#x540E;&#x51FA;&#x73B0;&#x9519;&#x8BEF;&#xFF0C;&#x8FD9;&#x6837;&#x4F20;&#x8F93;&#x5C42;&#x5C31;&#x4E0D;&#x662F;&#x53EF;&#x9760;&#x7684;&#x4E86;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x89E3;&#x51B3;&#x529E;&#x6CD5;&#x4E5F;&#x6BD4;&#x8F83;&#x7B80;&#x5355;&#xFF0C;&#x5728;&#x53D1;&#x9001;&#x5B57;&#x8282;&#x6570;&#x7EC4;&#x4E4B;&#x524D;&#xFF0C;&#x7ED9;<code>Segment</code>&#x8BBE;&#x7F6E;&#x4E00;&#x4E2A;&#x5C5E;&#x6027;<code>checkSum</code>&#xFF0C;&#x4E00;&#x4E2A;&#x6574;&#x6570;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E24;&#x7AEF;&#x90FD;&#x5177;&#x5907;&#x7684;&#x4E00;&#x4E2A;&#x6458;&#x8981;&#x51FD;&#x6570;&#x6765;&#x751F;&#x6210;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;<code>int check_sum(byte[] payload)</code>&#x3002;&#x8FD9;&#x6837;&#x5BF9;&#x7AEF;&#x6536;&#x5230;&#x5B57;&#x8282;&#x6570;&#x7EC4;&#x540E;&#xFF0C;&#x4F7F;&#x7528;<code>check_sum</code>&#x51FD;&#x6570;&#x8BA1;&#x7B97;&#x540E;&#xFF0C;&#x540C;<code>Segment</code>&#x4E2D;&#x7684;<code>checkSum</code>&#x503C;&#x8FDB;&#x884C;&#x6BD4;&#x5BF9;&#xFF0C;&#x901A;&#x8FC7;&#x6BD4;&#x5BF9;&#x6458;&#x8981;&#x503C;&#x5C31;&#x77E5;&#x9053;&#x6570;&#x636E;&#x662F;&#x5426;&#x51FA;&#x9519;&#x4E86;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x63A5;&#x6536;&#x65B9;&#x8FDB;&#x884C;&#x6570;&#x636E;&#x6821;&#x9A8C;&#x65F6;&#x6CA1;&#x6709;&#x51FA;&#x9519;&#x8FD8;&#x597D;&#xFF0C;&#x5982;&#x679C;&#x51FA;&#x73B0;&#x9519;&#x8BEF;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x901A;&#x77E5;&#x53D1;&#x9001;&#x65B9;&#x8FDB;&#x884C;&#x91CD;&#x65B0;&#x53D1;&#x9001;&#xFF0C;&#x8FD9;&#x6837;&#x5C31;&#x9700;&#x8981;&#x8BBE;&#x8BA1;&#x4E00;&#x4E2A;&#x5E94;&#x7B54;<code>Segment</code>&#x3002;&#x5982;&#x679C;&#x53EA;&#x662F;&#x9519;&#x8BEF;&#x4E86;&#x624D;&#x56DE;&#x590D;&#x663E;&#x5F97;&#x592A;&#x5C40;&#x9650;&#xFF0C;&#x90A3;&#x5C31;&#x5E72;&#x8106;&#x8BBE;&#x8BA1;&#x6210;&#x4E24;&#x79CD;&#x5E94;&#x7B54;<code>Segment</code>&#xFF0C;&#x4E00;&#x79CD;&#x662F;&#x6210;&#x529F;&#x5E94;&#x7B54;<code>ACK</code>&#xFF0C;&#x53E6;&#x4E00;&#x79CD;&#x662F;&#x5931;&#x8D25;&#x5E94;&#x7B54;<code>NACK</code>&#xFF0C;&#x4E8C;&#x8005;&#x90FD;&#x7EE7;&#x627F;&#x4E8E;<code>Segment</code>&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>RDT 2.0</code>&#x6570;&#x636E;&#x53D1;&#x9001;&#x7684;&#x8C03;&#x7528;&#x5173;&#x7CFB;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/rdt-2.0-snd.png" width="60%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x5E94;&#x7528;&#x4F9D;&#x65E7;&#x8C03;&#x7528;<code>rdt_snd</code>&#x65B9;&#x6CD5;&#x53D1;&#x9001;&#x6570;&#x636E;&#xFF0C;&#x800C;&#x8BE5;&#x65B9;&#x6CD5;&#x7684;&#x5B9E;&#x73B0;&#x6709;&#x4E86;&#x6539;&#x53D8;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x9996;&#x5148;&#xFF0C;&#x9700;&#x8981;&#x5728;&#x53D1;&#x9001;&#x6570;&#x636E;&#x4E4B;&#x524D;&#x8C03;&#x7528;<code>check_sum</code>&#x65B9;&#x6CD5;&#x8BA1;&#x7B97;&#x51FA;&#x5F85;&#x53D1;&#x9001;&#x5B57;&#x8282;&#x6570;&#x7EC4;&#x7684;&#x6458;&#x8981;<code>checkSum</code>&#xFF0C;&#x5C06;&#x5176;&#x8BBE;&#x7F6E;&#x5230;<code>Segment</code>&#x4E2D;&#x3002;&#x5176;&#x6B21;&#xFF0C;&#x5C06;&#x6784;&#x9020;&#x597D;&#x7684;<code>Segment</code>&#x8F6C;&#x6362;&#x4E3A;<code>Packet</code>&#xFF0C;&#x8C03;&#x7528;<code>net_snd</code>&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x53D1;&#x9001;&#xFF0C;&#x53D1;&#x9001;&#x540E;&#x4E0D;&#x80FD;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#xFF0C;&#x8FD8;&#x9700;&#x8981;&#x8C03;&#x7528;<code>net_rcv</code>&#x65B9;&#x6CD5;&#xFF0C;&#x7B49;&#x5F85;&#x5BF9;&#x7AEF;&#x7684;&#x54CD;&#x5E94;&#x3002;&#x6700;&#x540E;&#xFF0C;&#x5982;&#x679C;&#x54CD;&#x5E94;<code>Packet</code>&#x6536;&#x5230;&#xFF0C;&#x5C06;&#x5176;&#x8F6C;&#x6362;&#x4E3A;<code>Segment</code>&#xFF0C;&#x5982;&#x679C;&#x7C7B;&#x578B;&#x662F;<code>ACK</code>&#xFF0C;&#x5219;&#x8FD4;&#x56DE;&#xFF0C;&#x53D1;&#x9001;&#x6210;&#x529F;&#xFF1B;&#x5982;&#x679C;&#x662F;<code>NACK</code>&#xFF0C;&#x5219;&#x8C03;&#x7528;<code>net_snd</code>&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x6570;&#x636E;&#x91CD;&#x53D1;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>RDT 2.0</code>&#x6570;&#x636E;&#x63A5;&#x6536;&#x7684;&#x8C03;&#x7528;&#x5173;&#x7CFB;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/rdt-2.0-rcv.png" width="65%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x7F51;&#x7EDC;&#x5C42;&#x6536;&#x5230;&#x5206;&#x7EC4;<code>Packet</code>&#xFF0C;&#x5C06;&#x5176;&#x4F20;&#x9012;&#x7ED9;<code>rdt_rcv</code>&#x65B9;&#x6CD5;&#xFF0C;&#x7531;&#x4F20;&#x8F93;&#x5C42;RDT&#x6765;&#x5904;&#x7406;&#xFF0C;&#x7531;&#x4E8E;<code>checkSum</code>&#x548C;&#x5E94;&#x7B54;&#x7684;&#x51FA;&#x73B0;&#xFF0C;<code>rdt_rcv</code>&#x5B9E;&#x73B0;&#x4F1A;&#x6709;&#x6240;&#x53D8;&#x5316;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>rdt_rcv</code>&#x4F9D;&#x65E7;&#x662F;&#x5C06;<code>Packet</code>&#x8F6C;&#x6362;&#x4E3A;<code>Segment</code>&#xFF0C;&#x7136;&#x540E;&#x4F7F;&#x7528;<code>check_sum</code>&#x65B9;&#x6CD5;&#x8BA1;&#x7B97;<code>Segment.data</code>&#x7684;&#x6458;&#x8981;&#xFF0C;&#x5E76;&#x4E0E;<code>Segment.checkSum</code>&#x8FDB;&#x884C;&#x6BD4;&#x5BF9;&#x3002;&#x5982;&#x679C;&#x76F8;&#x7B49;&#xFF0C;&#x5219;&#x8C03;&#x7528;<code>net_snd</code>&#x65B9;&#x6CD5;&#xFF0C;&#x53D1;&#x9001;<code>ACK</code>&#x5E94;&#x7B54;&#xFF0C;&#x540C;&#x65F6;&#x5C06;<code>Segment.data</code>&#x8FD4;&#x56DE;&#x7ED9;&#x5E94;&#x7528;&#x8FDB;&#x884C;&#x5904;&#x7406;&#xFF0C;&#x53CD;&#x4E4B;&#xFF0C;&#x53D1;&#x9001;<code>NACK</code>&#x5E94;&#x7B54;&#xFF0C;&#x7B49;&#x5F85;&#x53D1;&#x9001;&#x65B9;&#x8FDB;&#x884C;&#x91CD;&#x4F20;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x968F;&#x7740;<code>checkSum</code>&#x548C;&#x5E94;&#x7B54;&#x673A;&#x5236;&#x7684;&#x52A0;&#x5165;&#xFF0C;&#x5728;&#x7F51;&#x7EDC;&#x5C42;&#x4F20;&#x8F93;&#x53EF;&#x80FD;&#x51FA;&#x73B0;&#x6BD4;&#x7279;&#x9519;&#x8BEF;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;<code>RDT 2.0</code>&#x4F9D;&#x65E7;&#x80FD;&#x591F;&#x53EF;&#x9760;&#x5DE5;&#x4F5C;&#xFF0C;&#x901A;&#x8FC7;&#x8BA9;&#x53D1;&#x9001;&#x7AEF;&#x8FDB;&#x884C;&#x91CD;&#x4F20;&#x6765;&#x627F;&#x62C5;&#x8D77;&#x53EF;&#x9760;&#x6027;&#x7684;&#x8D23;&#x4EFB;&#x3002;</p>
+<h3 id="rdt-21">RDT 2.1</h3>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>RDT 2.0</code>&#x5728;&#x53D1;&#x9001;&#x5B57;&#x8282;&#x51FA;&#x9519;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x80FD;&#x591F;&#x641E;&#x5B9A;&#x53EF;&#x9760;&#x4F20;&#x8F93;&#xFF0C;&#x4E0D;&#x5BB9;&#x6613;&#x3002;&#x63A5;&#x4E0B;&#x6765;&#xFF0C;&#x6211;&#x4EEC;&#x518D;&#x7EE7;&#x7EED;&#x6316;&#x5899;&#x811A;&#xFF0C;&#x5BF9;&#x4E8E;&#x7F51;&#x7EDC;&#x5C42;&#x7684;&#x901A;&#x4FE1;&#x670D;&#x52A1;&#xFF0C;&#x5047;&#x8BBE;&#x53D8;&#x66F4;&#x4E3A;&#xFF1A;</p>
+<ol>
+<li>&#x53EF;&#x80FD;&#x6BD4;&#x7279;&#x51FA;&#x9519;&#xFF0C;&#x5373;&#x6709;&#x9519;&#xFF1B;</li>
+<li>&#x53EF;&#x80FD;&#x5206;&#x7EC4;&#x4E22;&#x5931;&#xFF0C;&#x5373;&#x4F1A;&#x4E22;&#xFF1B;</li>
+<li>&#x6CA1;&#x6709;&#x5206;&#x7EC4;&#x4E71;&#x5E8F;&#xFF0C;&#x5373;&#x4E0D;&#x4E71;&#x3002;</li>
+</ol>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>RDT 2.0</code>&#x867D;&#x7136;&#x5177;&#x5907;&#x7EA0;&#x9519;&#x529F;&#x80FD;&#xFF0C;&#x4F46;&#x5BF9;&#x4E8E;&#x5206;&#x7EC4;&#x4F1A;&#x4E22;&#x7684;&#x60C5;&#x51B5;&#x5C31;&#x65E0;&#x6CD5;&#x5904;&#x7406;&#x4E86;&#x3002;&#x5E94;&#x7528;&#x5C42;&#x5C06;&#x9700;&#x8981;&#x4F20;&#x8F93;&#x7684;&#x5B57;&#x8282;&#x901A;&#x8FC7;&#x8C03;&#x7528;&#x4F20;&#x8F93;&#x5C42;&#x7684;<code>rdt_snd</code>&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x53D1;&#x9001;&#xFF0C;&#x5982;&#x679C;&#x4F20;&#x8F93;&#x4E2D;&#x7684;<code>Packet</code>&#x51FA;&#x73B0;&#x8DE8;&#x591A;&#x4E2A;&#x8DEF;&#x7531;&#x8282;&#x70B9;&#x540E;&#x4E22;&#x5931;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x8BE5;&#x5982;&#x4F55;&#x5E94;&#x5BF9;&#x5462;&#xFF1F;&#x73B0;&#x5B9E;&#x4E16;&#x754C;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x4E00;&#x65B9;&#x5BC4;&#x9001;&#x5305;&#x88F9;&#xFF0C;&#x53E6;&#x4E00;&#x65B9;&#x6536;&#x5305;&#x88F9;&#xFF0C;&#x63A5;&#x6536;&#x65B9;&#x5982;&#x4F55;&#x5224;&#x65AD;&#x51FA;&#x6709;&#x5305;&#x88F9;&#x6F0F;&#x6389;&#x4E86;&#x5462;&#xFF1F;&#x7B54;&#x6848;&#x662F;&#xFF0C;&#x7ED9;&#x5305;&#x88F9;&#x7F16;&#x53F7;&#x3002;&#x5047;&#x8BBE;&#x5BC4;&#x9001;&#x5305;&#x88F9;&#x7684;&#x4E00;&#x65B9;&#x4F1A;&#x7ED9;&#x5305;&#x88F9;&#x4E0A;&#x8D34;&#x4E00;&#x4E2A;&#x9762;&#x5355;&#x7F16;&#x53F7;&#xFF0C;&#x800C;&#x4E14;&#x8FD9;&#x4E2A;&#x7F16;&#x53F7;&#x662F;&#x81EA;&#x589E;&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x63A5;&#x6536;&#x65B9;&#x5C31;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x8FD9;&#x4E2A;&#x7F16;&#x53F7;&#x6765;&#x5224;&#x65AD;&#x51FA;&#x6709;&#x6CA1;&#x6709;&#x5305;&#x88F9;&#x6F0F;&#x6389;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;&#x63A5;&#x6536;&#x65B9;&#x6536;&#x5230;&#x7684;&#x5305;&#x88F9;&#x7F16;&#x53F7;&#x662F;<code>{1, 3&#xFF0C;4}</code>&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x4EE3;&#x8868;<code>{2}</code>&#x53F7;&#x5305;&#x88F9;&#x4E22;&#x5931;&#x4E86;&#xFF0C;&#x8FD9;&#x65F6;&#x5C31;&#x8981;&#x901A;&#x77E5;&#x53D1;&#x9001;&#x65B9;&#x68C0;&#x67E5;&#x4E00;&#x4E0B;<code>{2}</code>&#x53F7;&#x5305;&#x88F9;&#x7684;&#x5BC4;&#x9001;&#x60C5;&#x51B5;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x53D1;&#x9001;&#x65F6;&#x6709;&#x7F16;&#x53F7;&#xFF0C;&#x5E94;&#x7B54;&#x786E;&#x8BA4;&#x56DE;&#x590D;&#x65F6;&#x80FD;&#x6307;&#x51FA;&#x7F16;&#x53F7;&#xFF0C;&#x56E0;&#x6B64;&#x9700;&#x8981;&#x5728;<code>Segment</code>&#x4E0A;&#x589E;&#x52A0;&#x4E24;&#x4E2A;&#x7F16;&#x53F7;&#x5B57;&#x6BB5;&#xFF0C;&#x7C7B;&#x578B;&#x53EF;&#x4EE5;&#x662F;&#x6574;&#x578B;&#xFF0C;&#x4E00;&#x4E2A;&#x53EB;&#xFF1A;<code>sequence</code>&#xFF0C;&#x4EE3;&#x8868;&#x62A5;&#x6587;<code>Segment</code>&#x7684;&#x53D1;&#x9001;&#x7F16;&#x53F7;&#xFF0C;&#x53E6;&#x4E00;&#x4E2A;&#x53EB;&#xFF1A;<code>ack</code>&#xFF0C;&#x4EE3;&#x8868;&#x63A5;&#x6536;&#x65B9;&#x786E;&#x8BA4;&#x6536;&#x5230;&#x7684;&#x7F16;&#x53F7;&#x3002;&#x5047;&#x8BBE;&#x53D1;&#x9001;&#x7AEF;&#x53D1;&#x9001;<code>Segment.sequence</code>&#x4E3A;<code>3</code>&#x7684;<code>Segment</code>&#xFF0C;&#x63A5;&#x6536;&#x7AEF;&#x6536;&#x5230;&#x7684;&#x4E0A;&#x4E00;&#x4E2A;<code>Segment</code>&#xFF0C;&#x5176;<code>sequence</code>&#x4E3A;<code>1</code>&#xFF0C;&#x5219;&#x63A5;&#x6536;&#x7AEF;&#x6536;&#x5230;<code>3</code>&#x53F7;<code>Segment</code>&#x540E;&#xFF0C;&#x5C31;&#x8BA4;&#x4E3A;<code>2</code>&#x53F7;<code>Segment</code>&#x4E22;&#x5931;&#x4E86;&#x3002;&#x6B64;&#x65F6;&#xFF0C;&#x6700;&#x7B80;&#x5355;&#x7684;&#x505A;&#x6CD5;&#x662F;&#x76F4;&#x63A5;&#x4E22;&#x5F03;<code>3</code>&#x53F7;<code>Segment</code>&#xFF0C;&#x540C;&#x65F6;&#x53D1;&#x9001;<code>NACK.ack</code>&#x4E3A;<code>2</code>&#x7684;&#x5E94;&#x7B54;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x53D1;&#x9001;&#x65B9;&#x6536;&#x5230;<code>NACK</code>&#xFF0C;&#x540C;&#x65F6;<code>ack</code>&#x7F16;&#x53F7;&#x4E3A;<code>2</code>&#xFF0C;&#x6B64;&#x65F6;&#x5C31;&#x4F1A;&#x5C06;<code>2</code>&#x53F7;<code>Segment</code>&#x8FDB;&#x884C;&#x91CD;&#x53D1;&#x3002;</p>
+<p><code>RDT 2.1</code>&#x6570;&#x636E;&#x53D1;&#x9001;&#x7684;&#x8C03;&#x7528;&#x5173;&#x7CFB;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/rdt-2.1-snd.png" width="60%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;<code>rdt_snd</code>&#x65B9;&#x6CD5;&#x53D8;&#x5F97;&#x66F4;&#x52A0;&#x590D;&#x6742;&#x4E86;&#xFF0C;&#x5B83;&#x4F1A;&#x5C06;&#x9700;&#x8981;&#x53D1;&#x9001;&#x7684;<code>Segment</code>&#x5148;&#x7F16;&#x53F7;&#xFF0C;&#x7136;&#x540E;&#x653E;&#x7F6E;&#x5230;&#x7F13;&#x51B2;&#x533A;<code>snd_buf</code>&#x4E2D;&#x3002;&#x8FD9;&#x4E2A;&#x7F16;&#x53F7;&#x5C31;&#x597D;&#x50CF;&#x6570;&#x7EC4;&#x7684;&#x4E0B;&#x6807;&#x4E00;&#x6837;&#xFF0C;&#x5F53;&#x53D1;&#x9001;&#x65F6;&#xFF0C;&#x4ECE;<code>Segment</code>&#x6570;&#x7EC4;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;<code>snd_buf</code>&#x4E2D;&#xFF0C;&#x4F9D;&#x636E;<code>snd_idx</code>&#x53D6;&#x51FA;&#x4E00;&#x4E2A;<code>Segment</code>&#x8FDB;&#x884C;&#x53D1;&#x9001;&#xFF0C;&#x63A5;&#x7740;&#x6267;&#x884C;<code>net_rcv</code>&#x65B9;&#x6CD5;&#x5904;&#x7406;&#x5E94;&#x7B54;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x679C;&#x54CD;&#x5E94;&#x662F;<code>ACK</code>&#xFF0C;&#x5219;&#x5C06;<code>ACK.ack + 1</code>&#x4F5C;&#x4E3A;&#x53D1;&#x9001;&#x6E38;&#x6807;<code>snd_idx</code>&#x7684;&#x503C;&#xFF0C;&#x5373;<code>snd_idx = ACK.ack + 1</code>&#xFF0C;&#x7136;&#x540E;&#x7EE7;&#x7EED;&#x53D1;&#x9001;&#x4E0B;&#x4E00;&#x4E2A;<code>Segment</code>&#x3002;&#x5982;&#x679C;&#x54CD;&#x5E94;&#x662F;<code>NACK</code>&#xFF0C;&#x5219;&#x5C06;<code>NACK.ack</code>&#x4F5C;&#x4E3A;&#x53D1;&#x9001;&#x6E38;&#x6807;<code>snd_idx</code>&#x7684;&#x503C;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;<code>snd_idx = NACK.ack</code>&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x8981;&#x8FDB;&#x884C;&#x91CD;&#x53D1;&#x4E86;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x53D1;&#x9001;&#x65B9;&#x4F1A;&#x6839;&#x636E;<code>ACK</code>&#x6216;&#x8005;<code>NACK</code>&#x4E2D;&#x7684;<code>ack</code>&#x7F16;&#x53F7;&#x6765;&#x8C03;&#x6574;&#x53D1;&#x9001;&#x7684;<code>Segment</code>&#xFF0C;&#x7531;&#x4E8E;&#x53D1;&#x9001;&#x548C;&#x63A5;&#x6536;&#x662F;&#x5BF9;&#x79F0;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x4ECE;&#x4E24;&#x7AEF;&#x6765;&#x770B;&#xFF0C;&#x5982;&#x679C;&#x53D1;&#x9001;&#x7AEF;&#x7684;<code>Segment</code>&#x662F;<code>src</code>&#xFF0C;&#x63A5;&#x6536;&#x7AEF;&#x6536;&#x5230;&#x7684;<code>Segment</code>&#x662F;<code>dst</code>&#xFF0C;&#x90A3;&#x4E48;&#x6570;&#x636E;&#x4F20;&#x8F93;&#x7684;&#x53EF;&#x9760;&#x6027;&#x5C31;&#x9700;&#x8981;&#x8BA9;&#x4EE5;&#x4E0B;&#x4E24;&#x4E2A;&#x7B49;&#x5F0F;&#x6210;&#x7ACB;&#xFF0C;&#x5373;&#xFF1A;<code>src.sequence == dst.ack</code>&#x548C;<code>src.ack == dst.sequence</code>&#x3002;</p>
+<blockquote>
+<p>&#x4E3A;&#x4EC0;&#x4E48;&#x4F1A;&#x6709;<code>src.ack == dst.sequence</code>&#xFF0C;&#x56E0;&#x4E3A;&#x4F20;&#x8F93;&#x5C42;&#x662F;&#x53CC;&#x5411;&#x7684;&#xFF0C;&#x6B64;&#x65F6;&#x63A5;&#x6536;&#x7AEF;&#xFF0C;&#x5F7C;&#x65F6;&#x53D1;&#x9001;&#x7AEF;&#x3002;</p>
+</blockquote>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>RDT 2.1</code>&#x6570;&#x636E;&#x63A5;&#x6536;&#x7684;&#x8C03;&#x7528;&#x5173;&#x7CFB;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/rdt-2.1-rcv.png" width="65%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;<code>rdt_rcv</code>&#x65B9;&#x6CD5;&#x4E5F;&#x9700;&#x8981;&#x51C6;&#x5907;&#x4E00;&#x4E2A;&#x7F13;&#x51B2;&#x533A;<code>rcv_buf</code>&#xFF0C;&#x987A;&#x5E8F;&#x7684;&#x5C06;&#x63A5;&#x6536;&#x5230;&#x7684;<code>Packet</code>&#x8F6C;&#x6362;&#x4E3A;<code>Segment</code>&#x540E;&#xFF0C;&#x6839;&#x636E;&#x63A5;&#x6536;&#x6E38;&#x6807;&#x653E;&#x7F6E;&#x5230;&#x7F13;&#x51B2;&#x533A;&#x6570;&#x7EC4;&#x4E2D;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x63A5;&#x6536;&#x65B9;&#x9700;&#x8981;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x671F;&#x671B;&#x63A5;&#x6536;&#x7684;&#x6E38;&#x6807;&#xFF0C;&#x79F0;&#x4E3A;<code>rcv_idx</code>&#xFF0C;&#x7136;&#x540E;&#x6839;&#x636E;&#x5B83;&#x4E0E;<code>Segment.sequence</code>&#x8FDB;&#x884C;&#x6BD4;&#x5BF9;&#xFF0C;&#x5728;<code>check_sum</code>&#x65B9;&#x6CD5;&#x6BD4;&#x5BF9;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#xFF0C;&#x8FD8;&#x9700;&#x8981;&#x770B;&#x4E00;&#x4E0B;<code>sequence</code>&#x662F;&#x5426;&#x662F;&#x81EA;&#x5DF1;&#x60F3;&#x8981;&#x7684;&#x3002;&#x5982;&#x679C;<code>rcv_idx == Segment.sequence</code>&#xFF0C;&#x5219;&#x5C06;<code>Segment</code>&#x653E;&#x7F6E;&#x5230;&#x6570;&#x7EC4;&#x4E2D;&#xFF0C;&#x5E76;&#x5C06;&#x6570;&#x636E;&#x8FD4;&#x56DE;&#x7ED9;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#xFF0C;&#x540C;&#x65F6;&#x8C03;&#x7528;<code>net_snd</code>&#x65B9;&#x6CD5;&#x53D1;&#x9001;<code>ACK</code>&#xFF0C;&#x5176;&#x4E2D;<code>ack</code>&#x8BBE;&#x7F6E;&#x4E3A;<code>rcv_idx</code>&#xFF0C;&#x53D1;&#x9001;&#x6210;&#x529F;&#x540E;&#xFF0C;&#x5C06;<code>rcv_idx</code>&#x66F4;&#x65B0;&#x4E3A;<code>rcv_idx + 1</code>&#xFF0C;&#x4EE3;&#x8868;&#x63A5;&#x6536;&#x65B9;&#x60F3;&#x6536;&#x4E0B;&#x4E00;&#x4E2A;<code>Segment</code>&#x4E86;&#x3002;&#x5982;&#x679C;<code>rcv_idx != Segment.sequence</code>&#xFF0C;&#x5219;&#x4EE3;&#x8868;<code>rcv_idx</code>&#x7F16;&#x53F7;&#x7684;&#x6570;&#x636E;&#x5305;&#x6CA1;&#x6709;&#x6536;&#x5230;&#xFF0C;&#x53EA;&#x80FD;&#x4E22;&#x5F03;&#x6389;&#x5F53;&#x524D;&#x5904;&#x7406;&#x7684;<code>Segment</code>&#xFF0C;&#x540C;&#x65F6;&#x8C03;&#x7528;<code>net_snd</code>&#x65B9;&#x6CD5;&#xFF0C;&#x53D1;&#x9001;<code>NACK</code>&#xFF0C;&#x5176;&#x4E2D;<code>ack</code>&#x8BBE;&#x7F6E;&#x4E3A;<code>rcv_idx</code>&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x63A5;&#x6536;&#x65B9;&#x77E5;&#x9053;&#x81EA;&#x5DF1;&#x7684;&#x76EE;&#x6807;&#x5E8F;&#x53F7;&#xFF0C;&#x56DE;&#x590D;<code>ACK</code>&#x6216;&#x8005;<code>NACK</code>&#x7ED9;&#x53D1;&#x9001;&#x65B9;&#xFF0C;&#x5982;&#x679C;&#x6536;&#x5230;&#x7684;<code>Segment.sequence</code>&#x4E3A;&#x76EE;&#x6807;&#x5E8F;&#x53F7;&#xFF0C;&#x5219;&#x8868;&#x660E;&#x4E4B;&#x524D;&#x7684;&#x6570;&#x636E;&#x63A5;&#x6536;&#x90FD;&#x662F;&#x6210;&#x529F;&#x7684;&#x3002;&#x4ECE;&#x53D1;&#x9001;&#x65B9;&#x7684;&#x89D2;&#x5EA6;&#x770B;&#xFF0C;<code>snd_idx</code>&#x6307;&#x7684;&#x662F;&#x53D1;&#x9001;<code>Segment</code>&#x7684;&#x9884;&#x671F;&#xFF0C;&#x800C;&#x4E00;&#x65E6;&#x63A5;&#x6536;&#x5230;&#x7684;<code>ack</code>&#x503C;&#x4E0E;&#x4E4B;&#x76F8;&#x7B49;&#xFF0C;&#x5219;&#x4EE3;&#x8868;&#x5BF9;&#x7AEF;&#x6210;&#x529F;&#x63A5;&#x6536;&#x5230;&#x4E86;&#x6570;&#x636E;&#xFF0C;&#x6240;&#x4EE5;&#x901A;&#x4FE1;&#x7684;&#x4E24;&#x7AEF;&#x90FD;&#x5BF9;&#x6536;&#x5230;&#x7684;&#x6570;&#x636E;<code>sequence</code>&#x6216;&#x8005;<code>ack</code>&#x6709;&#x9884;&#x671F;&#xFF0C;&#x800C;&#x8FD9;&#x4E2A;&#x9884;&#x671F;&#x5C31;&#x662F;&#x7EF4;&#x62A4;&#x5728;&#x5404;&#x7AEF;&#x5185;&#x5B58;&#x4E2D;&#x7684;&#x72B6;&#x6001;&#xFF08;&#x6BD4;&#x5982;&#xFF1A;<code>snd_idx</code>&#x6216;&#x8005;<code>rcv_idx</code>&#xFF09;&#x3002;</p>
+<h3 id="rdt-22">RDT 2.2</h3>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>RDT 2.1</code>&#x5DF2;&#x7ECF;&#x76F8;&#x5F53;&#x5B8C;&#x5584;&#x4E86;&#xFF0C;&#x5728;&#x4E00;&#x5B9A;&#x7A0B;&#x5EA6;&#x4E0A;&#x80FD;&#x591F;&#x53EF;&#x9760;&#x7684;&#x5DE5;&#x4F5C;&#xFF0C;&#x4E0D;&#x8FC7;&#x4EE3;&#x4EF7;&#x5C31;&#x662F;&#x592A;&#x590D;&#x6742;&#x4E86;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;&#x63A5;&#x6536;&#x65B9;&#x9700;&#x8981;&#x56DE;&#x590D;<code>ACK</code>&#x6216;&#x8005;<code>NACK</code>&#xFF0C;&#x800C;&#x53D1;&#x9001;&#x65B9;&#x4E5F;&#x9700;&#x8981;&#x5904;&#x7406;<code>ACK</code>&#x548C;<code>NACK</code>&#x3002;&#x5230;&#x8FD9;&#x4E2A;&#x9636;&#x6BB5;&#x9700;&#x8981;&#x505A;&#x4E00;&#x4E9B;&#x534F;&#x8BAE;&#x91CD;&#x6784;&#xFF0C;&#x8BA9;&#x5B83;&#x53D8;&#x5F97;&#x7EDF;&#x4E00;&#x548C;&#x7B80;&#x5355;&#x4E9B;&#xFF0C;&#x5728;&#x5047;&#x8BBE;&#x4E0D;&#x53D8;&#xFF0C;&#x5373;&#x7F51;&#x7EDC;&#x4F20;&#x8F93;&#x6709;&#x9519;&#x3001;&#x4F1A;&#x4E22;&#x4F46;&#x4E0D;&#x4E71;&#x7684;&#x524D;&#x63D0;&#x4E0B;&#xFF0C;&#x770B;&#x770B;&#x8BE5;&#x5982;&#x4F55;&#x4F18;&#x5316;&#x73B0;&#x6709;&#x7684;RDT&#x534F;&#x8BAE;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4ECE;<code>ACK</code>&#x548C;<code>NACK</code>&#x4E0B;&#x624B;&#xFF0C;&#x901A;&#x8FC7;&#x89C2;&#x5BDF;&#x4F20;&#x8F93;&#x5C42;&#x7684;&#x5DE5;&#x4F5C;&#xFF0C;&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x6309;&#x7F16;&#x53F7;&#x642C;&#x8FD0;&#x6570;&#x636E;&#x7684;&#x8FC7;&#x7A0B;&#x3002;<code>NACK</code>&#x5B9E;&#x9645;&#x4E0A;&#x53EF;&#x4EE5;&#x88AB;<code>ACK</code>&#x6240;&#x7EDF;&#x4E00;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#xFF1A;<code>ACK(0) == NACK(1)</code>&#xFF0C;<code>NACK</code>&#x8868;&#x793A;&#x9700;&#x8981;&#x91CD;&#x4F20;<code>{1}</code>&#x53F7;<code>Segment</code>&#x7B49;&#x540C;&#x4E8E;<code>ACK</code>&#x8868;&#x793A;&#x63A5;&#x6536;&#x65B9;&#x5DF2;&#x7ECF;&#x6536;&#x5230;&#x4E86;<code>{0}</code>&#x53F7;&#x6570;&#x636E;&#x5305;&#xFF0C;&#x56E0;&#x4E3A;&#x7F16;&#x53F7;&#x81EA;&#x589E;&#x662F;&#x53CC;&#x65B9;&#x7684;&#x5171;&#x8BC6;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>ACK</code>&#x548C;<code>NACK</code>&#x7684;&#x5BF9;&#x5E94;&#x5173;&#x7CFB;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/ack-nack.png" width="50%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x53EF;&#x4EE5;&#x63D0;&#x70BC;&#x51FA;&#x4E8C;&#x8005;&#x4E4B;&#x95F4;&#x7684;&#x5173;&#x7CFB;&#xFF0C;&#x5373;&#xFF1A;<code>NACK(N) = ACK(N - 1)</code>&#xFF0C;&#x5728;&#x6B64;&#x57FA;&#x7840;&#x4E0A;&#xFF0C;&#x53EF;&#x4EE5;&#x5C1D;&#x8BD5;&#x5BF9;<code>RDT 2.1</code>&#x8FDB;&#x884C;&#x4F18;&#x5316;&#x3002;&#x53E6;&#x5916;&#x4E00;&#x70B9;&#xFF0C;&#x65E2;&#x7136;<code>Segment</code>&#x5E26;&#x6709;<code>ack</code>&#x5C5E;&#x6027;&#xFF0C;&#x90A3;&#x4E48;&#x5B8C;&#x5168;&#x53EF;&#x4EE5;&#x4E0D;&#x4F7F;&#x7528;<code>Segment</code>&#x7684;&#x5B50;&#x7C7B;<code>ACK</code>&#xFF0C;&#x76F4;&#x63A5;&#x57FA;&#x4E8E;<code>Segment</code>&#x5C31;&#x597D;&#x4E86;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>RDT 2.2</code>&#x6570;&#x636E;&#x53D1;&#x9001;&#x7684;&#x8C03;&#x7528;&#x5173;&#x7CFB;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/rdt-2.2-snd.png" width="60%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;<code>rdt_snd</code>&#x65B9;&#x6CD5;&#x5BF9;&#x4E8E;&#x6570;&#x636E;&#x53D1;&#x9001;&#x7684;&#x884C;&#x4E3A;&#x4E0D;&#x53D8;&#xFF0C;&#x800C;&#x662F;&#x8C03;&#x7528;<code>net_rcv</code>&#x65B9;&#x6CD5;&#x6536;&#x5230;<code>Packet</code>&#x540E;&#x7684;&#x5904;&#x7406;&#x903B;&#x8F91;&#x6709;&#x6240;&#x4E0D;&#x540C;&#x3002;&#x5C06;<code>Packet</code>&#x8F6C;&#x6362;&#x4E3A;<code>Segment</code>&#x540E;&#xFF0C;&#x5982;&#x679C;&#x8BE5;<code>Segment.ack == snd_idx</code>&#xFF0C;&#x5219;&#x4EE3;&#x8868;&#x53D1;&#x9001;&#x7684;&#x6570;&#x636E;&#x88AB;&#x786E;&#x8BA4;&#xFF0C;&#x6CA1;&#x6709;&#x4E22;&#x5931;&#xFF1B;&#x5982;&#x679C;&#x8BE5;&#x7F16;&#x53F7;&#x4E0D;&#x7B49;&#x4E8E;<code>snd_idx</code>&#xFF0C;&#x5219;&#x91CD;&#x53D1;<code>Segment.ack + 1</code>&#x7684;<code>Segment</code>&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4E3E;&#x4E2A;&#x4F8B;&#x5B50;&#xFF0C;&#x5982;&#x679C;&#x53D1;&#x9001;&#x7684;<code>Segment.sequence = 20</code>&#x7684;&#x6570;&#x636E;&#x5305;&#x5230;&#x4E86;&#x5BF9;&#x7AEF;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x5E94;&#x8BE5;&#x53D1;&#x9001;&#x7F16;&#x53F7;&#x4E3A;<code>{21}</code>&#x7684;&#x6570;&#x636E;&#x5305;&#xFF0C;&#x4F46;&#x662F;&#x53D1;&#x9001;&#x7AEF;&#x5374;&#x6536;&#x5230;&#x4E86;<code>Segment.ack = 19</code>&#x7684;&#x56DE;&#x6267;<code>Segment</code>&#xFF0C;&#x5B83;&#x4EE3;&#x8868;&#x63A5;&#x6536;&#x65B9;&#x6536;&#x5230;&#x4E86;<code>[0, 19]</code>&#x7684;&#x6570;&#x636E;&#x5305;&#xFF0C;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x5047;&#x8BBE;<code>sequence</code>&#x4ECE;<code>0</code>&#x5F00;&#x59CB;&#x3002;&#x5982;&#x679C;&#x63A5;&#x6536;&#x65B9;&#x6536;&#x5230;&#x4E86;<code>{19}</code>&#x53CA;&#x5176;&#x4E4B;&#x524D;&#x7684;&#x6570;&#x636E;&#x5305;&#xFF0C;&#x90A3;&#x4E48;<code>{20}</code>&#x53F7;&#x6570;&#x636E;&#x5305;&#x5C31;&#x662F;&#x6CA1;&#x6709;&#x6536;&#x5230;&#xFF0C;&#x53D1;&#x9001;&#x65B9;&#x5C31;&#x9700;&#x8981;&#x53D1;&#x9001;&#x7B2C;<code>{20}&#xFF08;19 + 1 &#xFF09;</code>&#x4E2A;<code>Segment</code>&#xFF0C;&#x8FD9;&#x8868;&#x793A;&#x5728;&#x91CD;&#x53D1;&#x4E86;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>RDT 2.2</code>&#x6570;&#x636E;&#x63A5;&#x6536;&#x7684;&#x8C03;&#x7528;&#x5173;&#x7CFB;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/rdt-2.2-rcv.png" width="65%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;<code>rdt_rcv</code>&#x65B9;&#x6CD5;&#x5728;&#x5904;&#x7406;<code>Segment</code>&#x65F6;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5173;&#x6CE8;<code>Segment.sequence</code>&#x548C;<code>rcv_idx</code>&#x7684;&#x5173;&#x7CFB;&#xFF0C;&#x5982;&#x679C;&#x7B26;&#x5408;&#x671F;&#x671B;&#xFF0C;&#x5373;<code>Segment.sequence == rcv_idx</code>&#xFF0C;&#x5219;&#x5C06;<code>Segment</code>&#x6DFB;&#x52A0;&#x5230;<code>rcv_buf</code>&#xFF0C;&#x968F;&#x540E;&#x4EA4;&#x7ED9;&#x5E94;&#x7528;&#x8FDB;&#x7A0B;&#xFF0C;&#x5426;&#x5219;&#x505A;&#x91CD;&#x4F20;&#x5904;&#x7406;&#x3002;&#x54CD;&#x5E94;&#x7684;&#x7ED3;&#x679C;&#x4E0D;&#x7528;&#x533A;&#x5206;<code>ACK</code>&#x6216;<code>NACK</code>&#xFF0C;&#x800C;&#x7EDF;&#x4E00;&#x7528;<code>Segment</code>&#x7684;&#x5F62;&#x5F0F;&#x53D1;&#x56DE;&#xFF0C;&#x53EA;&#x662F;&#x5728;<code>ack</code>&#x7684;&#x8BBE;&#x7F6E;&#x4E0A;&#x6709;&#x6240;&#x4E0D;&#x540C;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x679C;&#x8BF7;&#x6C42;<code>Segment.sequence == rcv_idx</code>&#xFF0C;&#x8868;&#x793A;&#x7B26;&#x5408;&#x671F;&#x671B;&#xFF0C;&#x5219;&#x54CD;&#x5E94;&#x7684;<code>Segment.ack</code>&#x4F1A;&#x8BBE;&#x7F6E;&#x4E3A;<code>rcv_idx</code>&#xFF0C;&#x540C;&#x65F6;<code>rcv_idx</code>&#x81EA;&#x589E;&#x3002;&#x5982;&#x679C;&#x4E0D;&#x7B26;&#x5408;&#x671F;&#x671B;&#xFF0C;&#x5219;&#x54CD;&#x5E94;&#x7684;<code>Segment.ack</code>&#x4F1A;&#x8BBE;&#x7F6E;&#x4E3A;<code>rcv_idx - 1</code>&#xFF0C;&#x4EE3;&#x8868;&#x6536;&#x5230;&#x4E86;&#x7F16;&#x53F7;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E;<code>rcv_idx - 1</code>&#x7684;&#x6240;&#x6709;<code>Segment</code>&#xFF0C;&#x671F;&#x671B;&#x5BF9;&#x7AEF;&#x91CD;&#x53D1;<code>rcv_idx</code>&#x7684;<code>Segment</code>&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4ECE;&#x54CD;&#x5E94;<code>Segment</code>&#x770B;&#xFF0C;&#x65E0;&#x8BBA;&#x6536;&#x5230;<code>Segment.sequence</code>&#x662F;&#x5426;&#x7B26;&#x5408;&#x671F;&#x671B;&#xFF0C;&#x54CD;&#x5E94;<code>Segment.ack</code>&#x59CB;&#x7EC8;&#x8868;&#x793A;&#x63A5;&#x6536;&#x7AEF;&#x5DF2;&#x7ECF;&#x6536;&#x5230;&#x7684;&#xFF08;&#x6700;&#x5927;&#xFF09;&#x7F16;&#x53F7;&#xFF0C;&#x6838;&#x5FC3;&#x601D;&#x60F3;&#x5C31;&#x662F;&#xFF1A;<strong>&#x4F5C;&#x4E3A;&#x63A5;&#x6536;&#x65B9;&#xFF0C;&#x6211;&#x5DF2;&#x7ECF;&#x6210;&#x529F;&#x6536;&#x5230;&#x7B2C;&#x51E0;&#x4E2A;&#x6570;&#x636E;&#x5305;</strong>&#x3002;</p>
+<h3 id="rdt-30">RDT 3.0</h3>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>RDT 2.2</code>&#x5728;&#x5B57;&#x8282;&#x53D1;&#x9001;&#x51FA;&#x9519;&#xFF0C;&#x4E14;&#x53D1;&#x9001;&#x5206;&#x7EC4;&#x53EF;&#x80FD;&#x4E22;&#x5931;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x80FD;&#x591F;&#x5B8C;&#x6210;&#x53EF;&#x9760;&#x4F20;&#x8F93;&#xFF0C;&#x5E76;&#x4E14;&#x5C06;&#x53D1;&#x9001;&#x548C;&#x54CD;&#x5E94;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x505A;&#x5230;&#x4E86;&#x7EDF;&#x4E00;&#x3002;&#x63A5;&#x4E0B;&#x6765;&#x5BF9;&#x4E8E;&#x7F51;&#x7EDC;&#x5C42;&#x7684;&#x901A;&#x4FE1;&#x670D;&#x52A1;&#xFF0C;&#x5047;&#x8BBE;&#x53D8;&#x66F4;&#x4E3A;&#xFF1A;</p>
+<ol>
+<li>&#x53EF;&#x80FD;&#x6BD4;&#x7279;&#x51FA;&#x9519;&#xFF0C;&#x5373;&#x6709;&#x9519;&#xFF1B;</li>
+<li>&#x53EF;&#x80FD;&#x5206;&#x7EC4;&#x4E22;&#x5931;&#xFF0C;&#x5373;&#x4F1A;&#x4E22;&#xFF1B;</li>
+<li>&#x5B58;&#x5728;&#x5206;&#x7EC4;&#x4E71;&#x5E8F;&#xFF0C;&#x5373;&#x4F1A;&#x4E71;&#x3002;</li>
+</ol>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x4F55;&#x5728;&#x4E00;&#x4E2A;&#x6709;&#x9519;&#x3001;&#x4F1A;&#x4E22;&#x548C;&#x4F1A;&#x4E71;&#x7684;&#x7F51;&#x7EDC;&#x5C42;&#x901A;&#x4FE1;&#x670D;&#x52A1;&#x57FA;&#x7840;&#x4E0A;&#xFF0C;&#x652F;&#x6301;&#x53EF;&#x9760;&#x7684;&#x6570;&#x636E;&#x4F20;&#x8F93;&#xFF1F;<code>RDT 2.2</code>&#x5176;&#x5B9E;&#x5728;&#x4E00;&#x5B9A;&#x7A0B;&#x5EA6;&#x4E0B;&#x662F;&#x53EF;&#x4EE5;&#x505A;&#x5230;&#x7684;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5047;&#x8BBE;&#x7F51;&#x7EDC;&#x5C42;&#x7684;&#x6D88;&#x606F;&#x4F20;&#x9012;&#x662F;&#x5B8C;&#x5168;&#x540C;&#x6B65;&#x7684;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6BCF;&#x4E2A;&#x6570;&#x636E;&#x5305;&#x5230;&#x5BF9;&#x7AEF;&#x540E;&#xFF0C;&#x5BF9;&#x7AEF;&#x54CD;&#x5E94;&#x53D1;&#x56DE;&#x6765;&#xFF0C;&#x7136;&#x540E;&#x624D;&#x53EF;&#x4EE5;&#x53D1;&#x9001;&#x4E0B;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x5305;&#xFF0C;&#x5176;&#x672C;&#x8D28;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x540C;&#x6B65;&#x7684;&#x534A;&#x53CC;&#x5DE5;&#x7F51;&#x7EDC;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x679C;&#x53EA;&#x662F;&#x4E24;&#x70B9;&#x4F20;&#x8F93;&#xFF0C;&#x540C;&#x6B65;&#x534A;&#x53CC;&#x5DE5;&#x7F51;&#x7EDC;&#x6162;&#x4E5F;&#x5C31;&#x7B97;&#x4E86;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x5206;&#x7EC4;&#x4EA4;&#x6362;&#x7F51;&#x7EDC;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x5B8C;&#x5168;&#x540C;&#x6B65;&#xFF0C;&#x5C31;&#x4F1A;&#x9020;&#x6210;&#x5927;&#x91CF;&#x7684;&#x5E26;&#x5BBD;&#x5BB9;&#x91CF;&#x6D6A;&#x8D39;&#x3002;&#x56E0;&#x4E3A;&#x53D1;&#x9001;&#x540E;&#x540C;&#x6B65;&#x7B49;&#x5F85;&#x54CD;&#x5E94;&#x7684;&#x6548;&#x7387;&#x592A;&#x4F4E;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/sync-transfer.png" width="40%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x53D1;&#x9001;&#x65B9;&#x548C;&#x63A5;&#x6536;&#x65B9;&#x4E4B;&#x95F4;&#x5206;&#x7EC4;&#x4EA4;&#x6362;&#x8BBE;&#x5907;&#x7684;&#x5E26;&#x5BBD;&#x53EA;&#x6709;&#x53D1;&#x9001;&#x4F20;&#x64AD;&#x548C;&#x5E94;&#x7B54;&#x4F20;&#x64AD;&#x4E24;&#x6BB5;&#x65F6;&#x95F4;&#x5728;&#x670D;&#x52A1;&#xFF0C;&#x5176;&#x4ED6;&#x7684;&#x65F6;&#x5019;&#x5747;&#x662F;&#x7A7A;&#x95F2;&#x7684;&#xFF0C;&#x7F51;&#x7EDC;&#x5BB9;&#x91CF;&#x65E0;&#x6CD5;&#x8DD1;&#x6EE1;&#x3002;&#x63D0;&#x5347;&#x7F51;&#x7EDC;&#x5E26;&#x5BBD;&#x7684;&#x5229;&#x7528;&#x7387;&#xFF0C;&#x6700;&#x76F4;&#x63A5;&#x7684;&#x505A;&#x6CD5;&#x5C31;&#x662F;&#x8BA9;&#x53D1;&#x9001;&#x65B9;&#x505A;&#x5230;&#x6279;&#x91CF;&#x53D1;&#x9001;&#xFF0C;&#x5F02;&#x6B65;&#x63A5;&#x6536;&#x54CD;&#x5E94;&#xFF0C;&#x8FD9;&#x6837;&#x5C31;&#x53EF;&#x4EE5;&#x5C3D;&#x53EF;&#x80FD;&#x7684;&#x8DD1;&#x6EE1;&#x5E26;&#x5BBD;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x679C;&#x53D1;&#x9001;&#x65B9;&#x4E00;&#x6B21;&#x53D1;&#x9001;&#x591A;&#x4E2A;&#x6570;&#x636E;&#x5305;&#xFF0C;&#x6BCF;&#x4E2A;<code>Segment</code>&#x7684;<code>sequence</code>&#x53EF;&#x4EE5;&#x505A;&#x5230;&#x81EA;&#x589E;&#xFF0C;&#x4F46;&#x63A5;&#x6536;&#x65B9;&#x54CD;&#x5E94;&#x7684;<code>ack</code>&#x8BE5;&#x5982;&#x4F55;&#x5224;&#x5B9A;&#xFF1F;&#x4E0E;&#x6B64;&#x540C;&#x65F6;&#xFF0C;&#x63A5;&#x6536;&#x65B9;&#x5982;&#x679C;&#x7531;&#x4E8E;&#x7F51;&#x7EDC;&#x5EF6;&#x8FDF;&#x5BFC;&#x81F4;&#x5E94;&#x7B54;&#x7684;&#x5F88;&#x6162;&#xFF0C;&#x53D1;&#x9001;&#x65B9;&#x8BE5;&#x5982;&#x4F55;&#x786E;&#x4FDD;&#x6570;&#x636E;&#x4E00;&#x5B9A;&#x4F1A;&#x91CD;&#x4F20;&#xFF1F;&#x53D1;&#x9001;&#x65B9;&#x5982;&#x679C;&#x4E00;&#x6B21;&#x53D1;&#x9001;&#x591A;&#x4E2A;&#x6570;&#x636E;&#x5305;&#xFF0C;&#x63A5;&#x6536;&#x65B9;&#x5982;&#x679C;&#x53EA;&#x63A5;&#x6536;&#x4E00;&#x4E2A;&#xFF0C;&#x90A3;&#x4E48;&#x6548;&#x7387;&#x4E5F;&#x4F1A;&#x53D8;&#x4F4E;&#xFF0C;&#x5982;&#x679C;&#x540C;&#x65F6;&#x63A5;&#x6536;&#x591A;&#x4E2A;&#xFF0C;&#x8D85;&#x51FA;&#x4E86;&#x63A5;&#x6536;&#x7F13;&#x5B58;<code>rcv_buf</code>&#x7684;&#x4E0A;&#x9650;&#x8BE5;&#x600E;&#x4E48;&#x529E;&#xFF1F;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5206;&#x7EC4;&#x4E71;&#x5E8F;&#x9700;&#x8981;&#x505A;&#x5230;&#xFF1A;&#x53D1;&#x9001;&#x65B9;&#x5F02;&#x6B65;&#x591A;&#x53D1;&#xFF0C;&#x63A5;&#x6536;&#x65B9;&#x5F02;&#x6B65;&#x591A;&#x6536;&#xFF0C;&#x8FD9;&#x6837;&#x7684;&#x5F02;&#x6B65;&#x5168;&#x53CC;&#x5DE5;&#x7F51;&#x7EDC;&#x5B9E;&#x73B0;&#x8D77;&#x6765;&#x5C31;&#x5F88;&#x6709;&#x96BE;&#x5EA6;&#x4E86;&#x3002;&#x5982;&#x679C;&#x662F;&#x5168;&#x540C;&#x6B65;&#x7684;&#x7F51;&#x7EDC;&#xFF0C;&#x5B83;&#x4F1A;&#x975E;&#x5E38;&#x7B26;&#x5408;&#x4EBA;&#x7C7B;&#x76F4;&#x89C2;&#x601D;&#x8003;&#xFF0C;&#x4F46;&#x5176;&#x6548;&#x80FD;&#x4E5F;&#x662F;&#x975E;&#x5E38;&#x4F4E;&#x7684;&#x3002;&#x8981;&#x5EFA;&#x7ACB;&#x5F02;&#x6B65;&#x5168;&#x53CC;&#x5DE5;&#x7F51;&#x7EDC;&#xFF0C;&#x8FD9;&#x4E48;&#x591A;&#x95EE;&#x9898;&#x9700;&#x8981;&#x9010;&#x4E00;&#x89E3;&#x51B3;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x9996;&#x5148;&#xFF0C;&#x5BF9;&#x4E8E;<code>N</code>&#x4E2A;&#x53D1;&#x9001;&#x7684;<code>Segment</code>&#xFF0C;&#x63A5;&#x6536;&#x65B9;&#x56DE;&#x590D;&#x4E0D;&#x5FC5;&#x662F;&#x5BF9;&#x7B49;&#x7684;<code>N</code>&#x4E2A;&#x54CD;&#x5E94;<code>Segment</code>&#xFF0C;&#x800C;&#x662F;<code>M</code>&#x4E2A;<code>Segment</code>&#xFF0C;&#x5176;&#x4E2D;<code>M &lt;= N</code>&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x7528;&#x66F4;&#x5C11;&#x7684;&#x54CD;&#x5E94;&#x6765;&#x652F;&#x6301;&#x4F20;&#x8F93;&#x4F1A;&#x8BDD;&#x3002;&#x4E3E;&#x4E2A;&#x4F8B;&#x5B50;&#xFF0C;&#x5982;&#x679C;&#x53D1;&#x9001;&#x65B9;&#x4E00;&#x4E2A;&#x6279;&#x6B21;&#x53D1;&#x4E86;<code>[1, N]</code>&#x5171;<code>N</code>&#x4E2A;Segment&#xFF0C;&#x7531;&#x4E8E;&#x63A5;&#x6536;&#x65B9;&#x6536;&#x5230;&#x8FD9;&#x4E9B;&#x6570;&#x636E;&#x5305;&#x6709;&#x5148;&#x540E;&#xFF0C;&#x5F53;&#x5148;&#x6536;&#x5230;&#x5B8C;&#x6574;&#x7684;<code>[0, X]</code>&#x540E;&#xFF0C;&#x5C31;&#x56DE;&#x590D;&#x54CD;&#x5E94;<code>Segment</code>&#xFF0C;&#x5176;&#x4E2D;<code>Segment.ack = X</code>&#xFF0C;&#x4EE3;&#x8868;&#x524D;<code>X</code>&#x4E2A;&#x6570;&#x636E;&#x5305;&#x6536;&#x5230;&#x4E86;&#xFF0C;&#x518D;&#x7B49;&#x5230;&#x6240;&#x6709;&#x6570;&#x636E;&#x5305;&#x90FD;&#x6536;&#x5230;&#x540E;&#xFF0C;&#x6700;&#x540E;&#x56DE;&#x590D;&#x5BF9;&#x7B2C;<code>N</code>&#x4E2A;<code>Segment</code>&#x7684;&#x786E;&#x8BA4;&#x3002;&#x8FD9;&#x6837;&#x53EA;&#x9700;&#x8981;&#x4E24;&#x4E09;&#x4E2A;&#x54CD;&#x5E94;&#x5C31;&#x8BA9;&#x53D1;&#x9001;&#x65B9;&#x548C;&#x63A5;&#x6536;&#x65B9;&#x8FBE;&#x6210;&#x4E86;&#x5171;&#x8BC6;&#x3002;&#x6BCF;&#x6B21;&#x53D1;&#x56DE;&#x7684;&#x54CD;&#x5E94;&#xFF0C;&#x4ECE;&#x63A5;&#x6536;&#x65B9;&#x53D1;&#x51FA;&#x7684;&#x4E00;&#x77AC;&#xFF0C;<code>ack</code>&#x7F16;&#x53F7;&#x59CB;&#x7EC8;&#x662F;&#x9012;&#x589E;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x6BCF;&#x6536;&#x5230;&#x4E00;&#x4E2A;&#x5305;&#x5C31;&#x53D1;&#x9001;&#x5BF9;&#x5E94;&#x7684;&#x54CD;&#x5E94;&#xFF0C;&#x90A3;&#x4E48;<code>ack</code>&#x7F16;&#x53F7;&#x5728;&#x53D1;&#x9001;&#x65B9;&#x770B;&#x6765;&#xFF0C;&#x7531;&#x4E8E;&#x4E71;&#x5E8F;&#x6536;&#x5230;&#x54CD;&#x5E94;&#xFF0C;<code>ack</code>&#x7F16;&#x53F7;&#x5C31;&#x770B;&#x6765;&#x5C31;&#x663E;&#x5F97;&#x98D8;&#x5FFD;&#x4E0D;&#x5B9A;&#x4E86;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5176;&#x6B21;&#xFF0C;&#x987A;&#x7740;&#x8FD9;&#x4E2A;&#x601D;&#x8DEF;&#xFF0C;&#x7AD9;&#x5728;&#x53D1;&#x9001;&#x65B9;&#x7684;&#x89D2;&#x5EA6;&#x770B;&#xFF0C;&#x6536;&#x5230;&#x7684;<code>ack</code>&#x5C31;&#x662F;&#x8DF3;&#x8DC3;&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x5982;&#x4F55;&#x80FD;&#x591F;&#x786E;&#x5B9A;&#x53D1;&#x9001;&#x7684;<code>Segment</code>&#x4E2D;&#x6709;&#x54EA;&#x4E00;&#x4E2A;&#x88AB;&#x6F0F;&#x6389;&#x4E86;&#xFF1F;&#x5BF9;&#x4E8E;&#x91CD;&#x4F20;&#x7684;&#x786E;&#x4FDD;&#xFF0C;&#x9700;&#x8981;&#x5BF9;<code>Segment</code>&#x53D1;&#x9001;&#x8BBE;&#x7F6E;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x4FDD;&#x8BC1;&#x6570;&#x636E;&#x4E00;&#x5B9A;&#x4F1A;&#x8FDB;&#x884C;&#x91CD;&#x4F20;&#x53D1;&#x9001;&#x3002;&#x5F53;&#x4E00;&#x4E2A;<code>Segment</code>&#x8FDB;&#x884C;&#x53D1;&#x9001;&#x540E;&#xFF0C;&#x4F1A;&#x8BBE;&#x7F6E;&#x4E00;&#x4E2A;&#x8BA1;&#x65F6;&#x5668;&#xFF0C;&#x5982;&#x679C;&#x5728;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x5185;&#xFF0C;&#x6CA1;&#x6709;&#x6536;&#x5230;&#x8D85;&#x8FC7;&#xFF08;&#x6216;&#x7B49;&#x4E8E;&#xFF09;&#x5B83;&#x7F16;&#x53F7;&#x7684;&#x54CD;&#x5E94;&#xFF0C;&#x5C31;&#x53D1;&#x8D77;&#x91CD;&#x4F20;&#x3002;&#x6709;&#x4E86;&#x8D85;&#x65F6;&#x91CD;&#x4F20;&#x7684;&#x515C;&#x5E95;&#xFF0C;&#x53D1;&#x9001;&#x65B9;&#x5C31;&#x66F4;&#x5177;&#x5907;&#x5BB9;&#x9519;&#x548C;&#x9632;&#x4E22;&#x5931;&#x7684;&#x80FD;&#x529B;&#x4E86;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x6700;&#x540E;&#xFF0C;&#x8D85;&#x51FA;&#x63A5;&#x6536;&#x7F13;&#x5B58;&#x4E0A;&#x9650;&#x7684;&#x95EE;&#x9898;&#x3002;&#x8BE5;&#x95EE;&#x9898;&#x7684;&#x672C;&#x8D28;&#x662F;&#x53D1;&#x9001;&#x65B9;&#x4E0D;&#x65AD;&#x7684;&#x53D1;&#x9001;<code>Segment</code>&#xFF0C;&#x800C;&#x7531;&#x4E8E;&#x63A5;&#x6536;&#x65B9;&#x5904;&#x7406;&#x7684;&#x901F;&#x5EA6;&#x8F83;&#x6162;&#xFF0C;&#x5BFC;&#x81F4;&#x63A5;&#x6536;&#x7F13;&#x5B58;<code>rcv_buf</code>&#x88AB;&#x5360;&#x6EE1;&#x3002;&#x5904;&#x7406;&#x7684;&#x65B9;&#x5F0F;&#x5176;&#x5B9E;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x5982;&#x679C;&#x53D1;&#x73B0;<code>rcv_buf</code>&#x6EE1;&#xFF0C;&#x76F4;&#x63A5;&#x4E22;&#x5F03;&#x5373;&#x53EF;&#xFF0C;&#x56E0;&#x4E3A;&#x589E;&#x52A0;&#x4E86;&#x53D1;&#x9001;&#x65B9;&#x7684;&#x8D85;&#x65F6;&#x91CD;&#x8BD5;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x7528;&#x62C5;&#x5FC3;&#x6570;&#x636E;&#x4F1A;&#x4E22;&#x3002;&#x8FD9;&#x4E48;&#x505A;&#x7B80;&#x5355;&#x7C97;&#x66B4;&#xFF0C;&#x4F46;&#x662F;&#x4E22;&#x5F03;&#x7684;&#x7F51;&#x7EDC;&#x6D41;&#x91CF;&#x8FD8;&#x662F;&#x6D6A;&#x8D39;&#x4E86;&#xFF0C;&#x5982;&#x679C;&#x80FD;&#x591F;&#x544A;&#x77E5;&#x53D1;&#x9001;&#x65B9;&#xFF0C;&#x63A5;&#x6536;&#x65B9;&#x7684;<code>rcv_buf</code>&#x8FD8;&#x80FD;&#x5BB9;&#x7EB3;&#x591A;&#x5C11;<code>Segment</code>&#xFF0C;&#x90A3;&#x5C31;&#x6700;&#x597D;&#x4E86;&#xFF0C;&#x56E0;&#x4E3A;&#x53D1;&#x9001;&#x65B9;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x63A5;&#x6536;&#x65B9;<code>rcv_buf</code>&#x7684;&#x5927;&#x5C0F;&#x6765;&#x8C03;&#x6574;&#x53D1;&#x9001;&#x6570;&#x636E;&#x5305;&#x7684;&#x8282;&#x594F;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x53EF;&#x4EE5;&#x5C1D;&#x8BD5;&#x5728;<code>Segment</code>&#x4E2D;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x63A5;&#x6536;&#x7A97;&#x53E3;&#x7684;&#x5C5E;&#x6027;&#xFF0C;&#x53EB;&#xFF1A;<code>rwnd</code>&#xFF0C;&#x5F53;&#x6BCF;&#x6B21;&#x54CD;&#x5E94;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5C31;&#x5C06;&#x5F53;&#x524D;&#x53EF;&#x7528;&#x7684;&#x7F13;&#x5B58;&#x5927;&#x5C0F;&#x8BBE;&#x7F6E;&#x5230;&#x8BE5;&#x5C5E;&#x6027;&#xFF0C;&#x7531;&#x54CD;&#x5E94;<code>Segment</code>&#x5E26;&#x56DE;&#x3002;&#x53D1;&#x9001;&#x7AEF;&#x6536;&#x5230;&#x54CD;&#x5E94;<code>Segment</code>&#x540E;&#xFF0C;&#x4E0D;&#x4EC5;&#x8981;&#x505A;&#x6570;&#x636E;&#x5B8C;&#x6574;&#x6027;&#x68C0;&#x9A8C;&#xFF0C;&#x4E5F;&#x9700;&#x8981;&#x770B;&#x4E00;&#x4E0B;<code>ack</code>&#x505A;&#x597D;&#x91CD;&#x53D1;&#x5904;&#x7406;&#xFF0C;&#x540C;&#x65F6;&#x8FD8;&#x8981;&#x6839;&#x636E;<code>rwnd</code>&#x5C5E;&#x6027;&#x6765;&#x8C03;&#x6574;&#x4E00;&#x4E0B;&#x63A5;&#x4E0B;&#x6765;&#x53D1;&#x9001;&#x7684;&#x6570;&#x636E;&#x91CF;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x901A;&#x8FC7;&#x4E0D;&#x5BF9;&#x7B49;&#x7684;&#x53D1;&#x9001;&#x548C;&#x5E94;&#x7B54;&#xFF0C;&#x589E;&#x5927;&#x4E86;RDT&#x7684;&#x541E;&#x5410;&#x91CF;&#xFF0C;&#x540C;&#x65F6;&#x8D85;&#x65F6;&#x673A;&#x5236;&#x7684;&#x5F15;&#x5165;&#xFF0C;&#x4F7F;&#x5F97;&#x4E0D;&#x5BF9;&#x7B49;&#x53D1;&#x9001;&#x548C;&#x5E94;&#x7B54;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#xFF0C;&#x4E5F;&#x80FD;&#x4FDD;&#x8BC1;&#x91CD;&#x4F20;&#xFF0C;<code>rwnd</code>&#x7684;&#x5F15;&#x5165;&#xFF0C;&#x63A5;&#x6536;&#x65B9;&#x65E0;&#x5F62;&#x4E2D;&#x53EF;&#x4EE5;&#x5F71;&#x54CD;&#x5230;&#x53D1;&#x9001;&#x65B9;&#x7684;&#x53D1;&#x9001;&#x901F;&#x7387;&#x3002;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x79BB;&#x8FDC;&#x4E00;&#x70B9;&#x89C2;&#x5BDF;<code>RDT 3.0</code>&#xFF0C;&#x4F60;&#x4F1A;&#x53D1;&#x73B0;&#x53D1;&#x9001;&#x65B9;&#x548C;&#x63A5;&#x6536;&#x65B9;&#x901A;&#x8FC7;<code>Segment</code>&#x7684;&#x5C5E;&#x6027;&#xFF0C;&#x4EE5;&#x53CA;&#x7EF4;&#x62A4;&#x5728;&#x4E24;&#x7AEF;&#x5404;&#x81EA;&#x7684;&#x7F13;&#x5B58;&#x548C;&#x6E38;&#x6807;&#xFF0C;&#x76F8;&#x4E92;&#x7275;&#x5F15;&#xFF0C;&#x76F8;&#x4E92;&#x5236;&#x7EA6;&#xFF0C;&#x5C06;&#x6570;&#x636E;&#x4ECE;&#x53D1;&#x9001;&#x65B9;&#x5B8C;&#x6574;&#x7684;&#x642C;&#x5230;&#x63A5;&#x6536;&#x65B9;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5F53;&#x524D;&#x7684;<code>RDT 3.0</code>&#x534F;&#x8BAE;&#xFF0C;&#x5DF2;&#x7ECF;&#x548C;TCP&#x534F;&#x8BAE;&#x975E;&#x5E38;&#x50CF;&#x4E86;&#xFF0C;&#x6216;&#x8005;&#x8BF4;&#x5B83;&#x5DF2;&#x7ECF;&#x662F;&#x4E00;&#x4E2A;&#x539F;&#x59CB;&#x7248;&#x7684;TCP&#x534F;&#x8BAE;&#x4E86;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>RDT 3.0</code>&#x6570;&#x636E;&#x53D1;&#x9001;&#x7684;&#x8C03;&#x7528;&#x5173;&#x7CFB;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/rdt-3.0-snd.png" width="65%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x5176;&#x4E2D;&#x9ED1;&#x8272;&#x7EBF;&#x8DEF;&#x4E3A;&#x53D1;&#x9001;&#x6D41;&#x7A0B;&#xFF0C;&#x7EA2;&#x8272;&#x7EBF;&#x8DEF;&#x4E3A;&#x786E;&#x8BA4;&#x6D41;&#x7A0B;&#xFF0C;&#x800C;&#x7EFF;&#x8272;&#x7EBF;&#x8DEF;&#x4E3A;&#x8D85;&#x65F6;&#x6D41;&#x7A0B;&#xFF0C;&#x8FD9;&#x4E9B;&#x6D41;&#x7A0B;&#x5206;&#x522B;&#x8FD0;&#x884C;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x8FDB;&#x7A0B;&#x4E2D;&#x3002;&#x5E94;&#x7528;&#x5C42;&#x8C03;&#x7528;<code>rdt_snd</code>&#x65B9;&#x6CD5;&#x540E;&#xFF0C;&#x53EA;&#x662F;&#x5C06;<code>Segment</code>&#x5B58;&#x653E;&#x5230;&#x53D1;&#x9001;&#x7F13;&#x5B58;<code>snd_buf</code>&#x4E2D;&#xFF0C;&#x800C;&#x7F13;&#x5B58;&#x4E2D;&#x6BCF;&#x6B21;&#x4F1A;&#x9009;&#x5B9A;&#x4E00;&#x4E2A;&#x56FA;&#x5B9A;&#x7684;&#x6570;&#x91CF;&#x8FDB;&#x884C;&#x53D1;&#x9001;&#xFF0C;&#x53EF;&#x4EE5;&#x79F0;&#x4E3A;&#x53D1;&#x9001;&#x7A97;&#x53E3;<code>snd_wnd</code>&#xFF0C;&#x8D85;&#x51FA;<code>snd_wnd</code>&#x7684;<code>Segment</code>&#x6682;&#x65F6;&#x4E0D;&#x53D1;&#x3002;<code>snd_idx</code>&#x6307;&#x5411;<code>snd_window</code>&#x7684;&#x8D77;&#x59CB;&#x4F4D;&#x7F6E;&#xFF0C;&#x7136;&#x540E;&#x987A;&#x5E8F;&#x8BBE;&#x7F6E;<code>Segment.sequence</code>&#x5E76;&#x8C03;&#x7528;<code>net_snd</code>&#x65B9;&#x6CD5;&#xFF0C;&#x5C06;<code>Packet</code>&#x53D1;&#x9001;&#x5230;&#x7F51;&#x7EDC;&#xFF0C;&#x5F53;<code>snd_idx</code>&#x5230;&#x8FBE;<code>snd_wnd</code>&#x7684;&#x7ED3;&#x675F;&#x4F4D;&#x7F6E;&#x65F6;&#x505C;&#x6B62;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x7531;&#x4E8E;<code>net_snd</code>&#x65B9;&#x6CD5;&#x662F;&#x5F02;&#x6B65;&#x6267;&#x884C;&#xFF0C;&#x6240;&#x4EE5;&#x5F15;&#x5165;&#x4E86;<code>ack_idx</code>&#x6765;&#x8868;&#x793A;&#x53D1;&#x9001;&#x65B9;&#x6536;&#x5230;&#x7684;<code>ack</code>&#x7F16;&#x53F7;&#xFF0C;&#x5B83;&#x548C;<code>snd_idx</code>&#x4E00;&#x6837;&#xFF0C;&#x4F1A;&#x4E00;&#x76F4;&#x9012;&#x589E;&#xFF0C;&#x53EA;&#x662F;<code>ack_idx</code>&#x7684;&#x8BBE;&#x7F6E;&#x6765;&#x81EA;&#x4E8E;&#x5BF9;&#x7AEF;&#x7684;&#x5E94;&#x7B54;&#x54CD;&#x5E94;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x50CF;<code>snd_idx</code>&#x90A3;&#x6837;&#x7684;&#x4E3B;&#x52A8;&#x81EA;&#x589E;&#x3002;&#x53D1;&#x9001;&#x6BCF;&#x4E2A;<code>Segment</code>&#x65F6;&#xFF0C;&#x8FD8;&#x4F1A;&#x6CE8;&#x518C;&#x5BF9;&#x5E94;&#x7684;&#x5B9A;&#x65F6;&#x4EFB;&#x52A1;&#xFF0C;&#x6BCF;&#x9694;&#x51E0;&#x79D2;&#x4F1A;&#x68C0;&#x6D4B;&#x5F53;&#x524D;&#x4EFB;&#x52A1;&#x4E2D;<code>Segment</code>&#x7684;<code>sequence</code>&#x548C;<code>ack_idx</code>&#x4E4B;&#x95F4;&#x7684;&#x5173;&#x7CFB;&#xFF0C;&#x5982;&#x679C;<code>ack_idx &gt;= sequence</code>&#xFF0C;&#x5219;&#x8FD4;&#x56DE;&#xFF0C;&#x5426;&#x5219;&#x5B9A;&#x65F6;&#x4EFB;&#x52A1;&#x4F1A;&#x91CD;&#x65B0;&#x8C03;&#x7528;<code>net_snd</code>&#x65B9;&#x6CD5;&#x91CD;&#x4F20;&#x5F53;&#x524D;&#x5B9A;&#x65F6;&#x4EFB;&#x52A1;&#x8D1F;&#x8D23;&#x7684;<code>Segment</code>&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>net_rcv</code>&#x65B9;&#x6CD5;&#x63A5;&#x6536;&#x6765;&#x81EA;&#x5BF9;&#x7AEF;&#x7684;&#x54CD;&#x5E94;&#xFF0C;&#x5982;&#x679C;&#x54CD;&#x5E94;<code>Segment.ack &gt;= ack_idx</code>&#xFF0C;&#x5219;&#x66F4;&#x65B0;<code>ack_idx</code>&#x4E3A;&#x54CD;&#x5E94;<code>Segment.ack</code>&#xFF0C;&#x4EE3;&#x8868;&#x76EE;&#x524D;&#x5DF2;&#x7ECF;&#x6709;<code>ack</code>&#x53CA;&#x5176;&#x4E4B;&#x524D;&#x7684;<code>Segment</code>&#x90FD;&#x88AB;&#x6536;&#x5230;&#x3002;&#x6536;&#x5230;&#x54CD;&#x5E94;&#x7684;&#x4E00;&#x523B;&#xFF0C;<code>snd_idx - ack_idx &lt; snd_wnd</code>&#xFF0C;&#x8FD9;&#x4EE3;&#x8868;&#x5728;&#x786E;&#x8BA4;&#x8DEF;&#x9014;&#x4E0A;&#x7684;<code>Segment</code>&#x6570;&#x91CF;&#x5DF2;&#x7ECF;&#x5C0F;&#x4E8E;&#x53D1;&#x9001;&#x7A97;&#x53E3;<code>snd_wnd</code>&#x7684;&#x957F;&#x5EA6;&#x4E86;&#xFF0C;&#x6B64;&#x65F6;<code>snd_wnd</code>&#x5F00;&#x59CB;&#x5411;&#x524D;&#x79FB;&#x52A8;&#xFF0C;<code>snd_idx</code>&#x53EF;&#x4EE5;&#x7A81;&#x7834;&#x65E7;&#x6709;&#x7684;&#x9650;&#x5236;&#xFF0C;&#x7EE7;&#x7EED;&#x5C06;&#x5411;&#x524D;&#x79FB;&#x52A8;&#x591A;&#x51FA;&#x6765;&#x7684;<code>Segment</code>&#x53D1;&#x9001;&#x5230;&#x7F51;&#x7EDC;&#x4E2D;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x57FA;&#x4E8E;&#x7F13;&#x5B58;&#x548C;&#x8D85;&#x65F6;<code>rdt_snd</code>&#x65B9;&#x6CD5;&#x5DF2;&#x7ECF;&#x53D8;&#x5F97;&#x5F88;&#x590D;&#x6742;&#x4E86;&#xFF0C;&#x4F46;&#x662F;&#x5B83;&#x7684;&#x6548;&#x80FD;&#x548C;&#x9002;&#x5E94;&#x6027;&#x4E5F;&#x5F97;&#x4EE5;&#x63D0;&#x5347;&#xFF0C;&#x53D1;&#x9001;&#x7684;&#x9891;&#x5EA6;&#x53D7;&#x9650;&#x4E8E;&#x63A5;&#x6536;&#x7684;&#x80FD;&#x529B;&#xFF0C;<code>RDT 3.0</code>&#x5DF2;&#x7ECF;&#x5EFA;&#x7ACB;&#x8D77;&#x4E86;&#x5177;&#x5907;&#x53CD;&#x538B;&#x7279;&#x6027;&#x7684;&#x4F20;&#x8F93;&#x673A;&#x5236;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>RDT 3.0</code>&#x6570;&#x636E;&#x63A5;&#x6536;&#x7684;&#x8C03;&#x7528;&#x5173;&#x7CFB;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/rdt-3.0-rcv.png" width="70%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x5176;&#x4E2D;&#x9ED1;&#x8272;&#x7EBF;&#x8DEF;&#x4E3A;&#x63A5;&#x6536;&#x6D41;&#x7A0B;&#xFF0C;&#x800C;&#x7EFF;&#x8272;&#x7EBF;&#x8DEF;&#x4E3A;&#x5B9A;&#x65F6;&#x89E6;&#x53D1;&#x6D41;&#x7A0B;&#xFF0C;&#x8FD9;&#x4E9B;&#x6D41;&#x7A0B;&#x5206;&#x522B;&#x8FD0;&#x884C;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x8FDB;&#x7A0B;&#x4E2D;&#x3002;<code>rdt_rcv</code>&#x65B9;&#x6CD5;&#x4E0D;&#x662F;&#x5728;&#x5355;&#x4E2A;&#x7684;&#x5904;&#x7406;<code>Segment</code>&#xFF0C;&#x5BF9;&#x7AEF;&#x53D1;&#x9001;&#x7A97;&#x53E3;&#x5185;&#x7684;<code>Segment</code>&#x4F1A;&#x5E76;&#x53D1;&#x5230;&#x8FBE;&#x3002;<code>rcv_idx</code>&#x6307;&#x5411;&#x63A5;&#x6536;&#x7F13;&#x5B58;<code>rcv_buf</code>&#x4E2D;&#x7684;&#x8D77;&#x59CB;&#x4F4D;&#x7F6E;&#xFF0C;&#x5F53;&#x63A5;&#x6536;&#x5230;<code>Segment</code>&#x540E;&#xFF0C;&#x5982;&#x679C;<code>sequence &lt; rcv_idx</code>&#xFF0C;&#x5219;&#x4E22;&#x5F03;&#x5E76;&#x8FD4;&#x56DE;&#xFF0C;&#x5426;&#x5219;&#x5C06;<code>Segment</code>&#x5B58;&#x5165;&#x5230;<code>rcv_buf</code>&#x4E2D;&#x5BF9;&#x5E94;&#x7684;&#x7F16;&#x53F7;&#x5904;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x63A5;&#x6536;&#x65B9;&#x4F1A;&#x5468;&#x671F;&#x68C0;&#x67E5;<code>rcv_buf</code>&#xFF0C;&#x5982;&#x679C;&#x4ECE;<code>rcv_idx</code>&#x5F00;&#x59CB;&#x6709;&#x8FDE;&#x7EED;&#x82E5;&#x5E72;&#x4E2A;<code>Segment</code>&#x90FD;&#x6536;&#x5230;&#x4E86;&#xFF0C;&#x5219;&#x5C06;&#x8FDE;&#x7EED;&#x7684;&#x51E0;&#x4E2A;<code>Segment</code>&#x4E2D;&#x7684;<code>data</code>&#x6570;&#x636E;&#x4EA4;&#x7ED9;&#x5E94;&#x7528;&#x8FDB;&#x7A0B;&#xFF0C;&#x5E76;&#x524D;&#x79FB;<code>rcv_idx</code>&#xFF0C;&#x540C;&#x65F6;&#x53D1;&#x9001;&#x54CD;&#x5E94;<code>Segment</code>&#xFF0C;&#x5176;&#x4E2D;<code>ack</code>&#x7B49;&#x4E8E;<code>rcv_idx</code>&#xFF0C;&#x8868;&#x793A;<code>rcv_idx</code>&#x4E4B;&#x524D;&#x7684;&#x6570;&#x636E;&#x5305;&#x90FD;&#x6536;&#x5230;&#x4E86;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x54CD;&#x5E94;<code>Segment</code>&#x53D1;&#x9001;&#x5230;&#x53D1;&#x9001;&#x65B9;&#xFF0C;&#x53C8;&#x4F1A;&#x89E6;&#x53D1;&#x53D1;&#x9001;&#x65B9;&#x7684;<code>snd_window</code>&#x524D;&#x79FB;&#xFF0C;&#x8FDB;&#x800C;&#x53D1;&#x9001;&#x540E;&#x7EED;&#x7684;&#x6570;&#x636E;&#x3002;</p>
+<h3 id="rdt-31">RDT 3.1</h3>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<code>RDT 3.0</code>&#x5728;&#x4E00;&#x4E2A;&#x6709;&#x9519;&#x3001;&#x4F1A;&#x4E22;&#x548C;&#x4F1A;&#x4E71;&#x7684;&#x7F51;&#x7EDC;&#x5C42;&#x57FA;&#x7840;&#x4E0A;&#xFF0C;&#x4E0D;&#x4EC5;&#x5EFA;&#x7ACB;&#x8D77;&#x4E86;&#x53EF;&#x9760;&#x7684;&#x4F20;&#x8F93;&#x670D;&#x52A1;&#xFF0C;&#x8FD8;&#x652F;&#x6301;&#x5E76;&#x884C;&#x53D1;&#x9001;&#x4EE5;&#x53CA;&#x4E71;&#x5E8F;&#x63A5;&#x6536;&#xFF0C;&#x6781;&#x5927;&#x7684;&#x63D0;&#x5347;&#x4E86;&#x7F51;&#x7EDC;&#x7684;&#x5229;&#x7528;&#x7387;&#x3002;<code>RDT 3.0</code>&#x8981;&#x6C42;&#x5728;&#x4E24;&#x7AEF;&#x4FDD;&#x6301;&#x4E00;&#x4E9B;&#x72B6;&#x6001;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;<code>rcv_idx</code>&#x3001;<code>snd_idx</code>&#x548C;<code>rcv_buf</code>&#x7B49;&#xFF0C;&#x8FD9;&#x4E9B;&#x72B6;&#x6001;&#x662F;&#x670D;&#x52A1;&#x4E8E;&#x4E24;&#x7AEF;&#x8FDB;&#x7A0B;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x5B83;&#x4EEC;&#x9700;&#x8981;&#x57FA;&#x4E8E;IP&#x548C;&#x7AEF;&#x53E3;&#x88AB;&#x5355;&#x72EC;&#x7EF4;&#x62A4;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/rdt-client-server.png" width="70%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x4EE5;&#x53D1;&#x9001;&#x7AEF;&#x4E3A;&#x4F8B;&#xFF0C;&#x4F1A;&#x4EE5;<code>&lt;src-IP, src-Port, dst-IP, dst-Port&gt;</code>&#x4E3A;<code>KEY</code>&#xFF0C;&#x5F00;&#x8F9F;&#x72EC;&#x7ACB;&#x7684;&#x901A;&#x4FE1;&#x5C5E;&#x6027;&#xFF0C;&#x5305;&#x62EC;&#xFF1A;<code>rcv_idx</code>&#x3001;<code>snd_idx</code>&#x3001;<code>rcv_buf</code>&#x3001;<code>ack_idx</code>&#x3001;<code>snd_buf</code>&#x548C;<code>snd_window</code>&#xFF0C;&#x5176;&#x4E2D;<code>src</code>&#x662F;&#x53D1;&#x9001;&#x65B9;&#xFF0C;<code>dst</code>&#x662F;&#x63A5;&#x6536;&#x65B9;&#x3002;&#x867D;&#x7136;&#x662F;&#x53D1;&#x9001;&#x7AEF;&#xFF0C;&#x4F46;&#x662F;&#x4E5F;&#x4F1A;&#x5206;&#x914D;<code>rcv_idx</code>&#x548C;<code>rcv_buf</code>&#xFF0C;&#x539F;&#x56E0;&#x662F;&#x53D1;&#x9001;&#x7AEF;&#x4E0D;&#x4EC5;&#x53D1;&#x9001;&#x6570;&#x636E;&#xFF0C;&#x4E5F;&#x4F1A;&#x63A5;&#x6536;&#x5BF9;&#x7AEF;&#x7684;&#x54CD;&#x5E94;&#x6570;&#x636E;&#xFF0C;&#x4F20;&#x8F93;&#x5C42;&#x662F;&#x5168;&#x53CC;&#x5DE5;&#x7684;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x53D1;&#x9001;&#x7AEF;&#x53D1;&#x9001;&#x6570;&#x636E;&#x540E;&#xFF0C;&#x5982;&#x679C;&#x63A5;&#x6536;&#x65B9;&#x54CD;&#x5E94;&#x6570;&#x636E;&#x7684;<code>Segment</code>&#x5F88;&#x591A;&#xFF0C;&#x8D85;&#x8FC7;&#x4E86;&#x53D1;&#x9001;&#x7AEF;&#x7684;<code>rcv_buf</code>&#x9650;&#x5236;&#xFF0C;&#x5C31;&#x4F1A;&#x5BFC;&#x81F4;&#x65E0;&#x6548;&#x7684;&#x91CD;&#x4F20;&#x3002;&#x540C;&#x65F6;&#x53D1;&#x9001;&#x7AEF;&#x7684;<code>snd_idx</code>&#x8D77;&#x59CB;&#x503C;&#x4E5F;&#x9700;&#x8981;&#x7ED9;&#x5230;&#x63A5;&#x6536;&#x7AEF;&#xFF0C;&#x8FD9;&#x6837;&#x65B9;&#x4FBF;&#x63A5;&#x6536;&#x7AEF;&#x53EF;&#x4EE5;&#x4EE5;&#x6B64;&#x6765;&#x786E;&#x5B9A;&#x81EA;&#x5DF1;&#x7684;<code>rcv_idx</code>&#xFF0C;&#x6240;&#x4EE5;RDT&#x534F;&#x8BAE;&#x8FD8;&#x53EF;&#x4EE5;&#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x63A7;&#x5236;&#x6570;&#x636E;&#x5305;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x4EE3;&#x8868;&#x8FD9;&#x4E2A;<code>Segment</code>&#x4E2D;&#x7684;&#x6570;&#x636E;&#x662F;&#x4E3A;&#x4E86;&#x8BBE;&#x7F6E;&#x5BF9;&#x7AEF;&#x7684;&#x901A;&#x4FE1;&#x5C5E;&#x6027;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x6574;&#x578B;&#xFF0C;&#x6309;&#x7167;&#x4E8C;&#x8FDB;&#x5236;&#x4F4D;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x8868;&#x793A;<code>Segment</code>&#x7684;&#x7279;&#x6027;&#xFF0C;&#x6BD4;&#x5982;<code>4</code>&#x4F4D;&#x4E8C;&#x8FDB;&#x5236;&#xFF1A;<code>0001</code>&#xFF0C;&#x7B2C;&#x4E00;&#x4F4D;&#x4E3A;&#x771F;&#x8868;&#x793A;&#x8BE5;<code>Segment</code>&#x662F;&#x4E3A;&#x4E86;&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;&#xFF0C;&#x63A5;&#x6536;&#x65B9;&#x53EF;&#x4EE5;&#x7528;<code>Segment</code>&#x4E2D;&#x7684;<code>sequence</code>&#x5C5E;&#x6027;&#x6765;&#x521D;&#x59CB;&#x5316;&#x81EA;&#x5DF1;&#x7684;<code>rcv_idx</code>&#xFF1B;<code>0010</code>&#xFF0C;&#x7B2C;&#x4E8C;&#x4F4D;&#x4E3A;&#x771F;&#x8868;&#x793A;&#x8BE5;<code>Segment</code>&#x7684;<code>ack</code>&#x5C5E;&#x6027;&#x6709;&#x6548;&#xFF0C;&#x53EF;&#x4EE5;&#x7528;<code>Segment</code>&#x4E2D;&#x7684;<code>ack</code>&#x5C5E;&#x6027;&#x6765;&#x66F4;&#x65B0;<code>ack_idx</code>&#xFF1B;<code>0100</code>&#xFF0C;&#x7B2C;&#x4E09;&#x4F4D;&#x4E3A;&#x771F;&#x8868;&#x793A;&#x8BE5;<code>Segment</code>&#x662F;&#x4E3A;&#x4E86;&#x65AD;&#x5F00;&#x8FDE;&#x63A5;&#xFF0C;&#x63A5;&#x6536;&#x65B9;&#x6536;&#x5230;&#x8BE5;<code>Segment</code>&#x4EE3;&#x8868;&#x5B83;&#x662F;&#x53D1;&#x9001;&#x65B9;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x5305;&#x542B;&#x6570;&#x636E;&#x7684;<code>Segment</code>&#xFF0C;&#x540C;&#x65F6;&#x4E5F;&#x53EF;&#x4EE5;&#x51C6;&#x5907;&#x56DE;&#x6536;&#x5206;&#x914D;&#x7684;&#x901A;&#x4FE1;&#x5C5E;&#x6027;&#x4E86;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x8BE5;&#x6574;&#x578B;&#x5B9A;&#x4E49;&#x4E3A;<code>sign</code>&#xFF0C;&#x8FD9;&#x6837;&#x5347;&#x7EA7;&#x4E3A;<code>3.1</code>&#x7684;RDT&#x5C31;&#x6BD4;<code>3.0</code>&#x663E;&#x5F97;&#x66F4;&#x52A0;&#x4F53;&#x7CFB;&#x5316;&#x4E86;&#xFF0C;&#x4EE5;&#x8FDE;&#x63A5;&#x5EFA;&#x7ACB;&#x8FC7;&#x7A0B;&#x4E3A;&#x4F8B;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/computer-network/rdt-connect.png" width="90%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x53D1;&#x9001;&#x7AEF;&#x53D1;&#x8D77;&#x4E00;&#x6B21;&#x8FDE;&#x63A5;&#x5EFA;&#x7ACB;&#x64CD;&#x4F5C;&#xFF0C;&#x63A5;&#x6536;&#x7AEF;&#x4E5F;&#x8981;&#x8FDB;&#x884C;&#x4E00;&#x6B21;&#x8FDE;&#x63A5;&#x5EFA;&#x7ACB;&#x64CD;&#x4F5C;&#xFF0C;&#x8FD9;&#x6837;&#x4E24;&#x7AEF;&#x5C31;&#x5B8C;&#x6210;&#x4E86;&#x901A;&#x4FE1;&#x5C5E;&#x6027;&#x7684;&#x4EA4;&#x6362;&#xFF0C;&#x53CC;&#x65B9;&#x5BF9;&#x4E8E;<code>snd_idx</code>&#xFF0C;<code>rcv_idx</code>&#x3001;<code>ack_idx</code>&#x4EE5;&#x53CA;<code>rcv_buf</code>&#x7B49;&#x6709;&#x4E86;&#x5171;&#x8BC6;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x7531;&#x4E8E;<code>sign</code>&#x53EF;&#x4EE5;&#x5408;&#x5E76;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x5C1D;&#x8BD5;&#x5C06;&#x7B2C;&#x4E8C;&#x6B65;&#x63A5;&#x6536;&#x7AEF;&#x7684;&#x54CD;&#x5E94;&#x548C;&#x8FDE;&#x63A5;&#x5EFA;&#x7ACB;&#x64CD;&#x4F5C;&#xFF08;&#x7B2C;<code>2</code>&#x6B65;&#x548C;&#x7B2C;<code>3</code>&#x6B65;&#xFF09;&#x8FDB;&#x884C;&#x5408;&#x5E76;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;<code>Segment.sign = 0011</code>&#xFF0C;&#x800C;<code>Segment.sequence=13, Segment.ack=27</code>&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x53EA;&#x9700;&#x8981;&#x4E09;&#x6B21;&#x4F20;&#x8F93;&#x5C31;&#x80FD;&#x8FBE;&#x6210;&#x5171;&#x8BC6;&#x4E86;&#x3002;<code>RDT 3.1</code>&#x53EF;&#x4EE5;&#x8BF4;&#x4E0E;TCP&#x534F;&#x8BAE;&#x975E;&#x5E38;&#x63A5;&#x8FD1;&#x4E86;&#xFF0C;&#x4F46;&#x662F;&#x5B83;&#x8FD8;&#x662F;&#x5C40;&#x9650;&#x5728;&#x53D1;&#x9001;&#x548C;&#x63A5;&#x6536;&#x4E24;&#x7AEF;&#xFF0C;&#x6CA1;&#x6709;&#x5C06;&#x4E24;&#x7AEF;&#x4E4B;&#x95F4;&#x7684;&#x7F51;&#x7EDC;&#x8003;&#x8651;&#x5728;&#x5185;&#xFF0C;&#x6CA1;&#x6709;&#x8003;&#x8651;&#x7F51;&#x7EDC;&#x62E5;&#x585E;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x662F;&#x5B83;&#x5BF9;&#x4E8E;&#x7406;&#x89E3;TCP&#x534F;&#x8BAE;&#x662F;&#x5F88;&#x6709;&#x5E2E;&#x52A9;&#x7684;&#x3002;</p>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/weipeng2k/hot-wind" target="_blank">hot-wind</a>&#xFF0C;&#x4F7F;&#x7528;<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank">&#x77E5;&#x8BC6;&#x5171;&#x4EAB; &#x7F72;&#x540D;-&#x76F8;&#x540C;&#x65B9;&#x5F0F;&#x5171;&#x4EAB; 4.0&#x534F;&#x8BAE;</a>&#x53D1;&#x5E03; </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> &#x6B64;&#x9875;&#x9762;&#x4FEE;&#x8BA2;&#x4E8E;&#xFF1A; 2024-12-02 03:24:02 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="computer-network-02.html" class="navigation navigation-prev " aria-label="Previous page: 热风-感悟《计算机网络：自顶向下》（02.应用层）">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="computer-network-03b.html" class="navigation navigation-next " aria-label="Next page: 热风-感悟《计算机网络：自顶向下》（03b.传输层）">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"热风-感悟《计算机网络：自顶向下》（03a.传输层）","level":"1.25.3","depth":2,"next":{"title":"热风-感悟《计算机网络：自顶向下》（03b.传输层）","level":"1.25.4","depth":2,"path":"book/computer-network-03b.md","ref":"book/computer-network-03b.md","articles":[]},"previous":{"title":"热风-感悟《计算机网络：自顶向下》（02.应用层）","level":"1.25.2","depth":2,"path":"book/computer-network-02.md","ref":"book/computer-network-02.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-pro","-sharing","github-buttons","editlink","ga","-highlight","bibtex-indexed-cite","page-footer-ex","splitter","copy-code-button","expandable-chapters-small","donate","github"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/weipeng2k/hot-wind"},"editlink":{"label":"Edit","multilingual":false,"base":"https://github.com/weipeng2k/hot-wind/blob/master"},"page-footer-ex":{"copyright":"By [hot-wind](https://github.com/weipeng2k/hot-wind)，使用[知识共享 署名-相同方式共享 4.0协议](https://creativecommons.org/licenses/by-sa/4.0/deed.zh)发布","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"此页面修订于："},"splitter":{},"search-pro":{"cutWordLib":"nodejieba","defineWord":["Gitbook Use"]},"donate":{"alipay":"https://weipeng2k.github.io/hot-wind/alipay_qr.JPG","alipayText":"支付宝打赏","button":"赏","title":"","wechat":"https://weipeng2k.github.io/hot-wind/wechat_qr.JPG","wechatText":"微信打赏"},"fontsettings":{"theme":"white","family":"sans","size":2},"bibtex-indexed-cite":{"path":"/"},"github-buttons":{"buttons":[{"user":"weipeng2k","repo":"hot-wind","type":"star","size":"small","count":true}]},"expandable-chapters-small":{},"copy-code-button":{},"ga":{"configuration":"auto","token":"UA-131910384-3"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"weipeng2k","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"bibCount":0,"variables":{},"title":"hot-wind","bib":[],"gitbook":"*"},"file":{"path":"book/computer-network-03a.md","mtime":"2024-12-02T03:24:02.321Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-12-02T03:24:42.830Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-donate/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,1448 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>热风-说一说系统复杂性 · hot-wind</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="weipeng2k">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-bibtex-indexed-cite/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-donate/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="how-do-i-write-a-design-doc.html" />
+    
+    
+    <link rel="prev" href="talk-about-design-paradigm.html" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"weipeng2k","repo":"hot-wind","type":"star","size":"small","count":true}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    热风-简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../ABOUTME.html">
+            
+                <a href="../ABOUTME.html">
+            
+                    
+                    热风-关于作者
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="cap-brief-summary.html">
+            
+                <a href="cap-brief-summary.html">
+            
+                    
+                    热风-CAP小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="explanation-of-compensation-mechanism.html">
+            
+                <a href="explanation-of-compensation-mechanism.html">
+            
+                    
+                    热风-补偿机制说明
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="byzantine-generals-problem.html">
+            
+                <a href="byzantine-generals-problem.html">
+            
+                    
+                    热风-拜占庭将军问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="2pc-summary.html">
+            
+                <a href="2pc-summary.html">
+            
+                    
+                    热风-共识协议：两阶段提交
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="compensation-and-tcc.html">
+            
+                <a href="compensation-and-tcc.html">
+            
+                    
+                    热风-一种基于补偿的事务处理机制（TCC）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="how-to-design-a-distribute-database-feeling.html">
+            
+                <a href="how-to-design-a-distribute-database-feeling.html">
+            
+                    
+                    热风-《如何设计一个分布式数据库》观后感
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="tcc-using-seata.html">
+            
+                <a href="tcc-using-seata.html">
+            
+                    
+                    热风-使用Seata来实现TCC
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="what-about-the-future.html">
+            
+                <a href="what-about-the-future.html">
+            
+                    
+                    热风-未来的预测
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="seata-problem.html">
+            
+                <a href="seata-problem.html">
+            
+                    
+                    热风-Seata存在的一些问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="java-network-inetaddress-and-dns.html">
+            
+                <a href="java-network-inetaddress-and-dns.html">
+            
+                    
+                    热风-InetAddress与DNS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="java-network-arp-and-pcap4j.html">
+            
+                <a href="java-network-arp-and-pcap4j.html">
+            
+                    
+                    热风-ARP与pcap4j
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="java-network-tcpdump-and-redis-client.html">
+            
+                <a href="java-network-tcpdump-and-redis-client.html">
+            
+                    
+                    热风-TcpDump与Redis客户端
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="java-dev-learn-c.html">
+            
+                <a href="java-dev-learn-c.html">
+            
+                    
+                    热风-Java开发者看C
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="java-dev-learn-c-01.html">
+            
+                <a href="java-dev-learn-c-01.html">
+            
+                    
+                    热风-C语言概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="java-dev-learn-c-02.html">
+            
+                <a href="java-dev-learn-c-02.html">
+            
+                    
+                    热风-C语言的基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="basic-paxos-9-pages-notes.html">
+            
+                <a href="basic-paxos-9-pages-notes.html">
+            
+                    
+                    热风-基础Paxos算法的9页笔记
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="basic-paxos-9-pages-notes-01.html">
+            
+                <a href="basic-paxos-9-pages-notes-01.html">
+            
+                    
+                    热风-基础Paxos算法笔记(1/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="basic-paxos-9-pages-notes-02.html">
+            
+                <a href="basic-paxos-9-pages-notes-02.html">
+            
+                    
+                    热风-基础Paxos算法笔记(2/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.3" data-path="basic-paxos-9-pages-notes-03.html">
+            
+                <a href="basic-paxos-9-pages-notes-03.html">
+            
+                    
+                    热风-基础Paxos算法笔记(3/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.4" data-path="basic-paxos-9-pages-notes-04.html">
+            
+                <a href="basic-paxos-9-pages-notes-04.html">
+            
+                    
+                    热风-基础Paxos算法笔记(4/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.5" data-path="basic-paxos-9-pages-notes-05.html">
+            
+                <a href="basic-paxos-9-pages-notes-05.html">
+            
+                    
+                    热风-基础Paxos算法笔记(5/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.6" data-path="basic-paxos-9-pages-notes-06.html">
+            
+                <a href="basic-paxos-9-pages-notes-06.html">
+            
+                    
+                    热风-基础Paxos算法笔记(6/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.7" data-path="basic-paxos-9-pages-notes-07.html">
+            
+                <a href="basic-paxos-9-pages-notes-07.html">
+            
+                    
+                    热风-基础Paxos算法笔记(7/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.8" data-path="basic-paxos-9-pages-notes-08.html">
+            
+                <a href="basic-paxos-9-pages-notes-08.html">
+            
+                    
+                    热风-基础Paxos算法笔记(8/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.9" data-path="basic-paxos-9-pages-notes-09.html">
+            
+                <a href="basic-paxos-9-pages-notes-09.html">
+            
+                    
+                    热风-基础Paxos算法笔记(9/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="distribute-lock-brief-summary.html">
+            
+                <a href="distribute-lock-brief-summary.html">
+            
+                    
+                    热风-分布式锁
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.17.1" data-path="distribute-lock-what-is-lock.html">
+            
+                <a href="distribute-lock-what-is-lock.html">
+            
+                    
+                    热风-锁是什么？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.2" data-path="distribute-lock-what-is-distribute-lock.html">
+            
+                <a href="distribute-lock-what-is-distribute-lock.html">
+            
+                    
+                    热风-分布式锁是什么？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.3" data-path="distribute-lock-problem.html">
+            
+                <a href="distribute-lock-problem.html">
+            
+                    
+                    热风-实现分布式锁会遇到的问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.4" data-path="distribute-lock-framework.html">
+            
+                <a href="distribute-lock-framework.html">
+            
+                    
+                    热风-分布式锁框架
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.5" data-path="distribute-lock-spin-impl.html">
+            
+                <a href="distribute-lock-spin-impl.html">
+            
+                    
+                    热风-拉模式的分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.6" data-path="distribute-lock-event-impl.html">
+            
+                <a href="distribute-lock-event-impl.html">
+            
+                    
+                    热风-推模式的分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.7" data-path="distribute-lock-with-redis.html">
+            
+                <a href="distribute-lock-with-redis.html">
+            
+                    
+                    热风-使用Redis实现分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.8" data-path="distribute-lock-how-to-do-it.html">
+            
+                <a href="distribute-lock-how-to-do-it.html">
+            
+                    
+                    热风-如何实现分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.9" data-path="distribute-lock-is-redlock-safe.html">
+            
+                <a href="distribute-lock-is-redlock-safe.html">
+            
+                    
+                    热风-Redlock能保证锁的正确性吗？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.10" data-path="distribute-lock-another-way.html">
+            
+                <a href="distribute-lock-another-way.html">
+            
+                    
+                    热风-再看分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="change-to-temurin.html">
+            
+                <a href="change-to-temurin.html">
+            
+                    
+                    热风-更新到Eclipse Temurin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="using-jetbrains-toolbox.html">
+            
+                <a href="using-jetbrains-toolbox.html">
+            
+                    
+                    热风-使用JetBrains Toolbox来管理IDE
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="8-books-to-be-better-dev.html">
+            
+                <a href="8-books-to-be-better-dev.html">
+            
+                    
+                    热风-成为更好程序员的8本书
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="juc-summary.html">
+            
+                <a href="juc-summary.html">
+            
+                    
+                    热风-JUC总结
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.21.1" data-path="juc-stamped-lock-doc.html">
+            
+                <a href="juc-stamped-lock-doc.html">
+            
+                    
+                    热风-JUC中的StampedLock文档
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.2" data-path="juc-seqlock.html">
+            
+                <a href="juc-seqlock.html">
+            
+                    
+                    热风-《Linux系统高效同步》SeqLock摘译
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.3" data-path="juc-stampedlock-summary.html">
+            
+                <a href="juc-stampedlock-summary.html">
+            
+                    
+                    热风-StampedLock简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.4" data-path="juc-stampedlock-inf-and-case.html">
+            
+                <a href="juc-stampedlock-inf-and-case.html">
+            
+                    
+                    热风-StampedLock的接口与示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.5" data-path="juc-stampedlock-implement-analysis.html">
+            
+                <a href="juc-stampedlock-implement-analysis.html">
+            
+                    
+                    热风-StampedLock的实现分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="program-how-to-run.html">
+            
+                <a href="program-how-to-run.html">
+            
+                    
+                    热风-程序是怎样跑起来的
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.22.1" data-path="program-how-to-run-01.html">
+            
+                <a href="program-how-to-run-01.html">
+            
+                    
+                    热风-对程序员来说CPU是什么
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.2" data-path="program-how-to-run-02.html">
+            
+                <a href="program-how-to-run-02.html">
+            
+                    
+                    热风-数据是用二进制数表示的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.3" data-path="program-how-to-run-03.html">
+            
+                <a href="program-how-to-run-03.html">
+            
+                    
+                    热风-计算机进行小数运算时出错的原因
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.4" data-path="program-how-to-run-04.html">
+            
+                <a href="program-how-to-run-04.html">
+            
+                    
+                    热风-熟练使用有棱有角的内存
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.5" data-path="program-how-to-run-05.html">
+            
+                <a href="program-how-to-run-05.html">
+            
+                    
+                    热风-内存和磁盘的亲密关系
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.6" data-path="program-how-to-run-06.html">
+            
+                <a href="program-how-to-run-06.html">
+            
+                    
+                    热风-亲自尝试压缩数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.7" data-path="program-how-to-run-07.html">
+            
+                <a href="program-how-to-run-07.html">
+            
+                    
+                    热风-程序是在何种环境中运行的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.8" data-path="program-how-to-run-08.html">
+            
+                <a href="program-how-to-run-08.html">
+            
+                    
+                    热风-从源文件到可执行文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.9" data-path="program-how-to-run-09.html">
+            
+                <a href="program-how-to-run-09.html">
+            
+                    
+                    热风-操作系统和应用的关系
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.10" data-path="program-how-to-run-10.html">
+            
+                <a href="program-how-to-run-10.html">
+            
+                    
+                    热风-通过汇编语言了解程序的实际构成
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.11" data-path="program-how-to-run-11.html">
+            
+                <a href="program-how-to-run-11.html">
+            
+                    
+                    热风-硬件控制方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="program-program-program.html">
+            
+                <a href="program-program-program.html">
+            
+                    
+                    热风-程序！程序！程序！
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.23.1" data-path="program-program-program-01.html">
+            
+                <a href="program-program-program-01.html">
+            
+                    
+                    热风-程序的视角
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.2" data-path="program-program-program-02.html">
+            
+                <a href="program-program-program-02.html">
+            
+                    
+                    热风-硬件的执念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.3" data-path="program-program-program-03.html">
+            
+                <a href="program-program-program-03.html">
+            
+                    
+                    热风-编译的力量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.4" data-path="program-program-program-04.html">
+            
+                <a href="program-program-program-04.html">
+            
+                    
+                    热风-数据的表达
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.5" data-path="program-program-program-05.html">
+            
+                <a href="program-program-program-05.html">
+            
+                    
+                    热风-协同的奥义
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="do-unit-test-better.html">
+            
+                <a href="do-unit-test-better.html">
+            
+                    
+                    热风-如何更好的做单元测试
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.24.1" data-path="do-unit-test-better-01.html">
+            
+                <a href="do-unit-test-better-01.html">
+            
+                    
+                    热风-软件开发与单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.2" data-path="do-unit-test-better-02.html">
+            
+                <a href="do-unit-test-better-02.html">
+            
+                    
+                    热风-Java程序员使用JUnit做单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.3" data-path="do-unit-test-better-03.html">
+            
+                <a href="do-unit-test-better-03.html">
+            
+                    
+                    热风-基于Spring的单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.4" data-path="do-unit-test-better-04.html">
+            
+                <a href="do-unit-test-better-04.html">
+            
+                    
+                    热风-维护好单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.5" data-path="do-unit-test-better-05.html">
+            
+                <a href="do-unit-test-better-05.html">
+            
+                    
+                    热风-体验测试驱动开发
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="computer-network-01.html">
+            
+                <a href="computer-network-01.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.25.1" data-path="computer-network-01.html">
+            
+                <a href="computer-network-01.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（01.概述）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.2" data-path="computer-network-02.html">
+            
+                <a href="computer-network-02.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（02.应用层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.3" data-path="computer-network-03a.html">
+            
+                <a href="computer-network-03a.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（03a.传输层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.4" data-path="computer-network-03b.html">
+            
+                <a href="computer-network-03b.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（03b.传输层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.5" data-path="computer-network-04a.html">
+            
+                <a href="computer-network-04a.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（04a.网络层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.6" data-path="computer-network-04b.html">
+            
+                <a href="computer-network-04b.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（04b.网络层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.7" data-path="computer-network-05a.html">
+            
+                <a href="computer-network-05a.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（05a.数据链路层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.8" data-path="computer-network-05b.html">
+            
+                <a href="computer-network-05b.html">
+            
+                    
+                    热风-《计算机网络》第5章-数据链路层（b.以太网）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.9" data-path="computer-network-06a.html">
+            
+                <a href="computer-network-06a.html">
+            
+                    
+                    热风-《计算机网络》第6章-物理层（a.基本概念）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="talk-about-architecture.html">
+            
+                <a href="talk-about-architecture.html">
+            
+                    
+                    热风-聊一聊架构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="javac-release-option.html">
+            
+                <a href="javac-release-option.html">
+            
+                    
+                    热风-使用Javac's Release选项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="talk-about-design-paradigm.html">
+            
+                <a href="talk-about-design-paradigm.html">
+            
+                    
+                    热风-谈一谈设计范式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.29" data-path="talk-about-system-complex.html">
+            
+                <a href="talk-about-system-complex.html">
+            
+                    
+                    热风-说一说系统复杂性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="how-do-i-write-a-design-doc.html">
+            
+                <a href="how-do-i-write-a-design-doc.html">
+            
+                    
+                    热风-我怎么写概要设计？
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >热风-说一说系统复杂性</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x8BF4;&#x4E00;&#x8BF4;&#x7CFB;&#x7EDF;&#x590D;&#x6742;&#x6027;">&#x8BF4;&#x4E00;&#x8BF4;&#x7CFB;&#x7EDF;&#x590D;&#x6742;&#x6027;</h1>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4E1A;&#x52A1;&#x5728;&#x4E0D;&#x65AD;&#x7684;&#x53D1;&#x5C55;&#xFF0C;&#x652F;&#x6301;&#x5B83;&#x7684;&#x7CFB;&#x7EDF;&#x4E5F;&#x53D8;&#x5F97;&#x8D8A;&#x6765;&#x8D8A;&#x590D;&#x6742;&#xFF0C;&#x5C24;&#x5176;&#x662F;&#x8F6F;&#x4EF6;&#x6280;&#x672F;&#x516C;&#x53F8;&#x66F4;&#x662F;&#x5982;&#x6B64;&#x3002;&#x89C4;&#x6A21;&#x5DE8;&#x5927;&#x7684;&#x79D1;&#x6280;&#x4F01;&#x4E1A;&#x66F4;&#x662F;&#x6DF1;&#x53D7;&#x590D;&#x6742;&#x6027;&#x6240;&#x7D2F;&#xFF0C;&#x4E00;&#x4E2A;&#x770B;&#x4F3C;&#x5F88;&#x5C0F;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x5374;&#x5728;&#x4F17;&#x591A;&#x7CFB;&#x7EDF;&#x4E2D;&#x6765;&#x56DE;&#x7A7F;&#x68AD;&#xFF0C;&#x4FEE;&#x6539;&#x4E00;&#x6B21;&#x5C31;&#x5982;&#x540C;&#x7FFB;&#x6C5F;&#x5012;&#x6D77;&#xFF0C;&#x8017;&#x8D39;&#x4E86;&#x5927;&#x91CF;&#x7684;&#x4EBA;&#x529B;&#x548C;&#x7269;&#x529B;&#x3002;&#x4E3A;&#x4E86;&#x62B5;&#x6297;&#x590D;&#x6742;&#x6027;&#xFF0C;&#x4EBA;&#x4EEC;&#x5C31;&#x6469;&#x62F3;&#x64E6;&#x638C;&#x8DC3;&#x8DC3;&#x6B32;&#x8BD5;&#xFF0C;&#x751A;&#x81F3;&#x6709;&#x4E9B;&#x4EBA;&#x4E3A;&#x6B64;&#x4E13;&#x95E8;&#x6210;&#x7ACB;&#x4E86;&#x516C;&#x53F8;&#x6765;&#x552E;&#x5356;&#x65B9;&#x6CD5;&#x8BBA;&#xFF0C;&#x4EC0;&#x4E48;&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x6280;&#x672F;&#x3001;&#x9762;&#x5411;&#x670D;&#x52A1;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;&#x4EE5;&#x53CA;&#x5FAE;&#x670D;&#x52A1;&#x67B6;&#x6784;&#x5C42;&#x51FA;&#x4E0D;&#x7A77;&#xFF0C;&#x5B83;&#x4EEC;&#x65E0;&#x4E00;&#x4E0D;&#x6253;&#x7740;&#x964D;&#x4F4E;&#x590D;&#x6742;&#x5EA6;&#x548C;&#x63D0;&#x5347;&#x6548;&#x7387;&#x7684;&#x5E4C;&#x5B50;&#xFF0C;&#x4F46;&#x662F;&#x6CA1;&#x6709;&#x4E00;&#x4E2A;&#x80FD;&#x591F;&#x5151;&#x73B0;&#x627F;&#x8BFA;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4E1A;&#x52A1;&#x53D1;&#x5C55;&#x8D5A;&#x6765;&#x94F6;&#x5B50;&#xFF0C;&#x96C7;&#x4F63;&#x66F4;&#x591A;&#x7684;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#xFF0C;&#x800C;&#x4ED6;&#x4EEC;&#x5374;&#x6DF1;&#x9677;&#x7CFB;&#x7EDF;&#x7684;&#x590D;&#x6742;&#x6027;&#x4E4B;&#x4E2D;&#xFF0C;&#x6548;&#x7387;&#x65E0;&#x6CD5;&#x8BA9;&#x4E1A;&#x52A1;&#x5F97;&#x5230;&#x6EE1;&#x8DB3;&#xFF0C;&#x8FD9;&#x96BE;&#x9053;&#x5C31;&#x662F;&#x6280;&#x672F;&#x7684;&#x9505;&#x5417;&#xFF1F;&#x662F;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x62D9;&#x52A3;&#x7684;&#x8BBE;&#x8BA1;&#x5E26;&#x6765;&#x7684;&#x5417;&#xFF1F;&#x8FD9;&#x4E0D;&#x662F;&#x4E00;&#x5BB6;&#x6280;&#x672F;&#x516C;&#x53F8;&#x9762;&#x4E34;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x800C;&#x8FD9;&#x4E2A;&#x5E7F;&#x6CDB;&#x7684;&#x95EE;&#x9898;&#x662F;&#x4E0D;&#x662F;&#x4EE3;&#x8868;&#x7740;&#x5927;&#x591A;&#x6570;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x6C34;&#x5E73;&#x90FD;&#x662F;&#x62D9;&#x52A3;&#x7684;&#x5462;&#xFF1F;&#x7B54;&#x6848;&#xFF1A;&#x5E76;&#x4E0D;&#x662F;&#x3002;&#x7CFB;&#x7EDF;&#x53D8;&#x590D;&#x6742;&#x7684;&#x6E90;&#x5934;&#x8FD8;&#x662F;&#x4E1A;&#x52A1;&#xFF0C;&#x672C;&#x8D28;&#x5C31;&#x662F;&#x4E1A;&#x52A1;&#x4EBA;&#x5458;&#x81EA;&#x5DF1;&#x6CA1;&#x6709;&#x7406;&#x987A;&#x903B;&#x8F91;&#x5173;&#x7CFB;&#xFF0C;&#x505A;&#x4E1C;&#x897F;&#x6CA1;&#x6709;&#x8003;&#x8651;&#x65E7;&#x6709;&#x7684;&#x89C4;&#x5219;&#x4EE5;&#x53CA;&#x5982;&#x4F55;&#x5E94;&#x5BF9;&#x7528;&#x6237;&#x7684;&#x771F;&#x5B9E;&#x9700;&#x6C42;&#xFF0C;&#x800C;&#x8FD9;&#x4E9B;&#x6DF7;&#x4E71;&#x7684;&#x4E1A;&#x52A1;&#x601D;&#x8003;&#x5728;&#x53EA;&#x8BA4;&#x903B;&#x8F91;&#x7684;&#x6280;&#x672F;&#x7CFB;&#x7EDF;&#x4E2D;&#x843D;&#x5730;&#xFF0C;&#x7ED3;&#x679C;&#x5C31;&#x662F;&#x4E0D;&#x65AD;&#x589E;&#x52A0;&#x7684;&#x590D;&#x6742;&#x5EA6;&#x3002;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x7684;&#x4F4E;&#x6548;&#xFF0C;&#x5C31;&#x662F;&#x5728;&#x540C;&#x4E1A;&#x52A1;&#x5E26;&#x6765;&#x7684;&#x590D;&#x6742;&#x6027;&#x6597;&#x4E89;&#xFF0C;&#x5728;&#x540C;&#x6CA1;&#x6709;&#x60F3;&#x6E05;&#x695A;&#x7684;&#x4E1A;&#x52A1;&#x505A;&#x6597;&#x4E89;&#xFF0C;&#x8D39;&#x529B;&#x7684;&#x7F16;&#x6545;&#x4E8B;&#x6765;&#x5706;&#x4E1A;&#x52A1;&#x7684;&#x9505;&#xFF0C;&#x5728;&#x505A;&#x4EE3;&#x507F;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x65E2;&#x7136;&#x95EE;&#x9898;&#x6E90;&#x5934;&#x4E0D;&#x5728;&#x6280;&#x672F;&#xFF0C;&#x90A3;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x662F;&#x4E0D;&#x662F;&#x53EF;&#x4EE5;&#x8EBA;&#x5E73;&#x4E86;&#xFF1F;&#x975E;&#x4E5F;&#x3002;&#x4E1A;&#x52A1;&#x4E0D;&#x6309;&#x903B;&#x8F91;&#x6027;&#x529E;&#x4E8B;&#xFF0C;&#x4E0D;&#x4EE3;&#x8868;&#x6280;&#x672F;&#x4E0D;&#x8BB2;&#x5DE5;&#x7A0B;&#x6027;&#xFF0C;&#x5728;&#x6280;&#x672F;&#x5DE5;&#x4F5C;&#x4E2D;&#x5982;&#x679C;&#x80FD;&#x591F;&#x5173;&#x6CE8;&#x548C;&#x6CBB;&#x7406;&#x7CFB;&#x7EDF;&#x590D;&#x6742;&#x6027;&#xFF0C;&#x662F;&#x4E0D;&#x662F;&#x53EF;&#x4EE5;&#x51CF;&#x5C11;&#x4E00;&#x4E9B;&#x82E6;&#x96BE;&#x5462;&#xFF1F;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x867D;&#x7136;&#x590D;&#x6742;&#x6027;&#x7684;&#x8D77;&#x6E90;&#x6765;&#x81EA;&#x4E1A;&#x52A1;&#xFF0C;&#x4F46;&#x662F;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x5728;&#x8BBE;&#x8BA1;&#x548C;&#x5B9E;&#x73B0;&#x7CFB;&#x7EDF;&#x65F6;&#x4ECD;&#x7136;&#x9700;&#x8981;&#x5BF9;&#x590D;&#x6742;&#x6027;&#x8FDB;&#x884C;&#x5173;&#x6CE8;&#x548C;&#x6CBB;&#x7406;&#xFF0C;&#x540C;&#x65F6;&#x597D;&#x7684;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x4E5F;&#x4F1A;&#x53D1;&#x73B0;&#x4E1A;&#x52A1;&#x4E2D;&#x5B58;&#x5728;&#x7684;&#x5197;&#x4F59;&#x548C;&#x77DB;&#x76FE;&#xFF0C;&#x63A8;&#x52A8;&#x4E1A;&#x52A1;&#x4EBA;&#x5458;&#x4E0D;&#x80FD;&#x4EE5;&#x6210;&#x672C;&#x89C6;&#x89D2;&#x89C2;&#x5BDF;&#x6280;&#x672F;&#xFF0C;&#x800C;&#x9700;&#x8981;&#x6539;&#x8FDB;&#x4E1A;&#x52A1;&#xFF0C;&#x907F;&#x514D;&#x6240;&#x6709;&#x6D89;&#x4F17;&#x90FD;&#x4F1A;&#x4E3A;&#x6DF7;&#x4E71;&#x7684;&#x4E1A;&#x52A1;&#x4EE5;&#x53CA;&#x4EA7;&#x54C1;&#x67B6;&#x6784;&#x4E70;&#x5355;&#x3002;</p>
+<h2 id="&#x590D;&#x6742;&#x6027;&#x662F;&#x4E2A;&#x5FC5;&#x7136;">&#x590D;&#x6742;&#x6027;&#x662F;&#x4E2A;&#x5FC5;&#x7136;</h2>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x53EA;&#x8981;&#x4E1A;&#x52A1;&#x5B58;&#x6D3B;&#xFF0C;&#x7CFB;&#x7EDF;&#x7684;&#x590D;&#x6742;&#x6027;&#x5C31;&#x6210;&#x4E86;&#x5FC5;&#x7136;&#xFF0C;&#x8BBD;&#x523A;&#x7684;&#x662F;&#xFF0C;&#x53EA;&#x6709;&#x4E0D;&#x65AD;&#x589E;&#x52A0;&#x7684;&#x590D;&#x6742;&#x6027;&#x624D;&#x4EE3;&#x8868;&#x6D3B;&#x7740;&#x3002;&#x5C31;&#x62FF;&#x7B80;&#x4E2D;&#x4E92;&#x8054;&#x7F51;&#x4E2D;&#x7684;BAT&#x4E09;&#x5BB6;&#x6765;&#x8BF4;&#xFF0C;Alibaba&#x7684;&#x7CFB;&#x7EDF;&#x5DF2;&#x7ECF;&#x505A;&#x7684;&#x5F88;&#x5177;&#x6269;&#x5C55;&#x6027;&#x4E86;&#xFF0C;&#x800C;&#x5F53;&#x4E0B;ByteDance&#x7684;&#x7CFB;&#x7EDF;&#x8D8A;&#x505A;&#x8D8A;&#x590D;&#x6742;&#xFF0C;&#x4ECE;&#x4F53;&#x611F;&#x4E0A;&#x8BB2;&#xFF0C;&#x540E;&#x8005;&#x8981;&#x6D3B;&#x7684;&#x6BD4;&#x524D;&#x8005;&#x6ECB;&#x6DA6;&#x7684;&#x591A;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4EE5;<a href="https://spring.io" target="_blank">Spring&#x6846;&#x67B6;</a>&#x4E3A;&#x4F8B;&#xFF0C;&#x4ECE;&#x53D1;&#x5E03;&#x521D;&#x671F;<code>0.9.1</code>&#x7248;&#x672C;&#x7684;&#x4E00;&#x4E07;&#x591A;&#x884C;&#x4EE3;&#x7801;&#xFF0C;&#x5230;<code>2.5</code>&#x7248;&#x672C;&#x7684;&#x4E03;&#x4E07;&#x591A;&#x884C;&#x4EE3;&#x7801;&#xFF0C;&#x590D;&#x6742;&#x5EA6;&#x589E;&#x52A0;&#x4E86;&#x4E0D;&#x5C11;&#xFF0C;&#x4F46;&#x662F;&#x4ECE;&#x53E6;&#x4E00;&#x4E2A;&#x65B9;&#x9762;&#x770B;&#xFF0C;&#x5B83;&#x7684;&#x4F7F;&#x7528;&#x4EBA;&#x7FA4;&#x53D8;&#x5F97;&#x975E;&#x5E38;&#x5E7F;&#x6CDB;&#x3002;&#x4E1A;&#x52A1;&#x548C;&#x4EA7;&#x54C1;&#x7684;&#x6F14;&#x5316;&#x662F;&#x9884;&#x6599;&#x4E4B;&#x4E2D;&#x7684;&#xFF0C;&#x4E5F;&#x662F;&#x503C;&#x5F97;&#x671F;&#x5F85;&#x7684;&#xFF0C;&#x4F46;&#x5B83;&#x4E00;&#x5B9A;&#x4F1A;&#x5BFC;&#x81F4;&#x590D;&#x6742;&#x6027;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x9762;&#x5BF9;&#x590D;&#x6742;&#x6027;&#xFF0C;&#x9996;&#x5148;&#x8981;&#x7406;&#x89E3;&#x5B83;&#x5B58;&#x5728;&#x7684;&#x5FC5;&#x7136;&#x6027;&#xFF0C;&#x89C2;&#x5BDF;&#x5B83;&#x4EA7;&#x751F;&#x7684;&#x539F;&#x56E0;&#xFF0C;&#x8981;&#x6BD4;&#x7ACB;&#x523B;&#x7740;&#x624B;&#x4FEE;&#x590D;&#x5B83;&#x8981;&#x91CD;&#x8981;&#x7684;&#x591A;&#x3002;&#x5C31;&#x50CF;&#x6CBB;&#x7406;&#x6C34;&#x60A3;&#x4E00;&#x6837;&#xFF0C;&#x758F;&#x8981;&#x6BD4;&#x5835;&#x66F4;&#x4E3A;&#x6709;&#x6548;&#xFF0C;&#x627E;&#x5230;&#x4EA7;&#x751F;&#x590D;&#x6742;&#x6027;&#x7684;&#x539F;&#x56E0;&#xFF0C;&#x7406;&#x89E3;&#x4EA7;&#x751F;&#x7684;&#x539F;&#x56E0;&#xFF0C;&#x518D;&#x52A8;&#x624B;&#x4E5F;&#x4E0D;&#x8FDF;&#x3002;</p>
+<h2 id="&#x5FC5;&#x7136;&#x4F1A;&#x4EA7;&#x751F;&#x503A;&#x52A1;">&#x5FC5;&#x7136;&#x4F1A;&#x4EA7;&#x751F;&#x503A;&#x52A1;</h2>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x679C;&#x6240;&#x5728;&#x7684;&#x7CFB;&#x7EDF;&#x4E0D;&#x4F1A;&#x53D8;&#x7684;&#x590D;&#x6742;&#xFF0C;&#x6216;&#x8005;&#x8BF4;&#x4E0D;&#x4F1A;&#x6301;&#x7EED;&#x7ED9;&#x4F60;&#x5E26;&#x6765;&#x6CBB;&#x7406;&#x590D;&#x6742;&#x6027;&#x7684;&#x6311;&#x6218;&#xFF0C;&#x90A3;&#x5C31;&#x4EE3;&#x8868;&#x7740;&#x4E1A;&#x52A1;&#x5DF2;&#x7ECF;&#x505C;&#x6EDE;&#x3002;&#x53D1;&#x5C55;&#x4E2D;&#x7684;&#x4E1A;&#x52A1;&#xFF0C;&#x5FC5;&#x7136;&#x4F1A;&#x5E26;&#x6765;&#x7CFB;&#x7EDF;&#x4E0A;&#x7684;&#x590D;&#x6742;&#x6027;&#xFF0C;&#x800C;&#x8FD9;&#x79CD;&#x5FC5;&#x7136;&#x4E5F;&#x4F1A;&#x540C;&#x65F6;&#x5E26;&#x6765;&#x503A;&#x52A1;&#x3002;<a href="https://baike.baidu.com/item/&#x6C83;&#x5FB7;&#xB7;&#x574E;&#x5B81;&#x5B89;/6488429" target="_blank">Ward Cunningham</a>&#x63D0;&#x51FA;&#x4E86;&#x4E00;&#x4E2A;&#x8BF4;&#x6CD5;&#xFF0C;&#x53EB;&#xFF1A;&#x6280;&#x672F;&#x503A;&#xFF0C;&#x5B83;&#x7528;&#x6765;&#x63CF;&#x8FF0;&#x4E3A;&#x4E86;&#x6EE1;&#x8DB3;&#x8FDB;&#x5EA6;&#x6216;&#x7528;&#x6237;&#x671F;&#x671B;&#x800C;&#x4F5C;&#x51FA;&#x7684;&#x8BBE;&#x8BA1;&#x8BA9;&#x6B65;&#x3002;Deadline&#x9879;&#x76EE;&#x5927;&#x90E8;&#x5206;&#x90FD;&#x4E0D;&#x4F1A;&#x53D6;&#x5F97;&#x65E2;&#x5B9A;&#x7684;&#x4E1A;&#x52A1;&#x6307;&#x6807;&#xFF0C;&#x800C;&#x5B83;&#x4EEC;&#x7ED9;&#x7CFB;&#x7EDF;&#x9020;&#x6210;&#x7684;&#x4F24;&#x5BB3;&#x4EE5;&#x53CA;&#x590D;&#x6742;&#x6027;&#x7684;&#x4E0A;&#x5347;&#x5374;&#x9700;&#x8981;&#x51E0;&#x500D;&#x7684;&#x4EBA;&#x529B;&#x53BB;&#x633D;&#x56DE;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x65E2;&#x7136;&#x662F;&#x503A;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x8FD8;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x8FD8;&#xFF0C;&#x5C31;&#x6709;&#x98CE;&#x9669;&#x6216;&#x8005;&#x95EE;&#x9898;&#x3002;&#x6280;&#x672F;&#x503A;&#x662F;&#x6807;&#x7684;&#x5728;&#x6280;&#x672F;&#x4EA7;&#x51FA;&#x7269;&#x4E0A;&#x7684;&#x503A;&#x52A1;&#xFF0C;&#x6280;&#x672F;&#x4EA7;&#x51FA;&#x7269;&#x4E00;&#x822C;&#x5305;&#x62EC;&#x4E86;&#x786C;&#x4EF6;&#x3001;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x3001;&#x8F6F;&#x4EF6;&#x73AF;&#x5883;&#x548C;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x3002;&#x5176;&#x4E2D;&#x524D;&#x4E09;&#x70B9;&#xFF0C;&#x5C24;&#x5176;&#x662F;&#x7B2C;&#x4E8C;&#x548C;&#x4E09;&#x70B9;&#xFF0C;&#x4F1A;&#x6784;&#x6210;&#x9690;&#x5F62;&#x7684;&#x6280;&#x672F;&#x503A;&#xFF0C;&#x6700;&#x540E;&#x4E00;&#x70B9;&#x4F1A;&#x5F62;&#x6210;&#x4E00;&#x822C;&#x610F;&#x4E49;&#x4E0A;&#x663E;&#x6027;&#x7684;&#x6280;&#x672F;&#x503A;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x9690;&#x5F62;&#x7684;&#x6280;&#x672F;&#x503A;&#x4F1A;&#x5E26;&#x6765;&#x9690;&#x5F62;&#x7684;&#x6210;&#x672C;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;&#x4F7F;&#x7528;&#x8F83;&#x4F4E;&#x7248;&#x672C;&#x7684;Java&#x6216;&#x8005;&#x4F4E;&#x7248;&#x672C;&#x7684;&#x4E2D;&#x95F4;&#x4EF6;&#xFF0C;&#x5E26;&#x6765;&#x7684;&#x95EE;&#x9898;&#x5C31;&#x662F;&#x9700;&#x8981;&#x82B1;&#x8D39;&#x66F4;&#x591A;&#x7684;&#x8BA1;&#x7B97;&#x6210;&#x672C;&#xFF0C;&#x5982;&#x679C;&#x80FD;&#x591F;&#x5B9A;&#x65F6;&#x5347;&#x7EA7;&#xFF0C;&#x5C31;&#x4F1A;&#x4F7F;&#x5F97;&#x786C;&#x4EF6;&#x7684;&#x5229;&#x7528;&#x7387;&#x5F97;&#x5230;&#x63D0;&#x5347;&#xFF0C;&#x540C;&#x65F6;&#x907F;&#x514D;&#x4E00;&#x4E9B;&#x5B89;&#x5168;&#x98CE;&#x9669;&#x3002;&#x663E;&#x6027;&#x7684;&#x6280;&#x672F;&#x503A;&#x5F80;&#x5F80;&#x662F;&#x5728;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4E2D;&#x5F15;&#x5165;&#x7684;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;&#x7531;&#x4E8E;&#x9879;&#x76EE;&#x65F6;&#x95F4;&#x8FC7;&#x7D27;&#x5BFC;&#x81F4;&#x5B58;&#x5728;&#x98CE;&#x9669;&#x6216;&#x8005;&#x4E0D;&#x5408;&#x7406;&#x7684;&#x8BBE;&#x8BA1;&#xFF0C;&#x4EE5;&#x53CA;&#x7531;&#x4E8E;&#x9879;&#x76EE;&#x6280;&#x672F;&#x4EBA;&#x5458;&#x80FD;&#x529B;&#x95EE;&#x9898;&#x5F15;&#x5165;&#x7684;&#x98CE;&#x9669;&#x8BBE;&#x8BA1;&#xFF0C;&#x65E0;&#x6CD5;&#x5E94;&#x5BF9;&#x5B9E;&#x9645;&#x7CFB;&#x7EDF;&#xFF08;&#x5F53;&#x4E0B;&#x6216;&#x77ED;&#x671F;&#x53EF;&#x89C1;&#xFF09;&#x9700;&#x8981;&#x7684;&#x8BA1;&#x7B97;&#x6307;&#x6807;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x8FD9;&#x4E9B;&#x6280;&#x672F;&#x503A;&#x4F1A;&#x62D6;&#x6162;&#x540E;&#x7EED;&#x7CFB;&#x7EDF;&#x7684;&#x5F00;&#x53D1;&#x6548;&#x7387;&#xFF0C;&#x589E;&#x5927;&#x5E94;&#x7528;&#x7684;&#x7EF4;&#x62A4;&#x6210;&#x672C;&#xFF0C;&#x5C31;&#x7B97;&#x4F7F;&#x7528;&#x826F;&#x597D;&#x7684;&#x6587;&#x6863;&#x8BB0;&#x5F55;&#x4E5F;&#x65E0;&#x6D4E;&#x4E8E;&#x4E8B;&#xFF0C;&#x9700;&#x8981;&#x5728;&#x6280;&#x672F;&#x503A;&#x51FA;&#x73B0;&#x65F6;&#x7ED9;&#x4E88;&#x8BC4;&#x7EA7;&#xFF0C;&#x4FDD;&#x8BC1;&#x80FD;&#x591F;&#x5728;&#x672A;&#x6765;&#x7684;&#x65F6;&#x95F4;&#x52A0;&#x4EE5;&#x4FEE;&#x590D;&#x3002;&#x9690;&#x5F62;&#x7684;&#x6280;&#x672F;&#x503A;&#x5BF9;&#x4F7F;&#x7528;&#x8005;&#x662F;&#x900F;&#x660E;&#x7684;&#xFF0C;&#x4F46;&#x663E;&#x6027;&#x7684;&#x5219;&#x4E0D;&#x7136;&#xFF0C;&#x5B83;&#x4EEC;&#x5927;&#x90FD;&#x662F;&#x5728;&#x5E94;&#x7528;&#x7684;&#x9700;&#x6C42;&#x8BBE;&#x8BA1;&#x9636;&#x6BB5;&#x5F15;&#x5165;&#x7684;&#xFF0C;&#x6CA1;&#x6709;&#x7CFB;&#x7EDF;&#x7684;&#x5B9E;&#x73B0;&#x80FD;&#x591F;&#x8DD1;&#x5728;&#x4E1A;&#x52A1;&#x9700;&#x6C42;&#x524D;&#x9762;&#xFF0C;&#x6240;&#x4EE5;&#x5982;&#x4F55;&#x80FD;&#x591F;&#x51CF;&#x5C11;&#x6280;&#x672F;&#x503A;&#x7684;&#x5F15;&#x5165;&#x662F;&#x8003;&#x91CF;&#x4E00;&#x4E2A;&#x67B6;&#x6784;&#x5E08;&#x662F;&#x5426;&#x80FD;&#x591F;&#x5168;&#x9762;&#x601D;&#x8003;&#x7684;&#x5173;&#x952E;&#x70B9;&#xFF0C;&#x901A;&#x8FC7;&#x4E00;&#x5B9A;&#x6A21;&#x5F0F;&#x5316;&#x3001;&#x5177;&#x5907;&#x9632;&#x5FA1;&#x6027;&#x7684;&#x67B6;&#x6784;&#x8BBE;&#x8BA1;&#xFF0C;&#x80FD;&#x591F;&#x5728;&#x7565;&#x5FAE;&#x589E;&#x52A0;&#x9879;&#x76EE;&#x65F6;&#x95F4;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x505A;&#x5230;&#x5C11;&#x8D1F;&#x503A;&#xFF0C;&#x4F7F;&#x5F97;&#x540E;&#x7EED;&#x80FD;&#x591F;&#x507F;&#x8FD8;&#x503A;&#x52A1;&#xFF0C;&#x6BD5;&#x7ADF;&#xFF0C;&#x6709;&#x4E9B;&#x503A;&#x52A1;&#x7684;&#x507F;&#x8FD8;&#x6210;&#x672C;&#x8FC7;&#x9AD8;&#xFF0C;&#x751A;&#x81F3;&#x96BE;&#x4EE5;&#x507F;&#x8FD8;&#x3002;</p>
+<h2 id="&#x503A;&#x52A1;&#x9700;&#x8981;&#x53BB;&#x507F;&#x8FD8;">&#x503A;&#x52A1;&#x9700;&#x8981;&#x53BB;&#x507F;&#x8FD8;</h2>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5982;&#x679C;&#x4E0D;&#x53BB;&#x7BA1;&#x7406;&#x548C;&#x507F;&#x8FD8;&#x503A;&#x52A1;&#xFF0C;&#x5C31;&#x4F1A;&#x5982;&#x540C;&#x5F53;&#x4E0B;&#x7684;&#x7ECF;&#x6D4E;&#x4E00;&#x6837;&#xFF0C;&#x9677;&#x5165;&#x901A;&#x7F29;&#xFF0C;&#x8FD9;&#x79CD;&#x87BA;&#x65CB;&#x5F0F;&#x4E0B;&#x5760;&#x4F1A;&#x8BA9;&#x4EBA;&#x4E07;&#x52AB;&#x4E0D;&#x590D;&#x3002;&#x65E2;&#x7136;&#x590D;&#x6742;&#x6027;&#x5FC5;&#x7136;&#x8981;&#x6765;&#xFF0C;&#x90A3;&#x5C31;&#x8981;&#x79D1;&#x5B66;&#x5E94;&#x5BF9;&#xFF0C;&#x65E2;&#x4E0D;&#x505A;&#x6DB8;&#x6CFD;&#x800C;&#x6E14;&#x7684;&#x523A;&#x6FC0;&#x6027;&#x5DE5;&#x4F5C;&#xFF0C;&#x4E5F;&#x4E0D;&#x8981;&#x641E;&#x8FD0;&#x52A8;&#x5F0F;&#x7ADE;&#x8D5B;&#xFF0C;&#x5984;&#x56FE;&#x4E0D;&#x653E;&#x5F03;&#x73B0;&#x6709;&#x5229;&#x76CA;&#x5206;&#x914D;&#x548C;&#x8DEF;&#x5F84;&#x7684;&#x524D;&#x63D0;&#x4E0B;&#xFF0C;&#x901A;&#x8FC7;&#x594B;&#x529B;&#x4E00;&#x51FB;&#x5C31;&#x80FD;&#x56DE;&#x5230;&#x539F;&#x6709;&#x72B6;&#x6001;&#xFF0C;&#x8FD9;&#x5C31;&#x662F;&#x75F4;&#x4EBA;&#x8BF4;&#x68A6;&#x4E86;&#x3002;&#x4E1A;&#x52A1;&#x4EBA;&#x5458;&#x8981;&#x5BA1;&#x89C6;&#x81EA;&#x5DF1;&#x8D1F;&#x8D23;&#x7684;&#x4E1A;&#x52A1;&#xFF0C;&#x54EA;&#x4E9B;&#x5B58;&#x5728;&#x5197;&#x4F59;&#xFF0C;&#x4EA7;&#x54C1;&#x4EBA;&#x5458;&#x8981;&#x6574;&#x7406;&#x81EA;&#x5DF1;&#x8D1F;&#x8D23;&#x7684;&#x4EA7;&#x54C1;&#xFF0C;&#x54EA;&#x4E9B;&#x6CA1;&#x6709;&#x4EBA;&#x7528;&#xFF0C;&#x6240;&#x6709;&#x4EBA;&#x5458;&#x90FD;&#x8981;&#x53C2;&#x4E0E;&#x5176;&#x4E2D;&#xFF0C;&#x7EC4;&#x7EC7;&#x4E2D;&#x6CA1;&#x6709;&#x4E00;&#x79CD;&#x89D2;&#x8272;&#x5929;&#x751F;&#x5C31;&#x662F;&#x6210;&#x672C;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5C06;&#x503A;&#x52A1;&#x5206;&#x95E8;&#x522B;&#x7C7B;&#x7684;&#x767B;&#x8BB0;&#x548C;&#x7BA1;&#x7406;&#x597D;&#xFF0C;&#x641E;&#x6E05;&#x695A;&#x503A;&#x52A1;&#x7684;&#x8D77;&#x56E0;&#xFF0C;&#x770B;&#x770B;&#x80FD;&#x5426;&#x5728;&#x6765;&#x6E90;&#x4E0A;&#x52A0;&#x4EE5;&#x63A7;&#x5236;&#x3002;&#x8981;&#x89E3;&#x51B3;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x7684;&#x6548;&#x7387;&#x95EE;&#x9898;&#xFF0C;&#x5C31;&#x8981;&#x89C6;&#x62D6;&#x6162;&#x4E1A;&#x52A1;&#x8282;&#x594F;&#x7684;&#x6162;&#x53D1;&#x5C55;&#x4E3A;&#x5E38;&#x6001;&#xFF0C;&#x8FD9;&#x662F;&#x5728;&#x7ED9;&#x4E1A;&#x52A1;&#x8FD8;&#x503A;&#x7684;&#x5468;&#x671F;&#xFF0C;&#x9700;&#x8981;&#x591A;&#x65B9;&#x7406;&#x89E3;&#x548C;&#x914D;&#x5408;&#x3002;&#x901A;&#x8FC7;&#x5408;&#x7406;&#x7684;&#x6D41;&#x7A0B;&#x8BBE;&#x8BA1;&#xFF0C;&#x964D;&#x4F4E;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x8D1F;&#x8F7D;&#xFF0C;&#x7ED9;&#x4E88;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x65F6;&#x95F4;&#x80FD;&#x591F;&#x5C06;&#x624B;&#x5DE5;&#x64CD;&#x4F5C;&#x8F6C;&#x53D8;&#x4E3A;&#x7CFB;&#x7EDF;&#x64CD;&#x4F5C;&#xFF0C;&#x907F;&#x514D;&#x51FA;&#x73B0;&#x95EE;&#x9898;&#x3002;&#x867D;&#x7136;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x7684;&#x9700;&#x6C42;&#x541E;&#x5410;&#x4E0B;&#x964D;&#x4E86;&#xFF0C;&#x4F46;&#x662F;&#x7CFB;&#x7EDF;&#x7684;&#x7A33;&#x5B9A;&#x6027;&#x63D0;&#x5347;&#x4E86;&#xFF0C;&#x800C;&#x4E14;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x4E5F;&#x4F1A;&#x5728;&#x8FD9;&#x4E2A;&#x9636;&#x6BB5;&#x5E2E;&#x52A9;&#x4E1A;&#x52A1;&#x627E;&#x5230;&#x5F88;&#x591A;&#x95EE;&#x9898;&#x3002;&#x65B0;&#x9700;&#x6C42;&#x7684;&#x8BBE;&#x8BA1;&#x65B9;&#x6848;&#x4EE5;&#x53CA;&#x65E7;&#x6709;&#x7CFB;&#x7EDF;&#x7684;&#x6539;&#x8FDB;&#x65B9;&#x6848;&#x90FD;&#x9700;&#x8981;&#x51C6;&#x5907;&#x597D;&#x6269;&#x5C55;&#x6027;&#xFF0C;&#x6E05;&#x6670;&#x7684;API&#x8BBE;&#x8BA1;&#x4EE5;&#x53CA;&#x53EF;&#x80FD;&#x6269;&#x5C55;&#x7684;SPI&#x9884;&#x7559;&#xFF0C;&#x6A21;&#x5757;&#x5316;&#x8BBE;&#x8BA1;&#xFF0C;&#x8FD9;&#x4E9B;&#x90FD;&#x53EF;&#x4EE5;&#x5E2E;&#x52A9;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x6574;&#x7406;&#x548C;&#x5F52;&#x7EB3;&#x597D;&#x6280;&#x672F;&#x8D44;&#x4EA7;&#xFF0C;&#x76EE;&#x7684;&#x5C31;&#x662F;&#x672A;&#x6765;&#x5954;&#x8DD1;&#x8FC7;&#x7A0B;&#x4E2D;&#x4E0D;&#x4F1A;&#x51FA;&#x73B0;&#x7ECA;&#x811A;&#x7684;&#x60C5;&#x51B5;&#x3002;&#x5F52;&#x7EB3;&#x597D;&#xFF0C;&#x6574;&#x7406;&#x597D;&#xFF0C;&#x5C4B;&#x5B50;&#x4E0D;&#x80FD;&#x4E71;&#xFF0C;&#x597D;&#x67B6;&#x6784;&#x5E08;&#x5C31;&#x662F;&#x597D;&#x7269;&#x4E1A;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x503A;&#x52A1;&#x507F;&#x8FD8;&#x5468;&#x671F;&#x9700;&#x8981;&#x591A;&#x65B9;&#x76F8;&#x4E92;&#x7406;&#x89E3;&#xFF0C;&#x8FD9;&#x4E5F;&#x662F;&#x5BF9;&#x7EC4;&#x7EC7;&#x7684;&#x7EC8;&#x6781;&#x8003;&#x9A8C;&#xFF0C;&#x987A;&#x98CE;&#x4ED7;&#x5BB9;&#x6613;&#x6253;&#xFF0C;&#x4F46;&#x662F;&#x9006;&#x98CE;&#x5C40;&#x624D;&#x662F;&#x8003;&#x9A8C;&#x771F;&#x672C;&#x4E8B;&#x548C;&#x5B9A;&#x529B;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4E0D;&#x6210;&#x719F;&#x7684;&#x7EC4;&#x7EC7;&#x5C06;&#x4F1A;&#x5728;&#x503A;&#x52A1;&#x507F;&#x8FD8;&#x5468;&#x671F;&#x4E2D;&#x6D88;&#x4EA1;&#x3002;&#x5982;&#x679C;&#x7EC4;&#x7EC7;&#x6CA1;&#x80FD;&#x7A81;&#x7834;&#x8FD9;&#x4E2A;&#x5FC5;&#x7136;&#xFF0C;&#x4E5F;&#x8981;&#x60F3;&#x5F00;&#x4E9B;&#xFF0C;&#x4E07;&#x7269;&#x7684;&#x53D1;&#x5C55;&#x5C31;&#x662F;&#x8FD9;&#x6837;&#xFF0C;&#x7A81;&#x7834;&#x5FC5;&#x7136;&#x7684;&#x4E8B;&#x7269;&#x4E5F;&#x4F1A;&#x5FC5;&#x7136;&#x51FA;&#x73B0;&#xFF0C;&#x6B63;&#x6240;&#x8C13;&#xFF1A;&#x6C89;&#x821F;&#x4FA7;&#x7554;&#x5343;&#x5E06;&#x8FC7;&#xFF0C;&#x75C5;&#x6811;&#x524D;&#x5934;&#x4E07;&#x6728;&#x6625;&#x3002;</p>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/weipeng2k/hot-wind" target="_blank">hot-wind</a>&#xFF0C;&#x4F7F;&#x7528;<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank">&#x77E5;&#x8BC6;&#x5171;&#x4EAB; &#x7F72;&#x540D;-&#x76F8;&#x540C;&#x65B9;&#x5F0F;&#x5171;&#x4EAB; 4.0&#x534F;&#x8BAE;</a>&#x53D1;&#x5E03; </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> &#x6B64;&#x9875;&#x9762;&#x4FEE;&#x8BA2;&#x4E8E;&#xFF1A; 2024-12-02 03:24:02 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="talk-about-design-paradigm.html" class="navigation navigation-prev " aria-label="Previous page: 热风-谈一谈设计范式">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="how-do-i-write-a-design-doc.html" class="navigation navigation-next " aria-label="Next page: 热风-我怎么写概要设计？">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"热风-说一说系统复杂性","level":"1.29","depth":1,"next":{"title":"热风-我怎么写概要设计？","level":"1.30","depth":1,"path":"book/how-do-i-write-a-design-doc.md","ref":"book/how-do-i-write-a-design-doc.md","articles":[]},"previous":{"title":"热风-谈一谈设计范式","level":"1.28","depth":1,"path":"book/talk-about-design-paradigm.md","ref":"book/talk-about-design-paradigm.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-pro","-sharing","github-buttons","editlink","ga","-highlight","bibtex-indexed-cite","page-footer-ex","splitter","copy-code-button","expandable-chapters-small","donate","github"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/weipeng2k/hot-wind"},"editlink":{"label":"Edit","multilingual":false,"base":"https://github.com/weipeng2k/hot-wind/blob/master"},"page-footer-ex":{"copyright":"By [hot-wind](https://github.com/weipeng2k/hot-wind)，使用[知识共享 署名-相同方式共享 4.0协议](https://creativecommons.org/licenses/by-sa/4.0/deed.zh)发布","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"此页面修订于："},"splitter":{},"search-pro":{"cutWordLib":"nodejieba","defineWord":["Gitbook Use"]},"donate":{"alipay":"https://weipeng2k.github.io/hot-wind/alipay_qr.JPG","alipayText":"支付宝打赏","button":"赏","title":"","wechat":"https://weipeng2k.github.io/hot-wind/wechat_qr.JPG","wechatText":"微信打赏"},"fontsettings":{"theme":"white","family":"sans","size":2},"bibtex-indexed-cite":{"path":"/"},"github-buttons":{"buttons":[{"user":"weipeng2k","repo":"hot-wind","type":"star","size":"small","count":true}]},"expandable-chapters-small":{},"copy-code-button":{},"ga":{"configuration":"auto","token":"UA-131910384-3"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"weipeng2k","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"bibCount":0,"variables":{},"title":"hot-wind","bib":[],"gitbook":"*"},"file":{"path":"book/talk-about-system-complex.md","mtime":"2024-12-02T03:24:02.325Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-12-02T03:24:42.830Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-donate/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

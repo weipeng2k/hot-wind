@@ -1,0 +1,1537 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>热风-C语言概述 · hot-wind</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="weipeng2k">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-bibtex-indexed-cite/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-donate/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="java-dev-learn-c-02.html" />
+    
+    
+    <link rel="prev" href="java-dev-learn-c.html" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"weipeng2k","repo":"hot-wind","type":"star","size":"small","count":true}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    热风-简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../ABOUTME.html">
+            
+                <a href="../ABOUTME.html">
+            
+                    
+                    热风-关于作者
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="cap-brief-summary.html">
+            
+                <a href="cap-brief-summary.html">
+            
+                    
+                    热风-CAP小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="explanation-of-compensation-mechanism.html">
+            
+                <a href="explanation-of-compensation-mechanism.html">
+            
+                    
+                    热风-补偿机制说明
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="byzantine-generals-problem.html">
+            
+                <a href="byzantine-generals-problem.html">
+            
+                    
+                    热风-拜占庭将军问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="2pc-summary.html">
+            
+                <a href="2pc-summary.html">
+            
+                    
+                    热风-共识协议：两阶段提交
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="compensation-and-tcc.html">
+            
+                <a href="compensation-and-tcc.html">
+            
+                    
+                    热风-一种基于补偿的事务处理机制（TCC）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="how-to-design-a-distribute-database-feeling.html">
+            
+                <a href="how-to-design-a-distribute-database-feeling.html">
+            
+                    
+                    热风-《如何设计一个分布式数据库》观后感
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="tcc-using-seata.html">
+            
+                <a href="tcc-using-seata.html">
+            
+                    
+                    热风-使用Seata来实现TCC
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="what-about-the-future.html">
+            
+                <a href="what-about-the-future.html">
+            
+                    
+                    热风-未来的预测
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="seata-problem.html">
+            
+                <a href="seata-problem.html">
+            
+                    
+                    热风-Seata存在的一些问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="java-network-inetaddress-and-dns.html">
+            
+                <a href="java-network-inetaddress-and-dns.html">
+            
+                    
+                    热风-InetAddress与DNS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="java-network-arp-and-pcap4j.html">
+            
+                <a href="java-network-arp-and-pcap4j.html">
+            
+                    
+                    热风-ARP与pcap4j
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="java-network-tcpdump-and-redis-client.html">
+            
+                <a href="java-network-tcpdump-and-redis-client.html">
+            
+                    
+                    热风-TcpDump与Redis客户端
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="java-dev-learn-c.html">
+            
+                <a href="java-dev-learn-c.html">
+            
+                    
+                    热风-Java开发者看C
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.15.1" data-path="java-dev-learn-c-01.html">
+            
+                <a href="java-dev-learn-c-01.html">
+            
+                    
+                    热风-C语言概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="java-dev-learn-c-02.html">
+            
+                <a href="java-dev-learn-c-02.html">
+            
+                    
+                    热风-C语言的基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="basic-paxos-9-pages-notes.html">
+            
+                <a href="basic-paxos-9-pages-notes.html">
+            
+                    
+                    热风-基础Paxos算法的9页笔记
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="basic-paxos-9-pages-notes-01.html">
+            
+                <a href="basic-paxos-9-pages-notes-01.html">
+            
+                    
+                    热风-基础Paxos算法笔记(1/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="basic-paxos-9-pages-notes-02.html">
+            
+                <a href="basic-paxos-9-pages-notes-02.html">
+            
+                    
+                    热风-基础Paxos算法笔记(2/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.3" data-path="basic-paxos-9-pages-notes-03.html">
+            
+                <a href="basic-paxos-9-pages-notes-03.html">
+            
+                    
+                    热风-基础Paxos算法笔记(3/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.4" data-path="basic-paxos-9-pages-notes-04.html">
+            
+                <a href="basic-paxos-9-pages-notes-04.html">
+            
+                    
+                    热风-基础Paxos算法笔记(4/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.5" data-path="basic-paxos-9-pages-notes-05.html">
+            
+                <a href="basic-paxos-9-pages-notes-05.html">
+            
+                    
+                    热风-基础Paxos算法笔记(5/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.6" data-path="basic-paxos-9-pages-notes-06.html">
+            
+                <a href="basic-paxos-9-pages-notes-06.html">
+            
+                    
+                    热风-基础Paxos算法笔记(6/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.7" data-path="basic-paxos-9-pages-notes-07.html">
+            
+                <a href="basic-paxos-9-pages-notes-07.html">
+            
+                    
+                    热风-基础Paxos算法笔记(7/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.8" data-path="basic-paxos-9-pages-notes-08.html">
+            
+                <a href="basic-paxos-9-pages-notes-08.html">
+            
+                    
+                    热风-基础Paxos算法笔记(8/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.9" data-path="basic-paxos-9-pages-notes-09.html">
+            
+                <a href="basic-paxos-9-pages-notes-09.html">
+            
+                    
+                    热风-基础Paxos算法笔记(9/9)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="distribute-lock-brief-summary.html">
+            
+                <a href="distribute-lock-brief-summary.html">
+            
+                    
+                    热风-分布式锁
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.17.1" data-path="distribute-lock-what-is-lock.html">
+            
+                <a href="distribute-lock-what-is-lock.html">
+            
+                    
+                    热风-锁是什么？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.2" data-path="distribute-lock-what-is-distribute-lock.html">
+            
+                <a href="distribute-lock-what-is-distribute-lock.html">
+            
+                    
+                    热风-分布式锁是什么？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.3" data-path="distribute-lock-problem.html">
+            
+                <a href="distribute-lock-problem.html">
+            
+                    
+                    热风-实现分布式锁会遇到的问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.4" data-path="distribute-lock-framework.html">
+            
+                <a href="distribute-lock-framework.html">
+            
+                    
+                    热风-分布式锁框架
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.5" data-path="distribute-lock-spin-impl.html">
+            
+                <a href="distribute-lock-spin-impl.html">
+            
+                    
+                    热风-拉模式的分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.6" data-path="distribute-lock-event-impl.html">
+            
+                <a href="distribute-lock-event-impl.html">
+            
+                    
+                    热风-推模式的分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.7" data-path="distribute-lock-with-redis.html">
+            
+                <a href="distribute-lock-with-redis.html">
+            
+                    
+                    热风-使用Redis实现分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.8" data-path="distribute-lock-how-to-do-it.html">
+            
+                <a href="distribute-lock-how-to-do-it.html">
+            
+                    
+                    热风-如何实现分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.9" data-path="distribute-lock-is-redlock-safe.html">
+            
+                <a href="distribute-lock-is-redlock-safe.html">
+            
+                    
+                    热风-Redlock能保证锁的正确性吗？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17.10" data-path="distribute-lock-another-way.html">
+            
+                <a href="distribute-lock-another-way.html">
+            
+                    
+                    热风-再看分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="change-to-temurin.html">
+            
+                <a href="change-to-temurin.html">
+            
+                    
+                    热风-更新到Eclipse Temurin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="using-jetbrains-toolbox.html">
+            
+                <a href="using-jetbrains-toolbox.html">
+            
+                    
+                    热风-使用JetBrains Toolbox来管理IDE
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="8-books-to-be-better-dev.html">
+            
+                <a href="8-books-to-be-better-dev.html">
+            
+                    
+                    热风-成为更好程序员的8本书
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="juc-summary.html">
+            
+                <a href="juc-summary.html">
+            
+                    
+                    热风-JUC总结
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.21.1" data-path="juc-stamped-lock-doc.html">
+            
+                <a href="juc-stamped-lock-doc.html">
+            
+                    
+                    热风-JUC中的StampedLock文档
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.2" data-path="juc-seqlock.html">
+            
+                <a href="juc-seqlock.html">
+            
+                    
+                    热风-《Linux系统高效同步》SeqLock摘译
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.3" data-path="juc-stampedlock-summary.html">
+            
+                <a href="juc-stampedlock-summary.html">
+            
+                    
+                    热风-StampedLock简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.4" data-path="juc-stampedlock-inf-and-case.html">
+            
+                <a href="juc-stampedlock-inf-and-case.html">
+            
+                    
+                    热风-StampedLock的接口与示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21.5" data-path="juc-stampedlock-implement-analysis.html">
+            
+                <a href="juc-stampedlock-implement-analysis.html">
+            
+                    
+                    热风-StampedLock的实现分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="program-how-to-run.html">
+            
+                <a href="program-how-to-run.html">
+            
+                    
+                    热风-程序是怎样跑起来的
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.22.1" data-path="program-how-to-run-01.html">
+            
+                <a href="program-how-to-run-01.html">
+            
+                    
+                    热风-对程序员来说CPU是什么
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.2" data-path="program-how-to-run-02.html">
+            
+                <a href="program-how-to-run-02.html">
+            
+                    
+                    热风-数据是用二进制数表示的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.3" data-path="program-how-to-run-03.html">
+            
+                <a href="program-how-to-run-03.html">
+            
+                    
+                    热风-计算机进行小数运算时出错的原因
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.4" data-path="program-how-to-run-04.html">
+            
+                <a href="program-how-to-run-04.html">
+            
+                    
+                    热风-熟练使用有棱有角的内存
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.5" data-path="program-how-to-run-05.html">
+            
+                <a href="program-how-to-run-05.html">
+            
+                    
+                    热风-内存和磁盘的亲密关系
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.6" data-path="program-how-to-run-06.html">
+            
+                <a href="program-how-to-run-06.html">
+            
+                    
+                    热风-亲自尝试压缩数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.7" data-path="program-how-to-run-07.html">
+            
+                <a href="program-how-to-run-07.html">
+            
+                    
+                    热风-程序是在何种环境中运行的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.8" data-path="program-how-to-run-08.html">
+            
+                <a href="program-how-to-run-08.html">
+            
+                    
+                    热风-从源文件到可执行文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.9" data-path="program-how-to-run-09.html">
+            
+                <a href="program-how-to-run-09.html">
+            
+                    
+                    热风-操作系统和应用的关系
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.10" data-path="program-how-to-run-10.html">
+            
+                <a href="program-how-to-run-10.html">
+            
+                    
+                    热风-通过汇编语言了解程序的实际构成
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22.11" data-path="program-how-to-run-11.html">
+            
+                <a href="program-how-to-run-11.html">
+            
+                    
+                    热风-硬件控制方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="program-program-program.html">
+            
+                <a href="program-program-program.html">
+            
+                    
+                    热风-程序！程序！程序！
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.23.1" data-path="program-program-program-01.html">
+            
+                <a href="program-program-program-01.html">
+            
+                    
+                    热风-程序的视角
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.2" data-path="program-program-program-02.html">
+            
+                <a href="program-program-program-02.html">
+            
+                    
+                    热风-硬件的执念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.3" data-path="program-program-program-03.html">
+            
+                <a href="program-program-program-03.html">
+            
+                    
+                    热风-编译的力量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.4" data-path="program-program-program-04.html">
+            
+                <a href="program-program-program-04.html">
+            
+                    
+                    热风-数据的表达
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23.5" data-path="program-program-program-05.html">
+            
+                <a href="program-program-program-05.html">
+            
+                    
+                    热风-协同的奥义
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="do-unit-test-better.html">
+            
+                <a href="do-unit-test-better.html">
+            
+                    
+                    热风-如何更好的做单元测试
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.24.1" data-path="do-unit-test-better-01.html">
+            
+                <a href="do-unit-test-better-01.html">
+            
+                    
+                    热风-软件开发与单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.2" data-path="do-unit-test-better-02.html">
+            
+                <a href="do-unit-test-better-02.html">
+            
+                    
+                    热风-Java程序员使用JUnit做单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.3" data-path="do-unit-test-better-03.html">
+            
+                <a href="do-unit-test-better-03.html">
+            
+                    
+                    热风-基于Spring的单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.4" data-path="do-unit-test-better-04.html">
+            
+                <a href="do-unit-test-better-04.html">
+            
+                    
+                    热风-维护好单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24.5" data-path="do-unit-test-better-05.html">
+            
+                <a href="do-unit-test-better-05.html">
+            
+                    
+                    热风-体验测试驱动开发
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="computer-network-01.html">
+            
+                <a href="computer-network-01.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.25.1" data-path="computer-network-01.html">
+            
+                <a href="computer-network-01.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（01.概述）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.2" data-path="computer-network-02.html">
+            
+                <a href="computer-network-02.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（02.应用层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.3" data-path="computer-network-03a.html">
+            
+                <a href="computer-network-03a.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（03a.传输层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.4" data-path="computer-network-03b.html">
+            
+                <a href="computer-network-03b.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（03b.传输层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.5" data-path="computer-network-04a.html">
+            
+                <a href="computer-network-04a.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（04a.网络层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.6" data-path="computer-network-04b.html">
+            
+                <a href="computer-network-04b.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（04b.网络层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.7" data-path="computer-network-05a.html">
+            
+                <a href="computer-network-05a.html">
+            
+                    
+                    热风-感悟《计算机网络：自顶向下》（05a.数据链路层）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.8" data-path="computer-network-05b.html">
+            
+                <a href="computer-network-05b.html">
+            
+                    
+                    热风-《计算机网络》第5章-数据链路层（b.以太网）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25.9" data-path="computer-network-06a.html">
+            
+                <a href="computer-network-06a.html">
+            
+                    
+                    热风-《计算机网络》第6章-物理层（a.基本概念）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="talk-about-architecture.html">
+            
+                <a href="talk-about-architecture.html">
+            
+                    
+                    热风-聊一聊架构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="javac-release-option.html">
+            
+                <a href="javac-release-option.html">
+            
+                    
+                    热风-使用Javac's Release选项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="talk-about-design-paradigm.html">
+            
+                <a href="talk-about-design-paradigm.html">
+            
+                    
+                    热风-谈一谈设计范式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="talk-about-system-complex.html">
+            
+                <a href="talk-about-system-complex.html">
+            
+                    
+                    热风-说一说系统复杂性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="how-do-i-write-a-design-doc.html">
+            
+                <a href="how-do-i-write-a-design-doc.html">
+            
+                    
+                    热风-我怎么写概要设计？
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >热风-C语言概述</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="c&#x8BED;&#x8A00;&#x6982;&#x8FF0;">C&#x8BED;&#x8A00;&#x6982;&#x8FF0;</h1>
+<h2 id="c&#x8BED;&#x8A00;&#x7684;&#x5386;&#x53F2;">C&#x8BED;&#x8A00;&#x7684;&#x5386;&#x53F2;</h2>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>C</strong>&#x8BDE;&#x751F;&#x4E8E;&#x4E0A;&#x4E2A;&#x4E16;&#x7EAA;70&#x5E74;&#x4EE3;&#x521D;&#x7684;&#x8D1D;&#x5C14;&#x5B9E;&#x9A8C;&#x5BA4;&#xFF0C;&#x7531;<strong>Ken Thompson</strong>&#x548C;<strong>Dennis Ritchie</strong>&#x8BBE;&#x8BA1;&#x5F00;&#x53D1;&#x51FA;&#x6765;&#x7684;&#xFF0C;&#x76EE;&#x7684;&#x662F;&#x4E3A;&#x4E86;&#x91CD;&#x5199;<strong>UNIX</strong>&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x3002;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/java-dev-learn-c-01/figure-1.png" width="90%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4E5F;&#x53EF;&#x4EE5;&#x8BF4;<strong>C</strong>&#x8BED;&#x8A00;&#x662F;<strong>UNIX</strong>&#x7CFB;&#x7EDF;&#x7684;&#x201C;<strong>&#x526F;&#x4EA7;&#x54C1;</strong>&#x201D;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>C</strong>&#x8BED;&#x8A00;&#x4E0D;&#x662F;&#x51ED;&#x7A7A;&#x521B;&#x4F5C;&#x51FA;&#x6765;&#x7684;&#xFF0C;&#x800C;&#x662F;&#x8BDE;&#x751F;&#x4E8E;&#x4E00;&#x4E2A;&#x6F14;&#x5316;&#x8FC7;&#x7A0B;&#x3002;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/java-dev-learn-c-01/figure-2.png" width="90%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>Ken</strong>&#x5728;&#x8D1D;&#x5C14;&#x5B9E;&#x9A8C;&#x5BA4;&#x5728;&#x4E00;&#x53F0;<strong>DEC PDP-7</strong>&#x673A;&#x5668;&#x4E0A;&#xFF0C;&#x4F7F;&#x7528;&#x6539;&#x8FDB;&#x540E;&#x7684;<strong>BCPL</strong>&#x8BED;&#x8A00;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;<strong>B</strong>&#x8BED;&#x8A00;&#xFF0C;&#x8BBE;&#x8BA1;&#x5F00;&#x53D1;&#x4E86;&#x521D;&#x7248;&#x7684;<strong>UNIX</strong>&#x7CFB;&#x7EDF;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>BCPL</strong>&#x8BED;&#x8A00;&#x6E90;&#x81EA;<strong>ALGOL60</strong>&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x7B97;&#x6CD5;&#x8BED;&#x8A00;&#xFF0C;&#x5B83;&#x957F;&#x5F97;&#x6837;&#x5B50;&#x5927;&#x6982;&#x662F;&#x8FD9;&#x6837;&#xFF1A;</p>
+<pre><code class="lang-algol">BEGIN
+    FILE F(KIND=REMOTE);
+    EBCDIC ARRAY E[0:11];
+    REPLACE E BY &quot;HELLO WORLD!&quot;;
+    WRITE(F, *, E); 
+END
+</code></pre>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x51FD;&#x6570;<code>WRITE</code>&#x7684;&#x65B9;&#x6CD5;&#x8C03;&#x7528;&#xFF0C;<code>;</code>&#x7ED3;&#x5C3E;&#x7684;&#x8BED;&#x53E5;&#x3002;&#x5F53;&#x7136;&#x5B83;&#x5DF2;&#x7ECF;&#x5177;&#x5907;&#x4E86;<code>IF</code>&#x9009;&#x62E9;&#xFF0C;<code>FOR</code>&#x5FAA;&#x73AF;&#x7B49;&#x9AD8;&#x7EA7;&#x8BED;&#x8A00;&#x7684;&#x7279;&#x6027;&#x4E86;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>BCPL</strong>&#x8BED;&#x8A00;&#x66F4;&#x8FD1;&#x4E00;&#x6B65;&#xFF0C;&#x5B83;&#x662F;<em>Basic Combined Programming Language</em>&#x7684;&#x7F29;&#x5199;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5B83;&#x7684;&#x6837;&#x5B50;&#xFF1A;</p>
+<pre><code class="lang-bcpl">GET &quot;libhdr&quot;
+LET start() = VALOF
+{ 
+    FOR i = 1 TO 5 
+    DO writef(&quot;fact(%n) = %i4*n&quot;, i, fact(i))
+    RESULTIS 0
+}
+
+AND fact(n) = n=0 -&gt; 1, n*fact(n-1)
+</code></pre>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>BCPL</strong>&#x6709;&#x4E3B;&#x51FD;&#x6570;<code>start()</code>&#xFF0C;&#x6709;&#x83B7;&#x53D6;&#x5916;&#x90E8;&#x5E93;&#x51FD;&#x6570;&#x7684;<code>GET</code>&#x6307;&#x4EE4;&#xFF0C;&#x540C;&#x65F6;&#x6709;&#x683C;&#x5F0F;&#x5316;&#x8F93;&#x51FA;&#x51FD;&#x6570;<code>writef</code>&#xFF0C;&#x770B;&#x8D77;&#x6765;&#x5DF2;&#x7ECF;&#x5F88;&#x6709;&#x611F;&#x89C9;&#x4E86;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>Ken</strong>&#x6240;&#x4F5C;&#x4E1A;&#x7684;<strong>DEC PDP-7</strong>&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x5F88;&#x5F3A;&#x7684;&#x7CFB;&#x7EDF;&#xFF0C;&#x53EA;&#x6709;4K&#x7684;&#x5185;&#x5B58;&#x3002;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/java-dev-learn-c-01/dec-pdp-7.jpg" width="50%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>Ken</strong>&#x53D1;&#x660E;&#x7684;<strong>B</strong>&#x8BED;&#x8A00;&#x3002;</p>
+<pre><code class="lang-b">/* The following function will print a non-negative number, n, to
+the base b, where 2&lt;=b&lt;=10, This routine uses the fact that
+in the ANSCII character set, the digits 0 to 9 have sequential
+code values. */
+printn(n,b) {
+extrn putchar;
+auto a;
+if(a=n/b) /* assignment, not test for equality */
+printn(a, b); /* recursive */
+putchar(n%b + &apos;0&apos;);
+</code></pre>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5DF2;&#x7ECF;&#x548C;<strong>C</strong>&#x5F88;&#x50CF;&#x4E86;&#xFF0C;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;<strong>Dennis</strong>&#x52A0;&#x5165;&#x4E86;&#x9879;&#x76EE;&#x7EC4;&#xFF0C;&#x540C;&#x65F6;&#x4ED6;&#x4EEC;&#x66F4;&#x6362;&#x4E86;&#x4E00;&#x53F0;&#x6027;&#x80FD;&#x5F3A;&#x52B2;&#x7684;&#x65B0;&#x673A;&#x5668;<strong>DEC PDP-11</strong>&#x3002;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/java-dev-learn-c-01/dec-pdp-11.jpg" width="50%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x7531;&#x4E8E;<strong>B</strong>&#x4E0D;&#x80FD;&#x5F88;&#x597D;&#x7684;&#x5229;&#x7528;&#x65B0;&#x673A;&#x5668;&#x7684;&#x7279;&#x6027;&#xFF0C;&#x6BD4;&#x5982;&#x4E00;&#x4E9B;&#x65B0;&#x7684;&#x6307;&#x4EE4;&#x96C6;&#xFF0C;&#x56E0;&#x6B64;<strong>Dennis</strong>&#x7684;&#x4E3B;&#x8981;&#x5DE5;&#x4F5C;&#x5C31;&#x662F;&#x7ED9;<strong>B</strong>&#x6253;patch&#x3002;&#x53EF;&#x662F;patch&#x6253;&#x5230;&#x6700;&#x540E;&#x5BFC;&#x81F4;<strong>B</strong>&#x5DF2;&#x7ECF;&#x4E0D;&#x518D;&#x50CF;&#x539F;&#x6709;&#x7684;<strong>B</strong>&#x4E86;&#xFF0C;<strong>Dennis</strong>&#x5C31;&#x7D22;&#x6027;&#x63A8;&#x7FFB;&#x4E86;&#x91CD;&#x5E72;&#xFF0C;&#x64CD;&#x5200;&#x8BBE;&#x8BA1;&#x51FA;&#x4E86;<strong>C</strong>&#xFF0C;&#x5E76;&#x7528;&#x5B83;&#x548C;<strong>Ken</strong>&#x4E00;&#x8D77;&#x91CD;&#x5199;&#x4E86;<strong>UNIX</strong>&#x3002;</p>
+<blockquote>
+<p>&#x90A3;&#x4E2A;&#x5E74;&#x4EE3;&#x7684;&#x7A0B;&#x5E8F;&#x5458;&#x5C31;&#x50CF;&#x5200;&#x5BA2;&#xFF1A;&#x8352;&#x6F20;&#x91CC;&#x4E00;&#x9152;&#x5BB6;&#xFF0C;&#x6EE1;&#x5C4B;&#x7686;&#x662F;&#x6076;&#x4EBA;&#x3002;&#x5916;&#x6765;&#x4E00;&#x4EBA;&#x6267;&#x5200;&#xFF0C;&#x8EAC;&#x8EAB;&#x4E0D;&#x60E7;&#x800C;&#x5165;&#xFF0C;&#x5200;&#x5149;&#x95EA;&#x5251;&#x5F71;&#x821E;&#x3002;&#x72EC;&#x4ED6;&#x63A8;&#x95E8;&#x800C;&#x51FA;&#xFF0C;&#x6536;&#x5200;&#x5E26;&#x5E3D;&#x4E0A;&#x9A6C;&#x3002;&#x9A6C;&#x8E0F;&#x5915;&#x9633;&#x897F;&#x4E0B;&#xFF0C;&#x53EA;&#x7559;&#x65E0;&#x4EBA;&#x9152;&#x5BB6;&#x3002;</p>
+</blockquote>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x4EFB;&#x4F55;&#x8F6F;&#x4EF6;&#x7684;&#x76EE;&#x7684;&#xFF0C;&#x90FD;&#x662F;&#x4E3A;&#x4E86;&#x9A71;&#x52A8;&#x786C;&#x4EF6;&#x3002;&#x548C;&#x786C;&#x4EF6;&#x4EA4;&#x4E92;&#x6700;&#x6DF1;&#x5165;&#x7684;&#x8F6F;&#x4EF6;&#xFF0C;&#x5C31;&#x662F;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x3002;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/java-dev-learn-c-01/figure-3.png" width="70%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5728;<strong>Java</strong>&#x8BED;&#x8A00;&#x4E2D;&#xFF0C;RUNTIME&#xFF08;JVM&#xFF09;&#x9488;&#x5BF9;&#x4E0D;&#x540C;&#x7684;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x505A;&#x4E86;&#x4E0D;&#x540C;&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x4F46;&#x662F;&#x5B83;&#x4EEC;&#x9700;&#x8981;&#x5151;&#x73B0;&#x4E00;&#x4E2A;&#x76EE;&#x6807;&#xFF0C;&#x4E3A;&#x4E0A;&#x5C42;&#x4EE3;&#x7801;&#xFF08;Java&#x4EE3;&#x7801;&#xFF09;&#x63D0;&#x4F9B;&#x4E00;&#x81F4;&#x7684;&#x6807;&#x51C6;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;<strong>Java Spec</strong>&#x3002;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5F88;&#x591A;&#x8BED;&#x8A00;&#x53CA;&#x529F;&#x80FD;&#x7684;&#x7279;&#x6027;&#xFF0C;&#x8BF8;&#x5982;&#xFF1A;&#x7F51;&#x7EDC;&#x3001;&#x6587;&#x4EF6;&#x548C;&#x7EBF;&#x7A0B;&#x7B49;&#xFF0C;&#x90FD;&#x62BD;&#x8C61;&#x5230;&#x4E86;<strong>Java Spec</strong>&#x4E2D;&#xFF0C;<strong>Java</strong>&#x5F00;&#x53D1;&#x8005;&#x53EF;&#x4EE5;&#x5728;SDK&#x4E2D;&#x770B;&#x5230;&#x8FD9;&#x4E9B;&#x5185;&#x5BB9;&#xFF0C;&#x800C;&#x5B83;&#x4EEC;&#x9700;&#x8981;&#x5F97;&#x5230;RUNTIME&#x7684;&#x652F;&#x6301;&#x4E0E;&#x5151;&#x73B0;&#x3002;<strong>Java</strong>&#x5E94;&#x7528;&#x548C;&#x7A0B;&#x5E8F;&#x90FD;&#x662F;&#x57FA;&#x4E8E;<strong>Java Spec</strong>&#x7684;&#xFF0C;&#x800C;&#x6574;&#x4E2A;<strong>Java</strong>&#x5B9E;&#x9645;&#x4E0A;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x5E73;&#x53F0;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5728;<strong>C</strong>&#x8BED;&#x8A00;&#x4E2D;&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x63D0;&#x4F9B;&#x5404;&#x81EA;&#x5BF9;&#x5E94;&#x7684;&#x7F16;&#x8BD1;&#x5668;&#xFF0C;&#x800C;<strong>C</strong>&#x53EA;&#x662F;&#x5B9A;&#x4E49;&#x4E86;<strong>C Spec</strong>&#xFF0C;&#x5177;&#x4F53;&#x7F16;&#x8BD1;&#x548C;&#x94FE;&#x63A5;&#x5C31;&#x9700;&#x8981;&#x4F9D;&#x9760;&#x4E0D;&#x540C;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x4E0A;&#x7684;&#x7F16;&#x8BD1;&#x5668;&#x3002;&#x8FD9;&#x4E5F;&#x662F;<strong>C</strong>&#x7F16;&#x8BD1;&#x5668;&#x5728;&#x4E0D;&#x540C;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#xFF08;&#x5982;&#xFF1A;Windows&#x6216;Linux&#xFF09;&#x8FE5;&#x5F02;&#x7684;&#x539F;&#x56E0;&#x4E86;&#x3002;</p>
+<h2 id="c&#x8BED;&#x8A00;&#x7684;&#x4F18;&#x7F3A;&#x70B9;">C&#x8BED;&#x8A00;&#x7684;&#x4F18;&#x7F3A;&#x70B9;</h2>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>C</strong>&#x8BED;&#x8A00;&#x7684;&#x4F18;&#x7F3A;&#x70B9;&#x3002;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/java-dev-learn-c-01/figure-4.png" width="70%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<strong>Java</strong>&#x7684;&#x8BED;&#x8A00;&#x7279;&#x6027;&#x6BD4;&#x8F83;&#x591A;&#xFF0C;&#x5E76;&#x4E14;&#x5728;&#x4E0D;&#x65AD;&#x7684;&#x589E;&#x52A0;&#xFF0C;&#x800C;<strong>C</strong>&#x53EA;&#x80FD;&#x4F9D;&#x9760;&#x6807;&#x51C6;&#x5E93;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x6807;&#x51C6;&#x5E93;&#xFF0C;&#x90A3;&#x4E48;&#x79FB;&#x690D;&#x6027;&#x5C31;&#x5B58;&#x5728;&#x95EE;&#x9898;&#x3002;</p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x540C;&#x65F6;<strong>C</strong>&#x7684;&#x7F16;&#x8BD1;&#x5668;&#x80FD;&#x529B;&#x4E0D;&#x5F3A;&#xFF0C;&#x6709;&#x4E9B;&#x9690;&#x85CF;&#x9519;&#x8BEF;&#x96BE;&#x4EE5;&#x53D1;&#x73B0;&#x3002;&#x6240;&#x4EE5;&#x5BF9;&#x4E8E;<strong>C</strong>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x3002;</p>
+<center>
+<img src="https://weipeng2k.github.io/hot-wind/resources/java-dev-learn-c-01/figure-5.png" width="70%">
+</center>
+
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x9488;&#x5BF9;&#x4E0B;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x3002;</p>
+<pre><code class="lang-c">#include&lt;stdio.h&gt;
+
+void main() {
+    printf(&quot;hello, world!\n&quot;);
+}
+</code></pre>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x5C1D;&#x8BD5;&#x4F7F;&#x7528;gcc&#x8FDB;&#x884C;&#x7F16;&#x8BD1;&#x3002;</p>
+<pre><code class="lang-sh">ch02 % gcc -o target/warn warn.c
+warn.c:3:1: warning: return type of &apos;main&apos; is not &apos;int&apos; [-Wmain-return-type]
+void main() {
+^
+warn.c:3:1: note: change return type to &apos;int&apos;
+void main() {
+^~~~
+int
+1 warning generated.
+</code></pre>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x7F16;&#x8BD1;&#x7ED3;&#x679C;&#x51FA;&#x73B0;&#x544A;&#x8B66;&#x3002;&#x7136;&#x540E;&#x4F7F;&#x7528;&#x65B0;&#x7684;&#x547D;&#x4EE4;&#x518D;&#x6B21;&#x7F16;&#x8BD1;&#x3002;</p>
+<pre><code class="lang-sh">ch02 % gcc -O -Wall -W -pedantic  -std=c99 -o target/warn warn.c
+warn.c:3:1: error: &apos;main&apos; must return &apos;int&apos;
+void main() {
+^~~~
+int
+1 error generated.
+</code></pre>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#x7F16;&#x8BD1;&#x5931;&#x8D25;&#xFF0C;&#x53EA;&#x662F;&#x56E0;&#x4E3A;&#x589E;&#x52A0;&#x4E86;<code>-std=c99</code>&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x8981;&#x6C42;&#x7F16;&#x8BD1;&#x524D;&#x6309;&#x7167;c99&#x7684;&#x6807;&#x51C6;&#x68C0;&#x67E5;&#x4EE3;&#x7801;&#xFF0C;&#x800C;&#x5BF9;&#x4E8E;&#x4E3B;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#xFF0C;c99&#x8981;&#x6C42;&#x5FC5;&#x987B;&#x4E3A;<code>int</code>&#xFF0C;&#x6240;&#x4EE5;&#x76F4;&#x63A5;&#x62A5;&#x9519;&#x3002;&#x901A;&#x8FC7;&#x589E;&#x52A0;<code>-Wall -W</code>&#xFF0C;&#x4E5F;&#x80FD;&#x591F;&#x770B;&#x5230;&#x544A;&#x8B66;&#xFF0C;&#x8FD9;&#x6837;&#x4F1A;&#x8BA9;&#x6211;&#x4EEC;&#x77E5;&#x9053;&#x54EA;&#x91CC;&#x53EF;&#x80FD;&#x5B58;&#x5728;&#x98CE;&#x9669;&#x3002;</p>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <a href="https://github.com/weipeng2k/hot-wind" target="_blank">hot-wind</a>&#xFF0C;&#x4F7F;&#x7528;<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank">&#x77E5;&#x8BC6;&#x5171;&#x4EAB; &#x7F72;&#x540D;-&#x76F8;&#x540C;&#x65B9;&#x5F0F;&#x5171;&#x4EAB; 4.0&#x534F;&#x8BAE;</a>&#x53D1;&#x5E03; </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> &#x6B64;&#x9875;&#x9762;&#x4FEE;&#x8BA2;&#x4E8E;&#xFF1A; 2024-12-02 03:24:02 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="java-dev-learn-c.html" class="navigation navigation-prev " aria-label="Previous page: 热风-Java开发者看C">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="java-dev-learn-c-02.html" class="navigation navigation-next " aria-label="Next page: 热风-C语言的基本概念">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"热风-C语言概述","level":"1.15.1","depth":2,"next":{"title":"热风-C语言的基本概念","level":"1.15.2","depth":2,"path":"book/java-dev-learn-c-02.md","ref":"book/java-dev-learn-c-02.md","articles":[]},"previous":{"title":"热风-Java开发者看C","level":"1.15","depth":1,"path":"book/java-dev-learn-c.md","ref":"book/java-dev-learn-c.md","articles":[{"title":"热风-C语言概述","level":"1.15.1","depth":2,"path":"book/java-dev-learn-c-01.md","ref":"book/java-dev-learn-c-01.md","articles":[]},{"title":"热风-C语言的基本概念","level":"1.15.2","depth":2,"path":"book/java-dev-learn-c-02.md","ref":"book/java-dev-learn-c-02.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-pro","-sharing","github-buttons","editlink","ga","-highlight","bibtex-indexed-cite","page-footer-ex","splitter","copy-code-button","expandable-chapters-small","donate","github"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/weipeng2k/hot-wind"},"editlink":{"label":"Edit","multilingual":false,"base":"https://github.com/weipeng2k/hot-wind/blob/master"},"page-footer-ex":{"copyright":"By [hot-wind](https://github.com/weipeng2k/hot-wind)，使用[知识共享 署名-相同方式共享 4.0协议](https://creativecommons.org/licenses/by-sa/4.0/deed.zh)发布","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"此页面修订于："},"splitter":{},"search-pro":{"cutWordLib":"nodejieba","defineWord":["Gitbook Use"]},"donate":{"alipay":"https://weipeng2k.github.io/hot-wind/alipay_qr.JPG","alipayText":"支付宝打赏","button":"赏","title":"","wechat":"https://weipeng2k.github.io/hot-wind/wechat_qr.JPG","wechatText":"微信打赏"},"fontsettings":{"theme":"white","family":"sans","size":2},"bibtex-indexed-cite":{"path":"/"},"github-buttons":{"buttons":[{"user":"weipeng2k","repo":"hot-wind","type":"star","size":"small","count":true}]},"expandable-chapters-small":{},"copy-code-button":{},"ga":{"configuration":"auto","token":"UA-131910384-3"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"weipeng2k","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"bibCount":0,"variables":{},"title":"hot-wind","bib":[],"gitbook":"*"},"file":{"path":"book/java-dev-learn-c-01.md","mtime":"2024-12-02T03:24:02.321Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-12-02T03:24:42.830Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-donate/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
