@@ -1,6 +1,8 @@
 # 新装环境配置ssh登录GitHub
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;自从更新到新版macOS，就发现x86架构在mac上越来越力不从心了。2018款的MBP更新到了macOS15.5，发热巨大，电池报故障，开机坚持不到五分钟就会热保护掉电关机。无奈之下，弄了台M4版本的Mac mini，虽然Mac的更换可以选择从另一台设备导入，但是MBP的备份是x86架构的，不太适合arm架构的M系列处理器，那就选择重新安装吧。重新安装完成后，发现homebrew的软件路径已经切换到了`/opt/homebrew`，暗自庆幸没有选择从备份中恢复，转到Mac mini后，发现托管在Github上的项目无法提交了，报错信息："`git@github.com: Permission denied (publickey). fatal: Could not read from remote repository. Please make sure you have the correct access rights and the repository exists.`"，我就知道要ssh重新走一遭了。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;自从更新到新版macOS，就发现x86架构在mac上越来越力不从心了。2018款的MBP更新到了macOS15.5，发热巨大，电池报故障，开机坚持不到五分钟就会热保护掉电关机。无奈之下，弄了台M4版本的Mac mini，虽然Mac的更换可以选择从另一台设备导入，但是MBP的备份是x86架构的，不太适合arm架构的M系列处理器，那就选择重新安装吧。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;重新安装完成后，发现homebrew的软件路径已经切换到了`/opt/homebrew`，暗自庆幸没有选择从备份中恢复，转到Mac mini后，发现托管在Github上的项目无法提交了，报错信息："`git@github.com: Permission denied (publickey). fatal: Could not read from remote repository. Please make sure you have the correct access rights and the repository exists.`"，我就知道要ssh重新走一遭了。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;配置ssh登录Github要比登录一个web账号要麻烦许多，Github为什么建议选择ssh而不是https呢？主要是安全性考虑，ssh通过密钥对（公钥和私钥）进行身份验证，比https的用户名和密码更加安全。即使有人截获了你的通信，也无法伪造你的身份。
 
@@ -23,9 +25,9 @@
 |-b|4096|指定生成的密钥长度为4096位。密钥长度越长，安全性越高，但也会增加计算开销。|
 |-C|your_email@example.com|在生成的密钥中添加一个注释，通常是一个电子邮件地址。这个注释有助于识别密钥的用途或所有者。|
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你运行`ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`命令时，会生成一个新的RSA密钥对，包含一个私钥和一个公钥，私钥将保存在一个文件中（默认是`~/.ssh/id_rsa`），公钥将保存在另一个文件中（默认是`~/.ssh/id_rsa.pub`）。ssh-keygen是交互命令，它会提示你输入密码来保护私钥，当然密码可以为空，我这里没有什么需要保护的，就一路回车，直到密钥生成完毕。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你运行`ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`命令时，会生成一个新的RSA密钥对，包含一个私钥和一个公钥，私钥将保存在一个文件中（默认是`~/.ssh/id_rsa`），公钥将保存在另一个文件中（默认是`~/.ssh/id_rsa.pub`）。ssh-keygen是交互式命令，它会提示你输入密码来保护私钥，当然密码可以为空，我这里没有什么需要保护的，就一路回车，直到密钥生成完毕。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;生成密钥对后，ssh-keygen 会显示一些关于新生成密钥的信息，包括：密钥的指纹（fingerprint）和随机艺术图（random art），类似下面的内容：
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;生成密钥对后，ssh-keygen会显示一些关于新生成密钥的信息，包括：密钥的指纹（fingerprint）和随机艺术图（random art），类似下面的内容：
 
 ```sh
 Your identification has been saved in /home/your_username/.ssh/id_rsa.
@@ -53,7 +55,7 @@ The key's random art image is:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;登录Github，进入【settings】，选择【SSH and GPG keys】一栏，可以看到类似如下内容。
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/login-github-by-ssh-with-new-mac/github-ssh-keys.jpg" width="70%" />
+<img src="https://weipeng2k.github.io/hot-wind/resources/login-github-by-ssh-with-new-mac/github-ssh-keys.jpg" />
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点击【New SSH key】，在key一栏中填入id_rsa.pub中的内容，其中title可以重复，这里我还是用了`weipeng2k@126.com`，提交创建之。这个过程就是将公钥给到Github。
@@ -71,7 +73,7 @@ Hi username! You've successfully authenticated, but GitHub does not provide shel
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在执行`ssh -T git@github.com`命令时，通过wireshark进行抓取，可以看到如下访问过程：
 
 <center>
-<img src="https://weipeng2k.github.io/hot-wind/resources/login-github-by-ssh-with-new-mac/ssh-login.jpg" width="70%" />
+<img src="https://weipeng2k.github.io/hot-wind/resources/login-github-by-ssh-with-new-mac/ssh-login.jpg" />
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;认证的过程还是比较复杂的，但简单探寻一下它的过程还是有必要的，毕竟已经做了不少操作，还是弄明白的好。验证本机，也就是客户端身份，需要确定客户端拥有私钥，因为公钥用来加密，私钥用来解密，如果服务端使用客户端的公钥将一个值进行加密，客户端得到数据后能够解密成功，就证明客户端拥有了私钥，服务端将加密的数据发送给客户端的过程被称为“服务端发送挑战”，而客户端解密后进行响应的过程被称为“客户端接受挑战”。
