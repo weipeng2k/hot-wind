@@ -100,3 +100,4 @@
 * [热风-我怎么写概要设计？](book/how-do-i-write-a-design-doc.md)
 * [热风-新装环境配置ssh登录GitHub](book/login-github-by-ssh-with-new-mac.md)
 * [热风-如何掌握一门编程语言](book/how-to-learn-a-programming-language.md)
+* [热风-如何在M4上快速的运行本地LLM](book/how-to-run-local-llm-on-m4.md)
