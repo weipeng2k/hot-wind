@@ -16,9 +16,9 @@
 
 ### 安装python并准备环境
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;假设你已经安装好了[homebrew](https://brew.sh/)，使用`brew install python`安装最新的python，Mac自带的python比较旧，版本大约在3.9左右，最新的已经到3.14.x了。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;假设你已经安装好了[homebrew](https://brew.sh/)，使用`brew install python`安装最新的python，Mac自带的python比较旧，版本大约在`3.9`左右，最新的已经到`3.14.x`了。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;完成python安装后，要创建python的虚拟环境，虚拟环境可隔离python依赖，避免版本冲突，可以理解为在某个目录下放置独立的python版本以及三方组件库版本。可以选择在home目录下创建隐藏目录envs，使用：`mkdir .venvs`，然后`cd`进入该文件夹，执行：`python3 -m venv myenv`，其中myenv可以自己起名字。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;完成python安装后，要创建python的虚拟环境，虚拟环境可隔离python依赖，避免版本冲突，可以理解为在某个目录下放置独立的python版本以及三方组件库版本。可以选择在home目录下创建隐藏目录`.venvs`，使用：`mkdir .venvs`，然后`cd`进入该文件夹，执行：`python3 -m venv myenv`，其中myenv可以自己起名字。
 
 > 如果你熟悉并主要使用Java的话，会感觉有些不理解，但是照做就好。你会诧异于python解决依赖冲突的方式和node的npm一个味道。
 
